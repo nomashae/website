@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nomashae | Democratic Micronation</title>
+    
+    <style>
+        @keyframes fall {
+            to {
+                transform: translateY(calc(100vh + 100px)) rotate(360deg);
+            }
+        }
+    </style>
+
+    <style>
+
+        .perviosly {
+            font-family: 'Courier New', monospace; color: var(--air); margin-top: 20px; text-align: center;
+        }
+
+        /* .custom-css--{
+
+        } */
+
+        .pixel-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--earth);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s;
+        }
+
+        /* REVISED ATLA Palette - Cleaner! */
+        :root {
+            --earth: #5B8C5A;
+            /* Fresh Earth Kingdom green */
+            --water: #2A7A9D;
+            /* Deep Water Tribe blue */
+            --fire: #C53D2B;
+            /* Vibrant Fire Nation red */
+            --air: #F0E6C2;
+            /* Soft Air Nomad parchment */
+            --text: #2F2F2F;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--air);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--earth), var(--earth)),
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,70 C150,40 350,100 500,70 C650,40 850,100 1000,70 C1150,40 1200,70 1200,70 L1200,100 L0,100 Z' fill='%232A7A9D'/%3E%3C/svg%3E");
+            background-size: auto, 1200px 100px;
+            background-repeat: repeat-x;
+            background-position: bottom;
+            color: white;
+            padding: 2rem 0 3rem; /* Extra space for waves */
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+}
+
+        .flag-img {
+            width: 200px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+            border: 3px solid var(--fire);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            animation: wave-flag 6s ease-in-out infinite;
+        }
+
+        @keyframes wave-flag {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(2deg) scale(1.02); }
+            75% { transform: rotate(-2deg) scale(1.02); }
+        }
+
+        h1 {
+            margin-top: 1rem;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .motto {
+            font-style: italic;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        section {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        h2 {
+            color: var(--fire);
+            border-bottom: 2px dashed var(--earth);
+            padding-bottom: 0.5rem;
+        }
+
+        .government,
+        .special-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            border: 1px solid #eee;
+        }
+
+        .minister {
+            margin: 0.8rem 0;
+            padding: 0.8rem;
+            background-color: var(--air);
+            border-left: 4px solid var(--water);
+            border-radius: 4px;
+            transition: transform 0.2s;
+        }
+
+        .minister:hover {
+            transform: translateX(5px);
+        }
+
+        .pdf-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--fire);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .pdf-link:hover {
+            background-color: #a83326;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--earth);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="pixel-loader" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--earth);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 1s;
+    ">
+        <!-- Fixed SVG (no data URL) -->
+        <svg width="80" height="80" viewBox="0 0 16 16" style="image-rendering: pixelated;">
+            <rect width="16" height="16" fill="#5B8C5A" />
+            <rect x="2" y="4" width="12" height="8" fill="#F0E6C2" />
+            <rect x="4" y="6" width="2" height="2" fill="#C53D2B" />
+            <rect x="10" y="6" width="2" height="2" fill="#C53D2B" />
+        </svg>
+        <p style="
+            font-family: 'Courier New', monospace;
+            color: var(--air);
+            margin-top: 20px;
+            text-align: center;
+        ">PREVIOUSLY ON NOMASHAE...</p>
+    </div>
+
+    <script>
+        // Hide loader after 3 seconds
+        setTimeout(() => {
+            document.getElementById('pixel-loader').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('pixel-loader').remove();
+            }, 1000);
+        }, 3000);
+    </script>
+
+    <header>
+        <img src="./assets/Flag_Nomashae.png" alt="Flag of Nomashae" class="flag-img">
+        <h1>Nomashae</h1>
+        <p class="motto">"Energy in Motion"</p>
+    </header>
+
+    <section>
+        <h2>Our Parliament</h2>
+        <div class="government">
+            <div class="minister">
+                <strong>Премиер (Prime Minister):</strong> Ефтимиј Новаковски
+            </div>
+            <div class="minister">
+                <strong>Прецедател (President):</strong> Горѓи Новаковски
+            </div>
+            <div class="minister">
+                <strong>Министер за внатрешни надворешни работи (Internal/External Affairs):</strong> Душка Новаковска
+            </div>
+            <div class="minister">
+                <strong>Министер за култура (Culture):</strong> Горѓи Новаковски
+            </div>
+            <div class="minister">
+                <strong>Министер за врски и конекции (Connections):</strong> Крсте Димов
+            </div>
+            <div class="minister">
+                <strong>Министер за заштита (Defense):</strong> Ефтимиј Новаковски
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Flyingo Bisdomick (Formerly Flying Bisonick)</h2>
+        <div class="special-section">
+            <p>Explore the linguistic heritage of Nomashae! Download the official Flyingo Bisdomick language guide
+                below:</p>
+            <a href="./assets/Flying Bisonick & Flyingo Bisdomic.pdf" class="pdf-link">Download PDF</a>
+            <p>Here is one full complex sentece both in Flying Bisonic & Flyingo Bisdomick:</p>
+            <p>Original English: Modern day is the best day for sky surfing. Also, I had an apple and a little chocolate bar.</p>
+            <p>Flying Bisonick (Ancient): “Diurnal moderna esh torar diurnal vola-bova. Nex, mi havar pomora e tikta chokolar barra.”<br>Breakdown: Diurnal moderna = modern day<br>esh torar = is best (greatest/strongest)<br>vola-bova = sky surfing (lit. fly-sky)<br>Nex = also / then<br>mi havar = I had<br>pomora = apple (constructed from pom- = fruit + -ora = red/round)<br>tikta chokolar barra = little chocolate bar</p>
+            
+            <p>Modern Flyingo Bisdomick: “Diurn mod es tor diurn for bo-vo. Nex, mi had pom e tik chok bar.”<br>Breakdown: Diurn mod = modern day<br>es tor = is best for<br>bo-vo = for sky surfing (fly-sky)<br>Nex = also / next<br>mi had= I had<br>pom = apple<br>tik chok bar = little chocolate bar</p>
+        </div>
+    </section>
+    <section>
+        <h2>About Nomashae</h2>
+        <p>Founded in 2025, Nomashae is a democratic micronation inspired by the nomadic spirit and energy of
+            <em>Avatar: The Last Airbender</em>. Our teritory lies in a virtuel world, "The Elements", but our community spans hearts and minds!
+        </p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Nomashae | Powered by the Elements</p>
+    </footer>
+
+    <script>
+        // Animate sections when scrolling
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s, transform 0.6s';
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+    <script>
+        // 1. FIRE NATION SCROLL EFFECT
+        document.addEventListener('scroll', () => {
+            const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+            document.body.style.background = `linear-gradient(to bottom, var(--air), hsl(${scrollPercent * 1.5}, 60%, 90%))`;
+        });
+
+        // 2. AIR NOMAD LEVITATION
+        document.querySelectorAll('.minister').forEach(minister => {
+            minister.addEventListener('mouseenter', () => {
+                minister.style.transform = 'translateY(-8px)';
+                minister.style.boxShadow = '0 10px 15px rgba(0,0,0,0.1)';
+            });
+            minister.addEventListener('mouseleave', () => {
+                minister.style.transform = 'translateY(0)';
+                minister.style.boxShadow = 'none';
+            });
+        });
+
+        // 3. WATER TRIBE AMBIENCE (click to play/pause)
+        const audio = new Audio('air.mp3');
+        audio.loop = true;
+        document.sound.onClick('click', () => {
+            audio.paused ? audio.play() : audio.pause();
+        });
+    </script>
+
+    <script>
+    
+        document.querySelector('.flag-img').addEventListener('click', () => {
+        const airball = document.createElement('div');
+        airball.innerHTML = '🌪️';
+        airball.style.position = 'fixed';
+        airball.style.fontSize = '50px';
+        airball.style.left = Math.random() * window.innerWidth + 'px';
+        airball.style.top = '-100px';
+        airball.style.animation = 'fall 5s linear forwards';
+        document.body.appendChild(airball);
+        
+        setTimeout(() => airball.remove(), 5000);
+        });
+    
+    </script>
+
+
+</body>
+
+</html>
