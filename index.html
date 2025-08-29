@@ -201,11 +201,11 @@
             setTimeout(() => {
                 document.getElementById('pixel-loader').remove();
             }, 1000);
-        }, 3000);
+        }, 500);
     </script>
 
     <header>
-        <img src="./assets/Flag_Nomashae.png" alt="Flag of Nomashae" class="flag-img">
+        <img src="./assets/Flag_Nomashae.png" alt="Flag of Nomashae" class="flag-img" onerror="this.onerror=null;this.src='https://placehold.co/200x120/F0E6C2/C53D2B?text=Flag+Not+Found';">
         <h1>Nomashae</h1>
         <p class="motto">"Energy in Motion"</p>
     </header>
@@ -214,22 +214,22 @@
         <h2>Our Parliament</h2>
         <div class="government">
             <div class="minister">
-                <strong>Премиер (Prime Minister):</strong> Ефтимиј Новаковски
+                <strong>Prime Minister:</strong> Ефтимиј Новаковски - Eftimij Novakovski
             </div>
             <div class="minister">
-                <strong>Претседател (President):</strong> Крсте Димов
+                <strong>President:</strong> Крсте Димов - Krste Dimov
             </div>
             <div class="minister">
-                <strong>Министер за внатрешни надворешни работи (Internal/External Affairs):</strong> Душка Новаковска
+                <strong>Internal/External Affairs:</strong> Ефтимиј Новаковски - Eftimij Novakovski
             </div>
             <div class="minister">
-                <strong>Министер за култура (Culture):</strong> Горѓи Новаковски
+                <strong>Culture:</strong> Крсте Димов - Krste Dimov
             </div>
             <div class="minister">
-                <strong>Министер за врски и конекции (Connections):</strong> Крсте Димов
+                <strong>Connections:</strong> Крсте Димов - Krste Dimov
             </div>
             <div class="minister">
-                <strong>Министер за заштита (Defense):</strong> Ефтимиј Новаковски
+                <strong>Defense:</strong> Ефтимиј Новаковски - Eftimij Novakovski
             </div>
         </div>
     </section>
@@ -247,6 +247,20 @@
             <p>Modern Flyingo Bisdomick: “Diurn mod es tor diurn for bo-vo. Nex, mi had pom e tik chok bar.”<br>Breakdown: Diurn mod = modern day<br>es tor = is best for<br>bo-vo = for sky surfing (fly-sky)<br>Nex = also / next<br>mi had= I had<br>pom = apple<br>tik chok bar = little chocolate bar</p>
         </div>
     </section>
+
+    <section>
+        <h2>Executive Orders</h2>
+        <div class="special-section">
+            <h4>Executive Order of Nomashae: Straw & Hole Classification</h4>
+            <p><strong>Hole:</strong> A void with a single opening. Can be tiny or huge, but it ends without connecting to another opening.</p>
+            <p><strong>Tunnel:</strong> A hole that connects two openings. Bigger than a regular hole, usually traversable.</p>
+            <p><strong>Straw:</strong> A small tunnel. Essentially, a tunnel you can sip through. In short: a straw = a tiny tunnel = two holes connected.</p>
+            <p>So basically, every straw is a tunnel, every tunnel has two holes, and every hole might someday wish it was a tunnel.</p>
+            <p style="text-align: right; margin-top: 2rem; font-style: italic;">Signed,<br>Eftimij Novakovski</p>
+            <p style="text-align: right; margin-top: 2rem">P.S. Flyingo Bisdomick is gonna be transalted later</p>
+        </div>
+    </section>
+
     <section>
         <h2>About Nomashae</h2>
         <p>Founded in 2025, Nomashae is a democratic micronation inspired by the nomadic spirit and energy of
@@ -300,11 +314,18 @@
         });
 
         // 3. WATER TRIBE AMBIENCE (click to play/pause)
-        const audio = new Audio('air.mp3');
-        audio.loop = true;
-        document.sound.onClick('click', () => {
-            audio.paused ? audio.play() : audio.pause();
-        });
+        try {
+            const audio = new Audio('air.mp3');
+            audio.loop = true;
+            document.body.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play().catch(e => console.error("Audio play failed:", e));
+                }
+            }, { once: true }); // Play on first click anywhere
+        } catch (e) {
+            console.error("Could not create audio:", e);
+        }
+
     </script>
 
     <script>
