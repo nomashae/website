@@ -7,4 +7,4 @@
 ## ▨❓| Where
 >We are located in a minecraft world
 <br>
-*NOTICE:* We are not a cult. Had to clarify since some peaople tought we were a cult 😅<br>-Eftimij
+<strong>NOTICE:</strong> We are <em>not a cult</em>. Had to clarify since some peaople tought we were a cult 😅<br>-Eftimij
