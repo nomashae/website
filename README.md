@@ -6,6 +6,5 @@
 >Why? - Our goal is to protect the 4 nations from **Avatar: The Last Airbender**
 ## ▨❓| Where
 >We are located in a minecraft world
- 
-Please note that we are not a cult. Had to clarify since some peaople tought we were a cult 😅
--Eftimij
+<br>
+*NOTICE:* We are not a cult. Had to clarify since some peaople tought we were a cult 😅<br>-Eftimij
