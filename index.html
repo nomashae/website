@@ -153,6 +153,33 @@
         .pdf-link:hover {
             background-color: #a83326;
         }
+        
+        .executive-button {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--fire);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            border-bottom: 4px solid #a83326;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .executive-button:hover {
+            background-color: #d64a39;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            border-bottom-width: 2px;
+        }
+
+        .executive-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            border-bottom-width: 1px;
+        }
 
         footer {
             text-align: center;
@@ -195,7 +222,7 @@
     </div>
 
     <script>
-        // Hide loader after 3 seconds
+        // Hide loader after a short time
         setTimeout(() => {
             document.getElementById('pixel-loader').style.opacity = '0';
             setTimeout(() => {
@@ -247,17 +274,12 @@
             <p>Modern Flyingo Bisdomick: “Diurn mod es tor diurn for bo-vo. Nex, mi had pom e tik chok bar.”<br>Breakdown: Diurn mod = modern day<br>es tor = is best for<br>bo-vo = for sky surfing (fly-sky)<br>Nex = also / next<br>mi had= I had<br>pom = apple<br>tik chok bar = little chocolate bar</p>
         </div>
     </section>
-
+    
     <section>
-        <h2>Executive Orders</h2>
-        <div class="special-section">
-            <h4>Executive Order of Nomashae: Straw & Hole Classification</h4>
-            <p><strong>Hole:</strong> A void with a single opening. Can be tiny or huge, but it ends without connecting to another opening.</p>
-            <p><strong>Tunnel:</strong> A hole that connects two openings. Bigger than a regular hole, usually traversable.</p>
-            <p><strong>Straw:</strong> A small tunnel. Essentially, a tunnel you can sip through. In short: a straw = a tiny tunnel = two holes connected.</p>
-            <p>So basically, every straw is a tunnel, every tunnel has two holes, and every hole might someday wish it was a tunnel.</p>
-            <p style="text-align: right; margin-top: 2rem; font-style: italic;">Signed,<br>Eftimij Novakovski</p>
-            <p style="text-align: right; margin-top: 2rem">P.S. Flyingo Bisdomick is gonna be transalted later</p>
+        <h2>Official Documents</h2>
+        <div class="special-section" style="text-align: center;">
+            <p>Review the official decrees and orders of the nation.</p>
+            <a href="./executive_orders.html" class="executive-button">View Executive Orders</a>
         </div>
     </section>
 
@@ -349,3 +371,4 @@
 </body>
 
 </html>
+
