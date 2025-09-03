@@ -36,6 +36,23 @@
             position: relative;
             overflow: hidden;
         }
+
+        .lang-switcher {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--fire);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .lang-switcher:hover {
+            background-color: #a83326;
+        }
         
         .flag-img {
             width: 200px;
@@ -109,31 +126,31 @@
 </head>
 <body>
     <header>
+        <button id="lang-switcher" class="lang-switcher">mFB</button>
         <img src="./assets/Flag_Nomashae.png" alt="Flag of Nomashae" class="flag-img" onerror="this.onerror=null;this.src='https://placehold.co/200x120/F0E6C2/C53D2B?text=Flag+Not+Found';">
-        <h1>Executive Orders</h1>
-        <p class="motto">"Energy in Motion"</p>
+        <h1 id="page-title">Executive Orders</h1>
+        <p class="motto" id="site-motto">"Energy in Motion"</p>
     </header>
 
     <main style="text-align: center;">
         <section>
-            <h2>Official Decrees</h2>
+            <h2 id="decrees-title">Official Decrees</h2>
             <div class="special-section">
-                <h4>Executive Order of NOMASHE: Straw & Hole Classification</h4>
-                <p><strong>Hole:</strong> A void with a single opening. Can be tiny or huge, but it ends without connecting to another opening.</p>
-                <p><strong>Tunnel:</strong> A hole that connects two openings. Bigger than a regular hole, usually traversable.</p>
-                <p><strong>Straw:</strong> A small tunnel. Essentially, a tunnel you can sip through. In short: a straw = a tiny tunnel = two holes connected.</p>
-                <p>So basically, every straw is a tunnel, every tunnel has two holes, and every hole might someday wish it was a tunnel.</p>
-                <p style="text-align: right; margin-top: 2rem; font-style: italic;">Signed,<br>Eftimij Novakovski</p>
-                <p style="text-align: right; margin-top: 2rem">P.S. Flyingo Bisdomick is gonna be transalted later</p>
+                <h4 id="order-title">Executive Order of NOMASHE: Straw & Hole Classification</h4>
+                <p id="hole-def"><strong>Hole:</strong> A void with a single opening. Can be tiny or huge, but it ends without connecting to another opening.</p>
+                <p id="tunnel-def"><strong>Tunnel:</strong> A hole that connects two openings. Bigger than a regular hole, usually traversable.</p>
+                <p id="straw-def"><strong>Straw:</strong> A small tunnel. Essentially, a tunnel you can sip through. In short: a straw = a tiny tunnel = two holes connected.</p>
+                <p id="conclusion">So basically, every straw is a tunnel, every tunnel has two holes, and every hole might someday wish it was a tunnel.</p>
+                <p id="signature" style="text-align: right; margin-top: 2rem; font-style: italic;">Signed,<br>Eftimij Novakovski</p>
             </div>
              <!-- Future executive orders can be added here inside new special-section divs -->
         </section>
 
-        <a href="./index.html" class="back-link">Back to Main Page</a>
+        <a href="./index.html" class="back-link" id="back-link">Back to Main Page</a>
     </main>
 
     <footer>
-        <p>&copy; 2025 Nomashae | Powered by the Elements</p>
+        <p id="footer-text">&copy; 2025 Nomashae | Powered by the Elements</p>
     </footer>
 
     <script>
@@ -148,5 +165,52 @@
             section.style.transform = 'translateY(0)';
         });
     </script>
+
+    <script>
+        const translations = {
+            en: {
+                "page-title": "Executive Orders",
+                "site-motto": '"Energy in Motion"',
+                "decrees-title": "Official Decrees",
+                "order-title": "Executive Order of NOMASHE: Straw & Hole Classification",
+                "hole-def": "<strong>Hole:</strong> A void with a single opening. Can be tiny or huge, but it ends without connecting to another opening.",
+                "tunnel-def": "<strong>Tunnel:</strong> A hole that connects two openings. Bigger than a regular hole, usually traversable.",
+                "straw-def": "<strong>Straw:</strong> A small tunnel. Essentially, a tunnel you can sip through. In short: a straw = a tiny tunnel = two holes connected.",
+                "conclusion": "So basically, every straw is a tunnel, every tunnel has two holes, and every hole might someday wish it was a tunnel.",
+                "signature": "Signed,<br>Eftimij Novakovski",
+                "back-link": "Back to Main Page",
+                "footer-text": "&copy; 2025 Nomashae | Powered by the Elements"
+            },
+            mfb: {
+                "page-title": "Exek Ord",
+                "site-motto": '"Ener mo"',
+                "decrees-title": "Ofi Dekra",
+                "order-title": "Exek Ord Nomasha: Strau & Hol Klasif",
+                "hole-def": "<strong>Hol:</strong> Voit uni op. Kan min e mag, ma fin no konex anoth op.",
+                "tunnel-def": "<strong>Tunel:</strong> Hol konex du op. Mag plu hol, usu trav.",
+                "straw-def": "<strong>Strau:</strong> Min tunel. Es tunel sip thru. Brev: strau = min tunel = du hol konex.",
+                "conclusion": "So bas: al strau es tunel, al tunel hav du hol, e al hol posi wush tunel.",
+                "signature": "Sign,<br>Eftimij Novakovski",
+                "back-link": "Bak tu Main Pag",
+                "footer-text": "&copy; 2025 Nomasha | Pow by Elem"
+            }
+        };
+
+        const langSwitcher = document.getElementById('lang-switcher');
+        let currentLang = 'en';
+
+        langSwitcher.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'mfb' : 'en';
+            langSwitcher.textContent = currentLang === 'en' ? 'mFB' : 'En';
+
+            for (const id in translations[currentLang]) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.innerHTML = translations[currentLang][id];
+                }
+            }
+        });
+    </script>
 </body>
 </html>
+
