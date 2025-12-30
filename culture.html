@@ -1,1 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Culture | Nomashae</title>
+    
+    <style>
+        /* REVISED ATLA Palette */
+        :root {
+            --earth: #5B8C5A;
+            --water: #2A7A9D;
+            --fire: #C53D2B;
+            --air: #F0E6C2;
+            --text: #2F2F2F;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--air);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--earth), var(--earth)),
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,70 C150,40 350,100 500,70 C650,40 850,100 1000,70 C1150,40 1200,70 1200,70 L1200,100 L0,100 Z' fill='%232A7A9D'/%3E%3C/svg%3E");
+            background-size: auto, 1200px 100px;
+            background-repeat: repeat-x;
+            background-position: bottom;
+            color: white;
+            padding: 2rem 0 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--fire);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            z-index: 100;
+        }
+        .lang-switcher:hover {
+            background-color: #a83326;
+        }
+        
+        .flag-img {
+            width: 200px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+            border: 3px solid var(--fire);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        h1 {
+            margin-top: 1rem;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .motto {
+            font-style: italic;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        section {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        h2 {
+            color: var(--fire);
+            border-bottom: 2px dashed var(--earth);
+            padding-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .special-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            border: 1px solid #eee;
+            text-align: center;
+        }
+
+        .anthem-content {
+            font-family: 'Georgia', serif;
+            white-space: pre-line;
+            font-size: 1.1rem;
+            color: #444;
+            line-height: 1.8;
+        }
+
+        .stanza-title {
+            font-weight: bold;
+            color: var(--water);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--water);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .back-link:hover {
+            background-color: #1f5a7a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--earth);
+            color: white;
+        }
+
+        .chorus {
+            background-color: #f9f9f9;
+            padding: 1rem;
+            border-radius: 8px;
+            font-style: italic;
+            border-left: 4px solid var(--fire);
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button id="lang-switcher" class="lang-switcher">mFB</button>
+        <img src="./assets/Flag_Nomashae.png" alt="Flag of Nomashae" class="flag-img" onerror="this.onerror=null;this.src='https://placehold.co/200x120/F0E6C2/C53D2B?text=Flag+Not+Found';">
+        <h1 id="page-title">National Culture</h1>
+        <p class="motto" id="site-motto">"Energy in Motion"</p>
+    </header>
+
+    <main style="text-align: center;">
+        <section>
+            <h2 id="anthem-header">National Anthem</h2>
+            <div class="special-section">
+                <h3 id="anthem-title">“Harmony of the Four”</h3>
+                <p id="anthem-subtitle" style="font-style: italic; margin-bottom: 2rem;">National Anthem of Nomashae</p>
+                
+                <div class="anthem-content" id="anthem-body">
+                    <!-- English Content by Default -->
+                    <div class="stanza-title">Verse I</div>
+                    From mountain breath to ocean deep,
+                    From steady stone to burning flame,
+                    Four ancient forces wake and keep
+                    Our land, our vow, our honored name.
+                    In balance born, in balance strong,
+                    We rise as one, though many stand,
+                    Each voice a note, each step a song,
+                    United heart of Nomashaen land.
+
+                    <div class="chorus">
+                        <div class="stanza-title">Chorus</div>
+                        Earth that holds us,
+                        Water that flows,
+                        Fire that guides us,
+                        Air that knows—
+                        Through change and time, through dark and light,
+                        The Four stand one, our path made right.
+                        In harmony we live and stand,
+                        All elements, one Nomashae.
+                    </div>
+
+                    <div class="stanza-title">Verse II</div>
+                    When storms may test our calm resolve,
+                    And shadows cross the rising sun,
+                    The ancient ways our doubts dissolve,
+                    For none are four, yet all are one.
+                    With strength of stone and mercy’s tide,
+                    With fearless flame and freedom’s breath,
+                    We walk the path where truths abide,
+                    In life, in peace, beyond all death.
+
+                    <div class="stanza-title">Bridge</div>
+                    No crown of power, no rule by fear,
+                    But balance sworn by heart and hand,
+                    The past behind, the future near,
+                    Guarded by all who love this land.
+
+                    <div class="stanza-title">Final Chorus</div>
+                    Earth, Water, Fire, Air,
+                    Bound in balance, just and fair,
+                    From every soul our strength is drawn,
+                    A new united age is born.
+                    In harmony we rise and stand,
+                    All elements—one Nomashae.
+                </div>
+            </div>
+        </section>
+
+        <a href="./index.html" class="back-link" id="back-link">Back to Main Page</a>
+    </main>
+
+    <footer>
+        <p id="footer-text">&copy; 2025 Nomashae | Powered by the Elements</p>
+    </footer>
+
+    <script>
+        // Animate section on load
+        const section = document.querySelector('section');
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        section.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+
+        window.addEventListener('load', () => {
+            section.style.opacity = '1';
+            section.style.transform = 'translateY(0)';
+        });
+
+        // Translation logic
+        const translations = {
+            en: {
+                "page-title": "National Culture",
+                "site-motto": '"Energy in Motion"',
+                "back-link": "Back to Main Page",
+                "footer-text": "&copy; 2025 Nomashae | Powered by the Elements",
+                "anthem-header": "National Anthem",
+                "anthem-title": "“Harmony of the Four”",
+                "anthem-subtitle": "National Anthem of Nomashae",
+                "anthem-body": `
+                    <div class="stanza-title">Verse I</div>
+                    From mountain breath to ocean deep,
+                    From steady stone to burning flame,
+                    Four ancient forces wake and keep
+                    Our land, our vow, our honored name.
+                    In balance born, in balance strong,
+                    We rise as one, though many stand,
+                    Each voice a note, each step a song,
+                    United heart of Nomashaen land.
+
+                    <div class="chorus">
+                        <div class="stanza-title">Chorus</div>
+                        Earth that holds us,
+                        Water that flows,
+                        Fire that guides us,
+                        Air that knows—
+                        Through change and time, through dark and light,
+                        The Four stand one, our path made right.
+                        In harmony we live and stand,
+                        All elements, one Nomashae.
+                    </div>
+
+                    <div class="stanza-title">Verse II</div>
+                    When storms may test our calm resolve,
+                    And shadows cross the rising sun,
+                    The ancient ways our doubts dissolve,
+                    For none are four, yet all are one.
+                    With strength of stone and mercy’s tide,
+                    With fearless flame and freedom’s breath,
+                    We walk the path where truths abide,
+                    In life, in peace, beyond all death.
+
+                    <div class="stanza-title">Bridge</div>
+                    No crown of power, no rule by fear,
+                    But balance sworn by heart and hand,
+                    The past behind, the future near,
+                    Guarded by all who love this land.
+
+                    <div class="stanza-title">Final Chorus</div>
+                    Earth, Water, Fire, Air,
+                    Bound in balance, just and fair,
+                    From every soul our strength is drawn,
+                    A new united age is born.
+                    In harmony we rise and stand,
+                    All elements—one Nomashae.
+                `
+            },
+            mfb: {
+                "page-title": "Nesh Kultur",
+                "site-motto": '"Ener mo"',
+                "back-link": "Bak tu Main Pag",
+                "footer-text": "&copy; 2025 Nomasha | Pow by Elem",
+                "anthem-header": "Nesh Antem",
+                "anthem-title": "“Pa Teka Tor”",
+                "anthem-subtitle": "Nationalna Anthema dem Nomashae",
+                "anthem-body": `
+                    <div class="stanza-title">Part I</div>
+                    Bo breth mo mon,
+                    Pa sol wa deep,
+                    Tor che ru, tor flam fi,
+                    Fo tor wak, tu guard pa nem.
+                    Pa teka born, pa teka tor,
+                    Tu ri un, tu zan stand,
+                    Ev vox sil, ev step son,
+                    Un tor hon Nomashae.
+
+                    <div class="chorus">
+                        <div class="stanza-title">Korus</div>
+                        Ru hold tu,
+                        Wa ru flow,
+                        Fi ru guid tu,
+                        Bo ru no—
+                        Tru chan ta, tru dark li,
+                        Fo tor un, pa teka ri.
+                        Pa teka liv, pa teka stand,
+                        Fo tor un — Nomashae.
+                    </div>
+
+                    <div class="stanza-title">Part II</div>
+                    Wen storm test sil tu,
+                    Wen shad cross sol ri,
+                    Old pa teka brek dout,
+                    Fo yet un, al yet tu.
+                    Ru tor stone, wa pa tide,
+                    Fi no fear, bo free breth,
+                    Tu wak pa tru pat,
+                    Liv, pa, beyon end.
+
+                    <div class="stanza-title">Brij</div>
+                    No kron pow, no rul fear,
+                    Pa teka swor by sil an hand,
+                    Past go bak, fut near,
+                    Guard by al ho lov hon.
+
+                    <div class="stanza-title">Fin Korus</div>
+                    Ru, Wa, Fi, Bo,
+                    Bound pa teka, jus an so,
+                    Ev sil giv tor tu,
+                    Nu age un ri nu.
+                    Pa teka ris, pa teka stand,
+                    Fo tor un — Nomashae.
+                `
+            }
+        };
+
+        const langSwitcher = document.getElementById('lang-switcher');
+        let currentLang = 'en';
+
+        langSwitcher.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'mfb' : 'en';
+            langSwitcher.textContent = currentLang === 'en' ? 'mFB' : 'En';
+
+            for (const id in translations[currentLang]) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.innerHTML = translations[currentLang][id];
+                }
+            }
+        });
+    </script>
+</body>
+</html>
