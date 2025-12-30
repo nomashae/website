@@ -510,25 +510,70 @@
                 "about-title": "Ab Nomasha",
                 "about-text": 'Fond 2025, Nomasha es demok nesh inspi nomad spir e ener <em>Avatar: Las Airbend</em>. Ter tu es virt wor “Elem”, ma komun span hart e mind!',
                 "footer-text": "&copy; 2025 Nomasha | Pow by Elem"
+            },
+            mfb2: {
+                "site-motto": '"Enerji in Mova"',
+                "parliament-title": "Parlamen Nomasha",
+                "pm-title": "Prim Ministra:",
+                "pres-title": "Prezida:",
+                "affairs-title": "Intra an Exter Afar:",
+                "culture-title": "Kulturana:",
+                "connections-title": "Konexana:",
+                "defense-title": "Defensa:",
+
+                "language-title": "Flyingo Bisdomic (Ultra-Modern Form)",
+                "language-intro":
+                "Dis es da liv ling ov Nomasha — evolvd ov mani agen, shapd bai air, mova, an balans.",
+
+                "pdf-link": "Loda Ofi Ling Gid",
+
+                "language-example-intro":
+                    "Hir es un ful evolvd sent, from Anglik tu Ultra-Modern Bisdomic:",
+
+                "language-example-en":
+                    "<strong>Orij Anglik:</strong> Modrn dei es da best dei for skai surf. Nex, mi had un pom an smol chok bar.",
+
+                "documents-title": "Ofi Dokumen",
+                "documents-intro": "Rev ofi dekra an ord ov da nesh.",
+                "executive-button": "Viz Exek Ord",
+
+                "culture-docs-title": "Nesh Kulturana",
+                "culture-docs-intro": "Diska art, tradishan, an herit ov aur peepel.",
+                "culture-button": "Explo Kulturana",
+
+                "about-title": "Abaut Nomasha",
+                "about-text":
+                    'Fond 2025, Nomasha es un demo-nesh inspai bai nomad spirita an air-enerji ov <em>Avatar: Las Airbend</em>. Aur ter es virt, bat aur peepel es real.',
+
+                "footer-text": "&copy; 2025 Nomasha | Powrd bai da Elemen"
             }
+
         };
 
         const langSwitcher = document.getElementById('lang-switcher');
-        let currentLang = 'en';
+        const langs = ['en', 'mfb', 'mfb2'];
+        let currentLangIndex = 0;
 
-        langSwitcher.addEventListener('click', () => {
-            currentLang = currentLang === 'en' ? 'mfb' : 'en';
-            langSwitcher.textContent = currentLang === 'en' ? 'mFB' : 'En';
+langSwitcher.addEventListener('click', () => {
+    currentLangIndex = (currentLangIndex + 1) % langs.length;
+    const lang = langs[currentLangIndex];
 
-            for (const id in translations[currentLang]) {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.innerHTML = translations[currentLang][id];
-                }
-            }
-        });
+    langSwitcher.textContent =
+        lang === 'en' ? 'mFB' :
+        lang === 'mfb' ? 'mFB2' :
+        'En';
+
+    for (const id in translations[lang]) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.innerHTML = translations[lang][id];
+        }
+    }
+});
+
     </script>
 </body>
 </html>
+
 
 
