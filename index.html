@@ -1,579 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nomashae | Democratic Micronation</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%232F2F2F%22/><text x=%2250%22 y=%2250%22 dy=%22.35em%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-weight=%22bold%22 font-size=%2270%22 fill=%22white%22>N</text></svg>">
     
     <style>
-        @keyframes fall {
-            to {
-                transform: translateY(calc(100vh + 100px)) rotate(360deg);
-            }
-        }
-    </style>
-
-    <style>
-        .perviosly {
-            font-family: 'Courier New', monospace; color: var(--air); margin-top: 20px; text-align: center;
-        }
-
-        .pixel-loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--earth);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 1s;
-        }
-
-        /* REVISED ATLA Palette */
+        /* --- DYNAMIC THEME ENGINE --- */
         :root {
-            --earth: #5B8C5A;
-            --water: #2A7A9D;
-            --fire: #C53D2B;
-            --air: #F0E6C2;
-            --text: #2F2F2F;
+            --bg-color: #f8f9fa;
+            --text-color: #2F2F2F;
+            --card-bg: #ffffff;
+            --border-color: #e9ecef;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05);
+            --primary: #5B8C5A;
+            --secondary: #2F2F2F;
         }
 
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --border-color: #333;
+            --shadow: 0 4px 6px rgba(0,0,0,0.4);
+        }
+
+        body.theme-fire { --primary: #C53D2B; --secondary: #8a2b1f; }
+        body.theme-earth { --primary: #5B8C5A; --secondary: #3e613d; }
+        body.theme-water { --primary: #2A7A9D; --secondary: #1a4d63; }
+        body.theme-air { --primary: #A0A0A0; --secondary: #505050; }
+
+        * { box-sizing: border-box; transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
         body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            line-height: 1.6;
-            color: var(--text);
-            background-color: var(--air);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 60px;
         }
 
-        header {
-            background: linear-gradient(to right, var(--earth), var(--earth)),
-                url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,70 C150,40 350,100 500,70 C650,40 850,100 1000,70 C1150,40 1200,70 1200,70 L1200,100 L0,100 Z' fill='%232A7A9D'/%3E%3C/svg%3E");
-            background-size: auto, 1200px 100px;
-            background-repeat: repeat-x;
-            background-position: bottom;
-            color: white;
-            padding: 2rem 0 3rem;
+        nav {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand { font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 12px; color: var(--primary); }
+        .nav-controls { display: flex; gap: 0.8rem; align-items: center; }
+        
+        .btn-icon {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .hero {
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .lang-switcher {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background-color: var(--fire);
+            padding: 3rem 1rem 5rem 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 0.5rem 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 10;
-            transition: background-color 0.3s;
-        }
-        .lang-switcher:hover {
-            background-color: #a83326;
-        }
-
-        .flag-img {
-            width: 200px;
-            height: auto;
-            margin: 0 auto;
-            display: block;
-            border: 3px solid var(--fire);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            animation: wave-flag 6s ease-in-out infinite;
-            cursor: pointer;
-        }
-
-        @keyframes wave-flag {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(2deg) scale(1.02); }
-            75% { transform: rotate(-2deg) scale(1.02); }
-        }
-
-        h1 {
-            margin-top: 1rem;
-            font-size: 2.5rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-        }
-
-        .motto {
-            font-style: italic;
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        section {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        h2 {
-            color: var(--fire);
-            border-bottom: 2px dashed var(--earth);
-            padding-bottom: 0.5rem;
-        }
-
-        .government,
-        .special-section {
-            background-color: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 2rem;
-            border: 1px solid #eee;
+            clip-path: polygon(0 0, 100% 0, 100% 92%, 50% 100%, 0 92%);
         }
 
-        .minister {
-            margin: 0.8rem 0;
-            padding: 0.8rem;
-            background-color: var(--air);
-            border-left: 4px solid var(--water);
-            border-radius: 4px;
-            transition: transform 0.2s;
+        .hero-flag-img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            display: block;
+            margin: 0 auto;
         }
 
-        .minister:hover {
-            transform: translateX(5px);
-        }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 1rem; text-align: center; }
 
-        .pdf-link {
+        .section-title {
+            color: var(--text-color);
+            border-bottom: 3px solid var(--primary);
             display: inline-block;
-            margin-top: 1rem;
-            padding: 0.5rem 1rem;
-            background-color: var(--fire);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s;
+            padding: 0 1rem 0.5rem 1rem;
+            margin: 3rem 0 2rem 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1rem;
+            font-weight: 800;
         }
 
-        .pdf-link:hover {
-            background-color: #a83326;
+        /* --- CENTERED PARLIAMENT GRID --- */
+        .minister-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
         
-        .executive-button {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.75rem 1.5rem;
-            background-color: var(--fire);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            border-bottom: 4px solid #a83326;
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .executive-button:hover {
-            background-color: #d64a39;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-            border-bottom-width: 2px;
-        }
-
-        .executive-button:active {
-            transform: translateY(1px);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-            border-bottom-width: 1px;
-        }
-
-        footer {
-            text-align: center;
+        .minister-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             padding: 1.5rem;
-            background-color: var(--earth);
-            color: white;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 240px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s;
+            cursor: default;
         }
+        .minister-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .icon-box svg { width: 24px; height: 24px; fill: var(--primary); }
+
+        .role-title { font-weight: 700; font-size: 0.8rem; color: var(--primary); display: block; text-transform: uppercase; margin-bottom: 5px; }
+        .role-name { font-size: 1.1rem; font-weight: 600; color: var(--text-color); }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .action-btn.secondary { background-color: transparent; color: var(--primary); border: 2px solid var(--primary); }
+        .action-btn:hover { opacity: 0.8; }
+
+        /* --- CENTERED EXAMPLE BOX --- */
+        .example-box {
+            background: var(--bg-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem auto;
+            max-width: 600px;
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--primary);
+        }
+
+        .download-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 1rem; 
+            margin-top: 1.5rem; 
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        footer { text-align: center; padding: 4rem 1rem; color: var(--text-color); opacity: 0.6; font-size: 0.9rem; }
     </style>
 </head>
-
 <body>
 
-    <div id="pixel-loader" style="
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: var(--earth);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-        transition: opacity 1s;
-    ">
-        <svg width="80" height="80" viewBox="0 0 16 16" style="image-rendering: pixelated;">
-            <rect width="16" height="16" fill="#5B8C5A" />
-            <rect x="2" y="4" width="12" height="8" fill="#F0E6C2" />
-            <rect x="4" y="6" width="2" height="2" fill="#C53D2B" />
-            <rect x="10" y="6" width="2" height="2" fill="#C53D2B" />
-        </svg>
-        <p style="
-            font-family: 'Courier New', monospace;
-            color: var(--air);
-            margin-top: 20px;
-            text-align: center;
-        ">PREVIOUSLY ON NOMASHAE...</p>
-    </div>
+    <nav>
+        <div class="nav-brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6z"/></svg>
+            <span>Nomashae</span>
+        </div>
+        <div class="nav-controls">
+            <button class="btn-icon" id="theme-toggle">Dark Mode</button>
+            <button class="btn-icon" id="lang-switcher">EN</button>
+        </div>
+    </nav>
 
-    <script>
-        setTimeout(() => {
-            const loader = document.getElementById('pixel-loader');
-            if (loader) {
-                loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.remove();
-                }, 1000);
-            }
-        }, 500);
-    </script>
-
-    <header>
-        <button id="lang-switcher" class="lang-switcher">mFB</button>
-        <img src="./assets/Flag_Nomashae.png" alt="Flag of Nomashae" class="flag-img" onerror="this.onerror=null;this.src='https://placehold.co/200x120/F0E6C2/C53D2B?text=Flag+Not+Found';">
+    <header class="hero">
+        <img src="./assets/Flag_Nomashae.png" alt="Flag of Nomashae" class="hero-flag-img">
         <h1 id="site-title">Nomashae</h1>
         <p class="motto" id="site-motto">"Energy in Motion"</p>
     </header>
 
-    <section>
-        <h2 id="parliament-title">Our Parliament</h2>
-        <div class="government">
-            <div class="minister">
-                <strong id="pm-title">Prime Minister:</strong> Ефтимиј Новаковски - Eftimij Novakovski
+    <main class="container">
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+            <a href="./executive_orders.html" class="action-btn" id="nav-orders">Decrees</a>
+            <a href="./culture.html" class="action-btn secondary" id="nav-culture">Culture</a>
+        </div>
+
+        <h2 class="section-title" id="parliament-title">Government Structure</h2>
+        <div class="minister-grid">
+            <div class="minister-card">
+                <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                <span class="role-title" id="pm-title">Prime Minister</span>
+                <span class="role-name">Eftimij Novakovski</span>
             </div>
-            <div class="minister">
-                <strong id="pres-title">President:</strong> Ефтимиј Новаковски - Eftimij Novakovski
+            <div class="minister-card">
+                <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></div>
+                <span class="role-title" id="pres-title">President</span>
+                <span class="role-name">Eftimij Novakovski</span>
             </div>
-            <div class="minister">
-                <strong id="affairs-title">Internal/External Affairs:</strong> Ефтимиј Новаковски - Eftimij Novakovski
+            <div class="minister-card">
+                <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M20 6h-1v13H5v1h15v-14zm-4 8V4h-2v10l-2.5-1.5L9 14h7zM5 6h10v10H5z"/></svg></div>
+                <span class="role-title" id="affairs-title">Affairs</span>
+                <span class="role-name">Eftimij Novakovski</span>
             </div>
-            <div class="minister">
-                <strong id="culture-title">Culture:</strong> Ефтимиј Новаковски - Eftimij Novakovski
-            </div>
-            <div class="minister">
-                <strong id="connections-title">Connections:</strong> Ефтимиј Новаковски - Eftimij Novakovski
-            </div>
-            <div class="minister">
-                <strong id="defense-title">Defense:</strong> Ефтимиј Новаковски - Eftimij Novakovski
+            <div class="minister-card">
+                <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-2.76-2.24-5-5-5zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg></div>
+                <span class="role-title" id="culture-title">Culture</span>
+                <span class="role-name">Eftimij Novakovski</span>
             </div>
         </div>
-    </section>
 
-<section>
-    <h2 id="language-title">Flyingo Bisdomick (Formerly Flying Bisonick)</h2>
+        <h2 class="section-title" id="language-title">Flyingo Bisdomick</h2>
+        <div class="card">
+            <p id="language-intro">The living language of Nomashae — shaped by air, motion, and balance.</p>
+            
+            <div class="example-box">
+                <p id="language-example" style="font-family: 'Georgia', serif; font-style: italic; margin: 0; font-size: 1.1rem;">
+                    "Modern day is the best day for sky surfing. Next, I had an apple and a small chocolate bar."
+                </p>
+            </div>
 
-    <div class="special-section">
-        <p id="language-intro">
-            Explore the living language of Nomashae — a billion-year evolution of English shaped by air,
-            motion, and balance.
-        </p>
-
-        <a href="./assets/Flyingo_Bisdomic_Complete_Guide_Nomashae.pdf" class="pdf-link" id="pdf-link">
-            Download Official Language Guide (PDF)
-        </a>
-
-        <hr style="margin: 1.5rem 0; border: none; border-top: 1px dashed var(--earth);">
-
-        <h3>🌀 Linguistic Evolution Rules</h3>
-
-        <p><strong>1. Phonetic Drift</strong><br>
-            Words are written how they sound.<br>
-            <em>culture → kultura → kulturana</em><br>
-            <em>nation → naishan</em>
-        </p>
-
-        <p><strong>2. Air Endings</strong><br>
-            Soft endings improve spoken flow: <em>-a, -na, -en, -um</em><br>
-            <em>balance → balans → balansen</em><br>
-            <em>spirit → spirita</em>
-        </p>
-
-        <p><strong>3. Consonant Softening</strong><br>
-            th → d / t | sh → x | hard c → k<br>
-            <em>this → dis</em>, <em>shape → xayp</em>
-        </p>
-
-        <p><strong>4. Silent Letters Removed</strong><br>
-            <em>know → no</em>, <em>write → rait</em>
-        </p>
-
-        <p><strong>5. Meaning Drift</strong><br>
-            Words become poetic and flexible.<br>
-            <em>power → paur</em> (physical or spiritual strength)
-        </p>
-
-        <hr style="margin: 1.5rem 0; border: none; border-top: 1px dashed var(--earth);">
-
-        <h3>🍎 Full Sentence Evolution Example</h3>
-
-        <p id="language-example-en">
-            <strong>Original English:</strong><br>
-            Modern day is the best day for sky surfing. Also, I had an apple and a little chocolate bar.
-        </p>
-
-        <p>
-            <strong>Flying Bisonick (Ancient):</strong><br>
-            “Diurnal moderna esh torar diurnal vola-bova.
-            Nex, mi havar pomora e tikta chokolar barra.”
-        </p>
-
-        <p>
-            <strong>Modern Flyingo Bisdomick:</strong><br>
-            “Diurn mod es tor diurn for bo-vo.
-            Nex, mi had pom e tik chok bar.”
-        </p>
-
-        <p style="font-size: 0.9rem; opacity: 0.85;">
-            <strong>Breakdown:</strong><br>
-            diurn mod = modern day<br>
-            tor = best<br>
-            bo-vo = sky surfing<br>
-            pom = apple<br>
-            tik chok bar = small chocolate bar
-        </p>
-
-        <hr style="margin: 1.5rem 0; border: none; border-top: 1px dashed var(--earth);">
-
-        <h3>🌬️ Cultural Usage</h3>
-
-        <p>
-            <strong>Formal:</strong><br>
-            <em>Balansen ov spirita guidus aur peepel.</em>
-        </p>
-
-        <p>
-            <strong>Casual:</strong><br>
-            <em>Balans guidus.</em>
-        </p>
-
-        <p style="opacity: 0.9;">
-            Flyingo Bisdomick is optimized for clarity while moving, breathing, and gliding —
-            reflecting Nomashae’s air-centered philosophy.
-        </p>
-    </div>
-</section>
-
-    
-    <section>
-        <h2 id="documents-title">Official Documents</h2>
-        <div class="special-section" style="text-align: center;">
-            <p id="documents-intro">Review the official decrees and orders of the nation.</p>
-            <a href="./executive_orders.html" class="executive-button" id="executive-button">View Executive Orders</a>
+            <div class="download-grid">
+                <a href="./assets/Flyingo_Bisdomic_Complete_Guide_Nomashae.pdf" class="action-btn secondary" id="pdf-link">Language Guide</a>
+                <a href="./assets/Flying Bisonick & Flyingo Bisdomic.pdf" class="action-btn secondary" id="original-link">Old Language Guide</a>
+            </div>
         </div>
-    </section>
 
-    <section>
-        <h2 id="culture-docs-title">National Culture</h2>
-        <div class="special-section" style="text-align: center;">
-            <p id="culture-docs-intro">Discover the art, traditions, and heritage of our people.</p>
-            <a href="./culture.html" class="executive-button" id="culture-button">Explore Culture</a>
+        <h2 class="section-title" id="about-title">About Nomashae</h2>
+        <div class="card">
+            <p id="about-text" style="max-width: 600px; margin: 0 auto;">Founded in 2025, Nomashae is a democratic micronation inspired by the nomadic spirit and energy of Avatar: The Last Airbender.</p>
         </div>
-    </section>
-
-    <section>
-        <h2 id="about-title">About Nomashae</h2>
-        <p id="about-text">Founded in 2025, Nomashae is a democratic micronation inspired by the nomadic spirit and energy of
-            <em>Avatar: The Last Airbender</em>. Our territory lies in a virtual world, "The Elements", but our community spans hearts and minds!
-        </p>
-    </section>
+    </main>
 
     <footer>
-        <p id="footer-text">&copy; 2025 Nomashae | Powered by the Elements</p>
+        <p id="footer-text">&copy; 2026 Nomashae | Powered by the Elements</p>
     </footer>
 
     <script>
-        // Animate sections when scrolling
-        document.querySelectorAll('section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(20px)';
-            section.style.transition = 'opacity 0.6s, transform 0.6s';
-        });
+        function cycleTheme() {
+            const themes = ['fire', 'earth', 'water', 'air'];
+            let lastIndex = parseInt(localStorage.getItem('themeIndex') || '-1');
+            let nextIndex = (lastIndex + 1) % themes.length;
+            localStorage.setItem('themeIndex', nextIndex);
+            document.body.classList.add('theme-' + themes[nextIndex]);
+        }
+        cycleTheme();
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
-
-        // Fire Nation Scroll Effect
-        document.addEventListener('scroll', () => {
-            const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-            document.body.style.background = `linear-gradient(to bottom, var(--air), hsl(${scrollPercent * 1.5}, 60%, 90%))`;
-        });
-
-        // Air Nomad Levitation
-        document.querySelectorAll('.minister').forEach(minister => {
-            minister.addEventListener('mouseenter', () => {
-                minister.style.transform = 'translateY(-8px)';
-                minister.style.boxShadow = '0 10px 15px rgba(0,0,0,0.1)';
-            });
-            minister.addEventListener('mouseleave', () => {
-                minister.style.transform = 'translateY(0)';
-                minister.style.boxShadow = 'none';
-            });
-        });
-
-        // Audio Handler
-        try {
-            const audio = new Audio('air.mp3');
-            audio.loop = true;
-            document.body.addEventListener('click', () => {
-                if (audio.paused) {
-                    audio.play().catch(e => console.error("Audio play failed:", e));
-                }
-            }, { once: true });
-        } catch (e) {
-            console.error("Could not create audio:", e);
+        const themeToggle = document.getElementById('theme-toggle');
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            themeToggle.textContent = 'Light Mode';
         }
 
-        // Tornado Animation on Flag Click
-        document.querySelector('.flag-img').addEventListener('click', () => {
-            const airball = document.createElement('div');
-            airball.innerHTML = '🌪️';
-            airball.style.position = 'fixed';
-            airball.style.fontSize = '50px';
-            airball.style.left = Math.random() * window.innerWidth + 'px';
-            airball.style.top = '-100px';
-            airball.style.animation = 'fall 5s linear forwards';
-            airball.style.zIndex = '1000';
-            document.body.appendChild(airball);
-            setTimeout(() => airball.remove(), 5000);
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            themeToggle.textContent = isDark ? 'Light Mode' : 'Dark Mode';
         });
 
-        // Translation Data
         const translations = {
             en: {
                 "site-motto": '"Energy in Motion"',
-                "parliament-title": "Our Parliament",
-                "pm-title": "Prime Minister:",
-                "pres-title": "President:",
-                "affairs-title": "Internal/External Affairs:",
-                "culture-title": "Culture:",
-                "connections-title": "Connections:",
-                "defense-title": "Defense:",
-                "language-title": "Flyingo Bisdomick (Formerly Flying Bisonick)",
-                "language-intro": "Explore the linguistic heritage of Nomashae! Download the official Flyingo Bisdomick language guide below:",
-                "pdf-link": "Download PDF",
-                "language-example-intro": "Here is one full complex sentece both in Flying Bisonic & Flyingo Bisdomick:",
-                "language-example-en": "Original English: Modern day is the best day for sky surfing. Also, I had an apple and a little chocolate bar.",
-                "documents-title": "Official Documents",
-                "documents-intro": "Review the official decrees and orders of the nation.",
-                "executive-button": "View Executive Orders",
-                "culture-docs-title": "National Culture",
-                "culture-docs-intro": "Discover the art, traditions, and heritage of our people.",
-                "culture-button": "Explore Culture",
+                "nav-orders": "Decrees",
+                "nav-culture": "Culture",
+                "parliament-title": "Government Structure",
+                "pm-title": "Prime Minister",
+                "pres-title": "President",
+                "affairs-title": "Affairs",
+                "culture-title": "Culture",
+                "language-title": "Flyingo Bisdomick",
+                "language-intro": "The living language of Nomashae — shaped by air, motion, and balance.",
+                "language-example": '"Modern day is the best day for sky surfing. Next, I had an apple and a small chocolate bar."',
+                "pdf-link": "Language Guide",
+                "original-link": "Original PDF",
                 "about-title": "About Nomashae",
-                "about-text": 'Founded in 2025, Nomashae is a democratic micronation inspired by the nomadic spirit and energy of <em>Avatar: The Last Airbender</em>. Our territory lies in a virtual world, "The Elements", but our community spans hearts and minds!',
+                "about-text": "Founded in 2025, Nomashae is a democratic micronation inspired by the nomadic spirit of Avatar: The Last Airbender.",
                 "footer-text": "&copy; 2025 Nomashae | Powered by the Elements"
-            },
-            mfb: {
-                "site-motto": '"Ener mo"',
-                "parliament-title": "Parlam tu",
-                "pm-title": "Prim Ministra:",
-                "pres-title": "Prezid:",
-                "affairs-title": "Intra/Exter Afar:",
-                "culture-title": "Kultur:",
-                "connections-title": "Konex:",
-                "defense-title": "Defens:",
-                "language-title": "Flyingo Bisdomic (forerly Flying Bisonic)",
-                "language-intro": "Explo ling herit Nomasha! Loda ofi Flyingo Bisdomic ling gid belo:",
-                "pdf-link": "Loda PDF",
-                "language-example-intro": "Exa un ful kom-sent in Bisnic & Bisdomic:",
-                "language-example-en": "Anglik Orij: Mod diurn es tor diurn for bo-vo. Nex, mi had pom e tik chok bar.",
-                "documents-title": "Ofi Dokumen",
-                "documents-intro": "Rev ofi dekra e ord tu nesh.",
-                "executive-button": "Viz Exek Ord",
-                "culture-docs-title": "Nesh Kultur",
-                "culture-docs-intro": "Disc art, trad e herit tu pop.",
-                "culture-button": "Explo Kultur",
-                "about-title": "Ab Nomasha",
-                "about-text": 'Fond 2025, Nomasha es demok nesh inspi nomad spir e ener <em>Avatar: Las Airbend</em>. Ter tu es virt wor “Elem”, ma komun span hart e mind!',
-                "footer-text": "&copy; 2025 Nomasha | Pow by Elem"
             },
             mfb2: {
                 "site-motto": '"Enerji in Mova"',
-                "parliament-title": "Parlamen Nomasha",
-                "pm-title": "Prim Ministra:",
-                "pres-title": "Prezida:",
-                "affairs-title": "Intra an Exter Afar:",
-                "culture-title": "Kulturana:",
-                "connections-title": "Konexana:",
-                "defense-title": "Defensa:",
-
-                "language-title": "Flyingo Bisdomic (Ultra-Modern Form)",
-                "language-intro":
-                "Dis es da liv ling ov Nomasha — evolvd ov mani agen, shapd bai air, mova, an balans.",
-
-                "pdf-link": "Loda Ofi Ling Gid",
-
-                "language-example-intro":
-                    "Hir es un ful evolvd sent, from Anglik tu Ultra-Modern Bisdomic:",
-
-                "language-example-en":
-                    "<strong>Orij Anglik:</strong> Modrn dei es da best dei for skai surf. Nex, mi had un pom an smol chok bar.",
-
-                "documents-title": "Ofi Dokumen",
-                "documents-intro": "Rev ofi dekra an ord ov da nesh.",
-                "executive-button": "Viz Exek Ord",
-
-                "culture-docs-title": "Nesh Kulturana",
-                "culture-docs-intro": "Diska art, tradishan, an herit ov aur peepel.",
-                "culture-button": "Explo Kulturana",
-
+                "nav-orders": "Ofi Ord",
+                "nav-culture": "Kulturana",
+                "parliament-title": "Gova Struktur",
+                "pm-title": "Prim Ministra",
+                "pres-title": "Prezida",
+                "affairs-title": "Afarana",
+                "culture-title": "Kulturana",
+                "language-title": "Ultra-Modern Bisdomic",
+                "language-intro": "Dis es da liv ling ov Nomasha — evolvd ov mani agen.",
+                "language-example": '<strong>Modrn dei es da best dei for skai surf. Nex, mi had un pom an smol chok bar.</strong>',
+                "pdf-link": "Loda Gid",
+                "original-link": "Orig PDF",
                 "about-title": "Abaut Nomasha",
-                "about-text":
-                    'Fond 2025, Nomasha es un demo-nesh inspai bai nomad spirita an air-enerji ov <em>Avatar: Las Airbend</em>. Aur ter es virt, bat aur peepel es real.',
-
+                "about-text": "Fond 2025, Nomasha es un demo-nesh inspai bai nomad spirita an air-enerji.",
                 "footer-text": "&copy; 2025 Nomasha | Powrd bai da Elemen"
             }
-
         };
 
         const langSwitcher = document.getElementById('lang-switcher');
-        const langs = ['en', 'mfb', 'mfb2'];
-        let currentLangIndex = 0;
+        let currentLang = 'en';
 
-langSwitcher.addEventListener('click', () => {
-    currentLangIndex = (currentLangIndex + 1) % langs.length;
-    const lang = langs[currentLangIndex];
-
-    langSwitcher.textContent =
-        lang === 'en' ? 'mFB' :
-        lang === 'mfb' ? 'mFB2' :
-        'En';
-
-    for (const id in translations[lang]) {
-        const element = document.getElementById(id);
-        if (element) {
-            element.innerHTML = translations[lang][id];
-        }
-    }
-});
-
+        langSwitcher.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'mfb2' : 'en';
+            langSwitcher.textContent = currentLang === 'en' ? 'EN' : 'mFB2';
+            for (const id in translations[currentLang]) {
+                const element = document.getElementById(id);
+                if (element) element.innerHTML = translations[currentLang][id];
+            }
+        });
     </script>
 </body>
 </html>
-
-
-
