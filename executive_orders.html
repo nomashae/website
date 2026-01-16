@@ -4,204 +4,147 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Executive Orders | Nomashae</title>
-    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%232F2F2F%22/><text x=%2250%22 y=%2250%22 dy=%22.35em%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-weight=%22bold%22 font-size=%2270%22 fill=%22white%22>N</text></svg>">
+
     <style>
-        /* REVISED ATLA Palette - Cleaner! */
         :root {
-            --earth: #5B8C5A;
-            --water: #2A7A9D;
-            --fire: #C53D2B;
-            --air: #F0E6C2;
-            --text: #2F2F2F;
+            --bg-color: #f8f9fa; --text-color: #2F2F2F; --card-bg: #ffffff;
+            --border-color: #e9ecef;
+            --primary: #5B8C5A; /* Default */
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            line-height: 1.6;
-            color: var(--text);
-            background-color: var(--air);
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background: linear-gradient(to right, var(--earth), var(--earth)),
-                url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,70 C150,40 350,100 500,70 C650,40 850,100 1000,70 C1150,40 1200,70 1200,70 L1200,100 L0,100 Z' fill='%232A7A9D'/%3E%3C/svg%3E");
-            background-size: auto, 1200px 100px;
-            background-repeat: repeat-x;
-            background-position: bottom;
-            color: white;
-            padding: 2rem 0 3rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .lang-switcher {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background-color: var(--fire);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 0.5rem 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .lang-switcher:hover {
-            background-color: #a83326;
+        body.dark-mode {
+            --bg-color: #121212; --text-color: #e0e0e0; --card-bg: #1e1e1e; --border-color: #333;
         }
         
-        .flag-img {
-            width: 200px;
-            height: auto;
-            margin: 0 auto;
-            display: block;
-            border: 3px solid var(--fire);
+        /* Theme Classes */
+        body.theme-fire { --primary: #C53D2B; }
+        body.theme-earth { --primary: #5B8C5A; }
+        body.theme-water { --primary: #2A7A9D; }
+        body.theme-air { --primary: #A0A0A0; }
+
+        * { box-sizing: border-box; transition: 0.3s; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-color); }
+        
+        nav { background: var(--card-bg); border-bottom: 1px solid var(--border-color); padding: 1rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        
+        .back-link { color: var(--text-color); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .back-link:hover { color: var(--primary); }
+        
+        .btn-icon { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; font-weight: 600; }
+
+        .container { max-width: 800px; margin: 3rem auto; padding: 0 1rem; }
+        h1 { text-align: center; color: var(--primary); margin-bottom: 3rem; font-size: 2rem; }
+        
+        .decree-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-        
-        h1 {
-            margin-top: 1rem;
-            font-size: 2.5rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-        }
-
-        .motto {
-            font-style: italic;
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        section {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        h2 {
-            color: var(--fire);
-            border-bottom: 2px dashed var(--earth);
-            padding-bottom: 0.5rem;
-        }
-
-        .special-section {
-            background-color: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
             margin-bottom: 2rem;
-            border: 1px solid #eee;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary);
         }
         
-        .back-link {
-            display: inline-block;
-            margin-bottom: 2rem;
-            padding: 0.75rem 1.5rem;
-            background-color: var(--water);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .back-link:hover {
-            background-color: #1f5a7a;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        .decree-title { 
+            font-size: 1.25rem; 
+            font-weight: 700; 
+            margin-bottom: 1.5rem; 
+            color: var(--text-color); 
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
         }
         
-        footer {
-            text-align: center;
-            padding: 1.5rem;
-            background-color: var(--earth);
-            color: white;
-        }
+        .definition { margin-bottom: 0.8rem; line-height: 1.6; }
+        .signature { text-align: right; margin-top: 2rem; font-style: italic; color: var(--primary); font-weight: 600; }
+        
+        footer { text-align: center; margin-top: 4rem; font-size: 0.8rem; opacity: 0.6; }
     </style>
 </head>
 <body>
-    <header>
-        <button id="lang-switcher" class="lang-switcher">mFB</button>
-        <img src="./assets/Flag_Nomashae.png" alt="Flag of Nomashae" class="flag-img" onerror="this.onerror=null;this.src='https://placehold.co/200x120/F0E6C2/C53D2B?text=Flag+Not+Found';">
+
+    <nav>
+        <a href="index.html" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            <span id="back-link">Back to Home</span>
+        </a>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn-icon" id="theme-toggle">Dark Mode</button>
+            <button class="btn-icon" id="lang-switcher">EN</button>
+        </div>
+    </nav>
+
+    <div class="container">
         <h1 id="page-title">Executive Orders</h1>
-        <p class="motto" id="site-motto">"Energy in Motion"</p>
-    </header>
 
-    <main style="text-align: center;">
-        <section>
-            <h2 id="decrees-title">Official Decrees</h2>
-            <div class="special-section">
-                <h4 id="order-title">Executive Order of NOMASHE: Straw & Hole Classification</h4>
-                <p id="hole-def"><strong>Hole:</strong> A void with a single opening. Can be tiny or huge, but it ends without connecting to another opening.</p>
-                <p id="tunnel-def"><strong>Tunnel:</strong> A hole that connects two openings. Bigger than a regular hole, usually traversable.</p>
-                <p id="straw-def"><strong>Straw:</strong> A small tunnel. Essentially, a tunnel you can sip through. In short: a straw = a tiny tunnel = two holes connected.</p>
-                <p id="conclusion">So basically, every straw is a tunnel, every tunnel has two holes, and every hole might someday wish it was a tunnel.</p>
-                <p id="signature" style="text-align: right; margin-top: 2rem; font-style: italic;">Signed,<br>Eftimij Novakovski</p>
-            </div>
-             <!-- Future executive orders can be added here inside new special-section divs -->
-            <div class="special-section">
-                <h4 id="order-title">Executive Order Of (DMN) Nomashae: </h4>
-                <p id="hole-def">After a fair and democratic vote DMN Nomashae (formerly: Communist Micronation of Nomashae),</p>
-                <p id="tunnel-def">DMN Nomashae is now proudly a <strong>Democratic MicroNation.</strong></p>
-                <p id="straw-def">1/1 People Have Voted for this change on <a href="https://forms.gle/Cu4joN1T4mf9BHW49">THIS GOOGLE EVOTE.</a> But we are not accepting any more votes as the vote has closed.</p>
-                <p id="conclusion">So as of 30.12.2025 21:56 (Deafult UTC time) Nomashae is now a Democratic Micronation.</p>
-                <p id="signature" style="text-align: right; margin-top: 2rem; font-style: italic;">Signed,<br>Eftimij Novakovski</p>
-            </div>
-            
-        </section>
+        <div class="decree-card">
+            <div class="decree-title" id="order-title-2">Executive Order: Democratic Transition</div>
+            <p class="definition"><strong>Status Update:</strong></p>
+            <p class="definition" id="hole-def-2">After a fair and democratic vote, DMN Nomashae is now officially a Democratic MicroNation.</p>
+            <p class="definition" id="straw-def-2" style="margin-top: 1rem; opacity: 0.8; font-size: 0.9rem;">1/1 People voted. Vote closed on 30.12.2025.</p>
+            <div class="signature">Eftimij Novakovski</div>
+        </div>
 
-        <a href="./index.html" class="back-link" id="back-link">Back to Main Page</a>
-    </main>
+        <div class="decree-card">
+            <div class="decree-title" id="order-title">Straw & Hole Classification</div>
+            <p class="definition" id="hole-def"><strong>Hole:</strong> A void with a single opening.</p>
+            <p class="definition" id="tunnel-def"><strong>Tunnel:</strong> A hole connecting two openings.</p>
+            <p class="definition" id="straw-def"><strong>Straw:</strong> A tiny tunnel. Straw = Two holes connected.</p>
+            <p id="conclusion" style="margin-top: 1.5rem; font-style: italic; opacity: 0.8;">"Every straw is a tunnel, every tunnel has two holes."</p>
+            <div class="signature">Eftimij Novakovski</div>
+        </div>
+    </div>
+
 
     <footer>
-        <p id="footer-text">&copy; 2025 Nomashae | Powered by the Elements</p>
+        <p id="footer-text">&copy; 2026 Nomashae | Powered by the Elements</p>
     </footer>
 
     <script>
-        // Animate section on load
-        const section = document.querySelector('section');
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(20px)';
-        section.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        // Sync Theme from LocalStorage
+        const themes = ['fire', 'earth', 'water', 'air'];
+        let currentIdx = parseInt(localStorage.getItem('themeIndex') || '0');
+        document.body.classList.add('theme-' + themes[currentIdx]);
 
-        window.addEventListener('load', () => {
-            section.style.opacity = '1';
-            section.style.transform = 'translateY(0)';
+        // Dark Mode Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            themeToggle.textContent = 'Light Mode';
+        }
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', body.classList.contains('dark-mode') ? 'enabled' : 'disabled');
+            themeToggle.textContent = body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
         });
-    </script>
 
-    <script>
+        // Translation Logic
         const translations = {
             en: {
                 "page-title": "Executive Orders",
-                "site-motto": '"Energy in Motion"',
-                "decrees-title": "Official Decrees",
-                "order-title": "Executive Order of NOMASHE: Straw & Hole Classification",
-                "hole-def": "<strong>Hole:</strong> A void with a single opening. Can be tiny or huge, but it ends without connecting to another opening.",
-                "tunnel-def": "<strong>Tunnel:</strong> A hole that connects two openings. Bigger than a regular hole, usually traversable.",
-                "straw-def": "<strong>Straw:</strong> A small tunnel. Essentially, a tunnel you can sip through. In short: a straw = a tiny tunnel = two holes connected.",
-                "conclusion": "So basically, every straw is a tunnel, every tunnel has two holes, and every hole might someday wish it was a tunnel.",
-                "signature": "Signed,<br>Eftimij Novakovski",
-                "back-link": "Back to Main Page",
-                "footer-text": "&copy; 2025 Nomashae | Powered by the Elements"
+                "back-link": "Back to Home",
+                "order-title": "Straw & Hole Classification",
+                "hole-def": "<strong>Hole:</strong> A void with a single opening.",
+                "tunnel-def": "<strong>Tunnel:</strong> A hole connecting two openings.",
+                "straw-def": "<strong>Straw:</strong> A tiny tunnel. Straw = Two holes connected.",
+                "conclusion": '"Every straw is a tunnel, every tunnel has two holes."',
+                "order-title-2": "Executive Order: Democratic Transition",
+                "hole-def-2": "After a fair vote, DMN Nomashae is a Democratic MicroNation.",
+                "straw-def-2": "Vote closed on 30.12.2025.",
+                "footer-text": "&copy; 2025 Nomashae"
             },
             mfb: {
                 "page-title": "Exek Ord",
-                "site-motto": '"Ener mo"',
-                "decrees-title": "Ofi Dekra",
-                "order-title": "Exek Ord Nomasha: Strau & Hol Klasif",
-                "hole-def": "<strong>Hol:</strong> Voit uni op. Kan min e mag, ma fin no konex anoth op.",
-                "tunnel-def": "<strong>Tunel:</strong> Hol konex du op. Mag plu hol, usu trav.",
-                "straw-def": "<strong>Strau:</strong> Min tunel. Es tunel sip thru. Brev: strau = min tunel = du hol konex.",
-                "conclusion": "So bas: al strau es tunel, al tunel hav du hol, e al hol posi wush tunel.",
-                "signature": "Sign,<br>Eftimij Novakovski",
-                "back-link": "Bak tu Main Pag",
-                "footer-text": "&copy; 2025 Nomasha | Pow by Elem"
+                "back-link": "Bak tu Hom",
+                "order-title": "Strau & Hol Klasif",
+                "hole-def": "<strong>Hol:</strong> Voit uni op.",
+                "tunnel-def": "<strong>Tunel:</strong> Hol konex du op.",
+                "straw-def": "<strong>Strau:</strong> Min tunel. Strau = du hol konex.",
+                "conclusion": '"Al strau es tunel, al tunel hav du hol."',
+                "order-title-2": "Exek Ord: Demok Trans",
+                "hole-def-2": "Aft vot, Nomashae es Demok Mikronesh.",
+                "straw-def-2": "Vot klos 30.12.2025.",
+                "footer-text": "&copy; 2025 Nomasha"
             }
         };
 
@@ -210,16 +153,12 @@
 
         langSwitcher.addEventListener('click', () => {
             currentLang = currentLang === 'en' ? 'mfb' : 'en';
-            langSwitcher.textContent = currentLang === 'en' ? 'mFB' : 'En';
-
+            langSwitcher.textContent = currentLang === 'en' ? 'EN' : 'mFB';
             for (const id in translations[currentLang]) {
                 const element = document.getElementById(id);
-                if (element) {
-                    element.innerHTML = translations[currentLang][id];
-                }
+                if (element) element.innerHTML = translations[currentLang][id];
             }
         });
     </script>
 </body>
 </html>
-
