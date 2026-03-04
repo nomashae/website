@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Decrees | Nomashae</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════
+       DESIGN TOKENS — same as index & culture
+    ═══════════════════════════════════════ */
+    :root {
+      --accent: #4A7C59; --accent2: #2e5c3e;
+      --bg: #f7f7f5; --bg2: #efefec; --card: #ffffff;
+      --ink: #1a1a1a; --ink2: #555550;
+      --border: rgba(0,0,0,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.07);
+      --radius: 14px; --t: 0.3s ease;
+    }
+    [data-theme="dark"] {
+      --bg: #141414; --bg2: #1e1e1e; --card: #242424;
+      --ink: #f0f0ee; --ink2: #999992;
+      --border: rgba(255,255,255,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    [data-element="air"]   { --accent: #5B9BBF; }
+    [data-element="water"] { --accent: #3A8F8F; }
+    [data-element="fire"]  { --accent: #C4622D; }
+    [data-element="earth"] { --accent: #4A7C59; }
+    [data-theme="dark"][data-element="air"]   { --accent: #7bb8d8; }
+    [data-theme="dark"][data-element="water"] { --accent: #5abfbf; }
+    [data-theme="dark"][data-element="fire"]  { --accent: #e07a4a; }
+    [data-theme="dark"][data-element="earth"] { --accent: #6aad82; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg); color: var(--ink);
+      line-height: 1.7; transition: background var(--t), color var(--t);
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2.5rem; height: 64px;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      transition: background var(--t), border-color var(--t);
+    }
+    .nav-left { display: flex; align-items: center; gap: 0.75rem; }
+    .back-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      text-decoration: none; color: var(--ink2);
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .nav-brand {
+      font-size: 1rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); text-decoration: none;
+      transition: color var(--t);
+    }
+    .nav-right { display: flex; gap: 0.5rem; align-items: center; }
+    .nav-btn {
+      background: transparent; border: 1.5px solid var(--border);
+      color: var(--ink2); padding: 0.35rem 0.9rem; border-radius: 8px;
+      cursor: pointer; font-family: 'Outfit', sans-serif;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: all 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .nav-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 2rem 4rem; text-align: center;
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      transition: background var(--t), border-color var(--t);
+    }
+    .hero-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .hero-title {
+      font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 2px; margin-bottom: 0.5rem;
+      transition: color var(--t);
+    }
+    .hero-sub {
+      font-size: 0.9rem; color: var(--ink2); font-weight: 300;
+      font-style: italic; transition: color var(--t);
+    }
+
+    /* MAIN LAYOUT */
+    .decrees-wrap {
+      max-width: 800px; margin: 0 auto;
+      padding: 4rem 2rem 5rem;
+    }
+
+    /* ═══════════════════════════════════════
+       DECREE CARD — the main building block
+       To add a new decree, copy a .decree
+       block and fill in the content.
+    ═══════════════════════════════════════ */
+    .decree {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 2rem 2rem 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t), transform 0.25s;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 0.5s ease forwards;
+    }
+    .decree:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.1); }
+
+    /* stagger animation for each card */
+    .decree:nth-child(1) { animation-delay: 0.05s; }
+    .decree:nth-child(2) { animation-delay: 0.15s; }
+    .decree:nth-child(3) { animation-delay: 0.25s; }
+    .decree:nth-child(4) { animation-delay: 0.35s; }
+    .decree:nth-child(5) { animation-delay: 0.45s; }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── DECREE HEADER ── */
+    .decree-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 1rem; flex-wrap: wrap;
+      padding-bottom: 1rem; margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      transition: border-color var(--t);
+    }
+    .decree-title {
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--ink); line-height: 1.4;
+      transition: color var(--t);
+    }
+    .decree-meta {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 0.3rem;
+      flex-shrink: 0;
+    }
+
+    /* ── STATUS BADGES ── */
+    /* Usage: <span class="badge badge-active">Active</span> */
+    .badge {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; padding: 0.25rem 0.7rem;
+      border-radius: 20px; display: inline-block;
+    }
+    .badge-active  { background: rgba(74,124,89,0.12);  color: #3a6b45; border: 1px solid rgba(74,124,89,0.25); }
+    .badge-passed  { background: rgba(74,124,89,0.12);  color: #3a6b45; border: 1px solid rgba(74,124,89,0.25); }
+    .badge-press   { background: rgba(90,155,191,0.12); color: #2e6e9e; border: 1px solid rgba(90,155,191,0.25); }
+    .badge-order   { background: rgba(196,98,45,0.12);  color: #9e4420; border: 1px solid rgba(196,98,45,0.25); }
+    .badge-decree  { background: rgba(160,120,60,0.12); color: #7a5a20; border: 1px solid rgba(160,120,60,0.25); }
+    [data-theme="dark"] .badge-active  { background: rgba(74,124,89,0.2);  color: #6aad82; }
+    [data-theme="dark"] .badge-passed  { background: rgba(74,124,89,0.2);  color: #6aad82; }
+    [data-theme="dark"] .badge-press   { background: rgba(90,155,191,0.2); color: #7bb8d8; }
+    [data-theme="dark"] .badge-order   { background: rgba(196,98,45,0.2);  color: #e07a4a; }
+    [data-theme="dark"] .badge-decree  { background: rgba(160,120,60,0.2); color: #c8a050; }
+
+    /* ── DATE STAMP ── */
+    /* Usage: <span class="date-stamp">24 Jan 2026</span> */
+    .date-stamp {
+      font-size: 0.65rem; color: var(--ink2); font-weight: 400;
+      letter-spacing: 1px; transition: color var(--t);
+    }
+
+    /* ── DECREE BODY ── */
+    .decree-body { font-size: 0.92rem; font-weight: 300; color: var(--ink2); line-height: 1.85; transition: color var(--t); }
+
+    /* ── SECTION HEADING inside a decree ── */
+    /* Usage: <p class="decree-section">Addressing New Flag:</p> */
+    .decree-section {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent);
+      margin: 1.2rem 0 0.4rem; transition: color var(--t);
+    }
+
+    /* ── PARAGRAPH inside a decree ── */
+    /* Usage: <p class="decree-p">Content here.</p> */
+    .decree-p {
+      margin-bottom: 0.6rem; color: var(--ink); font-size: 0.92rem;
+      font-weight: 300; line-height: 1.85; transition: color var(--t);
+    }
+
+    /* ── QUOTE / PHILOSOPHICAL NOTE ── */
+    /* Usage: <blockquote class="decree-quote">Text</blockquote> */
+    .decree-quote {
+      border-left: 3px solid var(--accent); padding: 0.8rem 1.2rem;
+      background: var(--bg2); border-radius: 0 8px 8px 0;
+      margin: 1rem 0; font-style: italic; font-size: 0.9rem;
+      color: var(--ink2); transition: background var(--t), border-color var(--t), color var(--t);
+    }
+
+    /* ── DEFINITION LIST ── */
+    /* Usage: <dl class="decree-defs"><dt>Term</dt><dd>Definition</dd></dl> */
+    .decree-defs { margin: 0.8rem 0; }
+    .decree-defs dt {
+      font-weight: 600; font-size: 0.88rem; color: var(--ink);
+      margin-top: 0.6rem; transition: color var(--t);
+    }
+    .decree-defs dd {
+      font-size: 0.88rem; font-weight: 300; color: var(--ink2);
+      margin-left: 1rem; transition: color var(--t);
+    }
+
+    /* ── VOTE RESULT ── */
+    /* Usage: <div class="vote-result"><span class="vote-for">1/1</span> voted in favour</div> */
+    .vote-result {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.5rem 1rem; margin-top: 0.8rem;
+      font-size: 0.78rem; color: var(--ink2);
+      transition: background var(--t), border-color var(--t), color var(--t);
+    }
+    .vote-for { font-weight: 700; color: var(--accent); transition: color var(--t); }
+
+    /* ── SIGNATURE ── */
+    /* Usage: <div class="decree-sig">Eftimij Novakovski</div> */
+    .decree-sig {
+      margin-top: 1.5rem; padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      text-align: right; font-style: italic;
+      font-size: 0.85rem; font-weight: 500;
+      color: var(--accent); transition: color var(--t), border-color var(--t);
+    }
+    .decree-sig .sig-date {
+      display: block; font-size: 0.72rem; font-weight: 300;
+      color: var(--ink2); font-style: normal; margin-bottom: 0.2rem;
+      transition: color var(--t);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); text-align: center; padding: 2.5rem 1rem;
+      font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--ink2); transition: border-color var(--t), color var(--t);
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 1rem; }
+      .decrees-wrap { padding: 2.5rem 1.2rem; }
+      .decree-header { flex-direction: column; }
+      .decree-meta { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body data-theme="light" data-element="earth">
+
+  <nav>
+    <div class="nav-left">
+      <a href="./index.html" class="back-link">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Back
+      </a>
+      <a href="./index.html" class="nav-brand">Nomashae</a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn" id="dark-btn">Dark</button>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <span class="hero-label">Republic of Nomashae</span>
+    <h1 class="hero-title">Decrees & News</h1>
+    <p class="hero-sub">Official orders, press releases and announcements</p>
+  </div>
+
+  <div class="decrees-wrap">
+
+    <!--
+    ═══════════════════════════════════════════
+    HOW TO ADD A NEW DECREE:
+
+    Copy the block below, paste it at the TOP
+    of this list (newest first), and fill in:
+
+    • .decree-title   — the title
+    • .badge-???      — badge-press / badge-order / badge-decree / badge-passed
+    • .date-stamp     — the date
+    • .decree-section — subheadings inside (optional)
+    • .decree-p       — paragraphs
+    • .decree-quote   — italic quote block (optional)
+    • .decree-defs    — definition list (optional)
+    • .vote-result    — vote outcome (optional)
+    • .decree-sig     — signature + date at bottom
+    ═══════════════════════════════════════════
+
+    <div class="decree">
+      <div class="decree-header">
+        <div class="decree-title">Your Title Here</div>
+        <div class="decree-meta">
+          <span class="badge badge-order">Executive Order</span>
+          <span class="date-stamp">DD Mon YYYY</span>
+        </div>
+      </div>
+      <div class="decree-body">
+        <p class="decree-section">Section Heading</p>
+        <p class="decree-p">Your content here.</p>
+        <div class="decree-sig">
+          <span class="sig-date">Signed DD Mon YYYY</span>
+          Eftimij Novakovski
+        </div>
+      </div>
+    </div>
+
+    ═══════════════════════════════════════════
+    -->
+
+    <!-- DECREE 1 — Press Release -->
+    <div class="decree">
+      <div class="decree-header">
+        <div class="decree-title">Press Release 1 — Culture, President & Flags</div>
+        <div class="decree-meta">
+          <span class="badge badge-press">Press Release</span>
+          <span class="date-stamp">24 Jan 2026 · 09:15 XST</span>
+        </div>
+      </div>
+      <div class="decree-body">
+        <p class="decree-section">Addressing New Flag</p>
+        <p class="decree-p">In order to make the flag of <strong>DMN Nomashae</strong> more modern and flowier, the flag will be updated to a newer 4K resolution design. The flag will mostly stay the same but the text and coat of arms element will be removed. <strong>DMN Nomashae</strong> will also receive its own coat of arms to better represent its citizens.</p>
+
+        <p class="decree-section">Addressing New President</p>
+        <p class="decree-p"><strong>DMN Nomashae</strong> has reinstated Krste Dimov as President. This comes after he was dismissed from his position wrongfully.</p>
+
+        <p class="decree-section">Addressing the Anthem</p>
+        <p class="decree-p">The anthem will not change in lyrics but will receive its own instrumental version and a combined vocal + instrumental version.</p>
+
+        <div class="decree-sig">
+          <span class="sig-date">Closed 24 Jan 2026 · 10:27 XST</span>
+          Eftimij Novakovski
+        </div>
+      </div>
+    </div>
+
+    <!-- DECREE 2 — Executive Order -->
+    <div class="decree">
+      <div class="decree-header">
+        <div class="decree-title">Executive Order: Democratic Transition</div>
+        <div class="decree-meta">
+          <span class="badge badge-passed">Passed</span>
+          <span class="date-stamp">26 Jan 2026</span>
+        </div>
+      </div>
+      <div class="decree-body">
+        <p class="decree-p">After a fair and democratic vote, <strong>DMN Nomashae</strong> is now officially a Democratic MicroNation.</p>
+        <div class="vote-result">
+          <span class="vote-for">1/1</span> citizens voted · Vote closed 30 Dec 2025
+        </div>
+        <div class="decree-sig">
+          <span class="sig-date">Signed 26 Jan 2026</span>
+          Eftimij Novakovski
+        </div>
+      </div>
+    </div>
+
+    <!-- DECREE 3 — Philosophical Decree -->
+    <div class="decree">
+      <div class="decree-header">
+        <div class="decree-title">Straw & Hole Classification</div>
+        <div class="decree-meta">
+          <span class="badge badge-decree">Decree</span>
+          <span class="date-stamp">26 Jan 2026</span>
+        </div>
+      </div>
+      <div class="decree-body">
+        <dl class="decree-defs">
+          <dt>Hole</dt>
+          <dd>A void with a single opening.</dd>
+          <dt>Tunnel</dt>
+          <dd>A hole connecting two openings.</dd>
+          <dt>Straw</dt>
+          <dd>A tiny tunnel. Straw = two holes connected.</dd>
+        </dl>
+        <blockquote class="decree-quote">
+          "Every straw is a tunnel, every tunnel has two holes."
+        </blockquote>
+        <div class="decree-sig">
+          <span class="sig-date">Signed 26 Jan 2026</span>
+          Eftimij Novakovski
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end decrees-wrap -->
+
+  <footer><p>© 2026 Nomashae · Powered by the Elements</p></footer>
+
+  <script>
+    // Element by time
+    function getElement() {
+      const h = new Date().getHours();
+      if (h >= 6  && h < 12) return 'air';
+      if (h >= 12 && h < 18) return 'water';
+      if (h >= 18 && h < 22) return 'fire';
+      return 'earth';
+    }
+    document.body.setAttribute('data-element', getElement());
+
+    // Dark mode — persisted
+    const darkBtn = document.getElementById('dark-btn');
+    let isDark = false;
+    try { isDark = localStorage.getItem('nmDark') === 'true'; } catch(e) {}
+    function applyDark() {
+      document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      darkBtn.classList.toggle('active', isDark);
+      darkBtn.textContent = isDark ? 'Light' : 'Dark';
+    }
+    darkBtn.addEventListener('click', () => {
+      isDark = !isDark;
+      try { localStorage.setItem('nmDark', isDark); } catch(e) {}
+      applyDark();
+    });
+    applyDark();
+  </script>
+</body>
+</html>
