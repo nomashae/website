@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Culture | Nomashae</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #4A7C59; --accent2: #2e5c3e;
+      --bg: #f7f7f5; --bg2: #efefec; --card: #ffffff;
+      --ink: #1a1a1a; --ink2: #555550;
+      --border: rgba(0,0,0,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.07);
+      --radius: 14px; --t: 0.3s ease;
+    }
+    [data-theme="dark"] {
+      --bg: #141414; --bg2: #1e1e1e; --card: #242424;
+      --ink: #f0f0ee; --ink2: #999992;
+      --border: rgba(255,255,255,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    [data-element="air"]   { --accent: #5B9BBF; --accent2: #3a7a9e; }
+    [data-element="water"] { --accent: #3A8F8F; --accent2: #2a6e6e; }
+    [data-element="fire"]  { --accent: #C4622D; --accent2: #9e4420; }
+    [data-element="earth"] { --accent: #4A7C59; --accent2: #2e5c3e; }
+    [data-theme="dark"][data-element="air"]   { --accent: #7bb8d8; }
+    [data-theme="dark"][data-element="water"] { --accent: #5abfbf; }
+    [data-theme="dark"][data-element="fire"]  { --accent: #e07a4a; }
+    [data-theme="dark"][data-element="earth"] { --accent: #6aad82; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg); color: var(--ink);
+      line-height: 1.7; transition: background var(--t), color var(--t);
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2.5rem; height: 64px;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      transition: background var(--t), border-color var(--t);
+    }
+    .nav-left { display: flex; align-items: center; gap: 0.75rem; }
+    .back-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      text-decoration: none; color: var(--ink2);
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .nav-brand {
+      font-size: 1rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); text-decoration: none;
+      transition: color var(--t);
+    }
+    .nav-right { display: flex; gap: 0.5rem; align-items: center; }
+    .nav-btn {
+      background: transparent; border: 1.5px solid var(--border);
+      color: var(--ink2); padding: 0.35rem 0.9rem; border-radius: 8px;
+      cursor: pointer; font-family: 'Outfit', sans-serif;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: all 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .nav-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* SECTIONS */
+    .section { padding: 5rem 2rem; border-top: 1px solid var(--border); transition: border-color var(--t); }
+    .section.alt { background: var(--bg2); transition: background var(--t), border-color var(--t); }
+    .section-inner { max-width: 760px; margin: 0 auto; }
+    .sec-header { text-align: center; margin-bottom: 3rem; }
+    .sec-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .sec-title {
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 1px; margin-bottom: 0.4rem;
+      transition: color var(--t);
+    }
+    .sec-sub { font-size: 0.88rem; color: var(--ink2); font-weight: 300; transition: color var(--t); }
+
+    .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade.in { opacity: 1; transform: none; }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 2rem 4rem; text-align: center;
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      transition: background var(--t), border-color var(--t);
+    }
+    .hero-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .hero-title {
+      font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 2px; margin-bottom: 0.5rem;
+      transition: color var(--t);
+    }
+    .hero-sub {
+      font-size: 0.9rem; color: var(--ink2); font-weight: 300;
+      font-style: italic; transition: color var(--t);
+    }
+
+    /* ANTHEM */
+    .anthem-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t);
+    }
+    .anthem-top {
+      height: 4px; background: var(--accent); transition: background var(--t);
+    }
+    .anthem-body { padding: 2.5rem; font-family: 'Outfit', sans-serif; }
+
+    .verse-block { margin-bottom: 2rem; }
+    .verse-label {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent);
+      display: block; margin-bottom: 0.8rem;
+      transition: color var(--t);
+    }
+    .verse-text {
+      font-size: 0.97rem; font-weight: 300; line-height: 2;
+      color: var(--ink); white-space: pre-line;
+      transition: color var(--t);
+    }
+    .chorus-block {
+      background: var(--bg2); border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0; padding: 1.5rem 2rem;
+      margin: 2rem 0; transition: background var(--t), border-color var(--t);
+    }
+    .chorus-block .verse-text { font-style: italic; }
+
+    /* VIDEO */
+    .video-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+    }
+    .video-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t), transform 0.25s;
+    }
+    .video-card:hover { transform: translateY(-3px); }
+    .video-label {
+      padding: 0.8rem 1.2rem;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent);
+      border-bottom: 1px solid var(--border);
+      transition: color var(--t), border-color var(--t);
+    }
+    .video-card iframe,
+    .video-card video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border: none;
+    background: #000;
+    }
+
+    /* LANGUAGE SECTION */
+    .lang-intro {
+      max-width: 600px; margin: 0 auto 3rem;
+      text-align: center; font-size: 0.95rem; font-weight: 300;
+      color: var(--ink2); line-height: 2; transition: color var(--t);
+    }
+
+    .lang-features {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem; margin-bottom: 2.5rem;
+    }
+    .lang-feature {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem;
+      box-shadow: var(--shadow); position: relative; overflow: hidden;
+      transition: background var(--t), border-color var(--t), transform 0.25s;
+    }
+    .lang-feature:hover { transform: translateY(-3px); }
+    .lang-feature::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--accent); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s ease, background var(--t);
+    }
+    .lang-feature:hover::after { transform: scaleX(1); }
+    .feat-label {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.4rem; transition: color var(--t);
+    }
+    .feat-val { font-size: 0.95rem; font-weight: 500; color: var(--ink); transition: color var(--t); }
+    .feat-sub { font-size: 0.78rem; color: var(--ink2); font-weight: 300; margin-top: 0.2rem; transition: color var(--t); }
+
+    .phrasebook {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t);
+    }
+    .phrasebook-header {
+      padding: 0.8rem 1.5rem; background: var(--accent);
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: background var(--t);
+    }
+    .ph-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.45); }
+    .ph-title { font-size: 0.68rem; font-weight: 600; color: rgba(255,255,255,0.9); letter-spacing: 2px; text-transform: uppercase; }
+    .phrase-row {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);
+      align-items: center; transition: background 0.2s, border-color var(--t);
+      font-size: 0.88rem;
+    }
+    .phrase-row:last-child { border-bottom: none; }
+    .phrase-row:hover { background: var(--bg2); }
+    .phrase-row.header {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--ink2);
+      background: var(--bg2); padding: 0.6rem 1.5rem;
+    }
+    .phrase-row.header:hover { background: var(--bg2); }
+    .phrase-fb { font-style: italic; color: var(--accent); font-weight: 500; transition: color var(--t); }
+    .phrase-en { color: var(--ink); transition: color var(--t); }
+    .phrase-mk { color: var(--ink2); font-size: 0.82rem; transition: color var(--t); }
+
+    /* HOLIDAYS */
+    .holiday-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .holiday-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.8rem 1.5rem;
+      box-shadow: var(--shadow); transition: background var(--t), border-color var(--t), transform 0.25s;
+    }
+    .holiday-card:hover { transform: translateY(-3px); }
+    .holiday-date {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .holiday-name { font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: 0.4rem; transition: color var(--t); }
+    .holiday-desc { font-size: 0.82rem; color: var(--ink2); font-weight: 300; line-height: 1.6; transition: color var(--t); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); text-align: center; padding: 2.5rem 1rem;
+      font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--ink2); transition: border-color var(--t), color var(--t);
+    }
+
+    /* BTN */
+    .btn {
+      padding: 0.75rem 2rem; border-radius: 10px; text-decoration: none;
+      font-family: 'Outfit', sans-serif; font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      transition: all 0.22s; display: inline-block; cursor: pointer;
+      border: 1.5px solid transparent;
+    }
+    .btn-solid { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-solid:hover { opacity: 0.85; }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 1rem; }
+      .video-grid { grid-template-columns: 1fr; }
+      .holiday-grid { grid-template-columns: 1fr; }
+      .phrase-row { grid-template-columns: 1fr 1fr; }
+      .phrase-mk { display: none; }
+      .section { padding: 3.5rem 1.2rem; }
+    }
+  </style>
+</head>
+<body data-theme="light" data-element="earth">
+
+  <nav>
+    <div class="nav-left">
+      <a href="./index.html" class="back-link">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        <span data-i18n="back">Back</span>
+      </a>
+      <a href="./index.html" class="nav-brand">Nomashae</a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn" id="dark-btn">Dark</button>
+      <button class="nav-btn" id="lang-btn">EN</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-label" data-i18n="hero-label">Republic of Nomashae</span>
+    <h1 class="hero-title" data-i18n="hero-title">National Culture</h1>
+    <p class="hero-sub" data-i18n="hero-sub">Harmony · Balance · The Four Elements</p>
+  </div>
+
+  <!-- ANTHEM -->
+  <div class="section">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label" data-i18n="anthem-label">National Anthem</span>
+        <h2 class="sec-title" data-i18n="anthem-title">Harmony of the Four</h2>
+        <p class="sec-sub" data-i18n="anthem-sub">Written by Eftimij Novakovski</p>
+      </div>
+      <div class="anthem-card">
+        <div class="anthem-top"></div>
+        <div class="anthem-body" id="anthem-body">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- VIDEO -->
+    <div class="section alt">
+      <div class="section-inner fade">
+        <div class="sec-header">
+          <span class="sec-label" data-i18n="video-label">Official Recordings</span>
+          <h2 class="sec-title" data-i18n="video-title">Video Anthems</h2>
+        </div>
+        <div class="video-grid">
+          <div class="video-card">
+            <div class="video-label" data-i18n="vid-full">Full Anthem</div>
+            <video controls preload="metadata">
+              <source src="./assets/anthem_full.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="video-card">
+            <div class="video-label" data-i18n="vid-inst">Instrumental Anthem</div>
+            <video controls preload="metadata">
+              <source src="./assets/anthem_instrumental.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- <iframe src="https://www.youtube.com/embed/1AgNEMWx2Ks?si=zNVHmR5y4WREOF_v" title="Instrumental Anthem" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
+
+  <!-- LANGUAGE -->
+  <div class="section">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label" data-i18n="lang-label">Official Language</span>
+        <h2 class="sec-title">Flyingo Bisdomic</h2>
+        <p class="sec-sub" data-i18n="lang-sub">The living language of Nomashae</p>
+      </div>
+
+      <p class="lang-intro" data-i18n="lang-intro">Flyingo Bisdomic is a constructed language developed alongside the Republic of Nomashae. Inspired by the Air Nomads' free-flowing speech, it simplifies English phonetics into a lighter, faster form — stripping syllables, reshaping vowels, and replacing complex words with rooted elemental vocabulary.</p>
+
+      <div class="lang-features">
+        <div class="lang-feature">
+          <span class="feat-label" data-i18n="feat1-label">Writing System</span>
+          <span class="feat-val" data-i18n="feat1-val">Phonetic Latin</span>
+          <span class="feat-sub" data-i18n="feat1-sub">Based on English alphabet, simplified spelling</span>
+        </div>
+        <div class="lang-feature">
+          <span class="feat-label" data-i18n="feat2-label">Word Order</span>
+          <span class="feat-val" data-i18n="feat2-val">SVO</span>
+          <span class="feat-sub" data-i18n="feat2-sub">Subject · Verb · Object — same as English</span>
+        </div>
+        <div class="lang-feature">
+          <span class="feat-label" data-i18n="feat3-label">Core Influence</span>
+          <span class="feat-val" data-i18n="feat3-val">English + ATLA</span>
+          <span class="feat-sub" data-i18n="feat3-sub">Air Nomad vocabulary roots many key words</span>
+        </div>
+        <div class="lang-feature">
+          <span class="feat-label" data-i18n="feat4-label">Status</span>
+          <span class="feat-val" data-i18n="feat4-val">Active & Evolving</span>
+          <span class="feat-sub" data-i18n="feat4-sub">New words added regularly by the Prime Minister</span>
+        </div>
+      </div>
+
+      <!-- Phrasebook -->
+      <div class="phrasebook">
+        <div class="phrasebook-header">
+          <div class="ph-dot"></div><div class="ph-dot"></div><div class="ph-dot"></div>
+          <span class="ph-title" data-i18n="phrase-title">Common Phrases</span>
+        </div>
+        <div class="phrase-row header">
+          <span data-i18n="col-fb">Flyingo Bisdomic</span>
+          <span data-i18n="col-en">English</span>
+          <span data-i18n="col-mk">Macedonian</span>
+        </div>
+        <div class="phrase-row"><span class="phrase-fb">Modrn dei es da best.</span><span class="phrase-en">Modern day is the best.</span><span class="phrase-mk">Денешниот ден е најдобар.</span></div>
+        <div class="phrase-row"><span class="phrase-fb">Mi had un pom.</span><span class="phrase-en">I had an apple.</span><span class="phrase-mk">Јадев јаболко.</span></div>
+        <div class="phrase-row"><span class="phrase-fb">Fo tor un — Nomasha.</span><span class="phrase-en">Four elements — one Nomashae.</span><span class="phrase-mk">Четири елементи — едно Номашае.</span></div>
+        <div class="phrase-row"><span class="phrase-fb">Bo es fri.</span><span class="phrase-en">Air is free.</span><span class="phrase-mk">Воздухот е слободен.</span></div>
+        <div class="phrase-row"><span class="phrase-fb">Mi liv pa teka.</span><span class="phrase-en">I live in balance.</span><span class="phrase-mk">Живеам во рамнотежа.</span></div>
+        <div class="phrase-row"><span class="phrase-fb">Nomasha es mi nesh.</span><span class="phrase-en">Nomashae is my nation.</span><span class="phrase-mk">Номашае е мојата нација.</span></div>
+        <div class="phrase-row"><span class="phrase-fb">Skai surf es da best!</span><span class="phrase-en">Sky surfing is the best!</span><span class="phrase-mk">Сурфањето по небото е најдобро!</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOLIDAYS -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label" data-i18n="hol-label">Celebrations</span>
+        <h2 class="sec-title" data-i18n="hol-title">National Holidays</h2>
+        <p class="sec-sub" data-i18n="hol-sub">Days of peace, balance, and remembrance</p>
+      </div>
+      <div class="holiday-grid">
+        <div class="holiday-card">
+          <span class="holiday-date" data-i18n="hol1-date">Whole Spring</span>
+          <div class="holiday-name" data-i18n="hol1-name">Avatar Day Festival</div>
+          <div class="holiday-desc" data-i18n="hol1-desc">A season-long celebration honouring all Avatars past and present. Citizens add flowers to Avatar tombs and statues, reflect on balance, and gather in peace.</div>
+        </div>
+        <div class="holiday-card">
+          <span class="holiday-date" data-i18n="hol2-date">26th January</span>
+          <div class="holiday-name" data-i18n="hol2-name">Flying Koi Carnival</div>
+          <div class="holiday-desc" data-i18n="hol2-desc">A joyful carnival celebrating the beautiful flying koi of Nomashae's waters. A day of colour, community, and wonder — without the old-school thieves.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer><p data-i18n="footer">© 2026 Nomashae · Powered by the Elements</p></footer>
+
+  <script>
+    /* ELEMENT BY TIME */
+    function getElement() {
+      const h = new Date().getHours();
+      if (h >= 6  && h < 12) return 'air';
+      if (h >= 12 && h < 18) return 'water';
+      if (h >= 18 && h < 22) return 'fire';
+      return 'earth';
+    }
+    document.body.setAttribute('data-element', getElement());
+
+    /* DARK MODE */
+    const darkBtn = document.getElementById('dark-btn');
+    let isDark = false;
+    try { isDark = localStorage.getItem('nmDark') === 'true'; } catch(e) {}
+    function applyDark() {
+      document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      darkBtn.classList.toggle('active', isDark);
+      const l = langs[langIdx];
+      darkBtn.textContent = isDark ? (i18n[l]['nav-light'] || 'Light') : (i18n[l]['nav-dark'] || 'Dark');
+    }
+    darkBtn.addEventListener('click', () => {
+      isDark = !isDark;
+      try { localStorage.setItem('nmDark', isDark); } catch(e) {}
+      applyDark();
+    });
+
+    /* SCROLL FADE */
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+
+    /* ANTHEM CONTENT */
+    const anthem = {
+      en: `<div class="verse-block">
+        <span class="verse-label">Verse I</span>
+        <p class="verse-text">From mountain breath to ocean deep,
+From steady stone to burning flame,
+Four ancient forces wake and keep
+Our land, our vow, our honored name.
+In balance born, in balance strong,
+We rise as one, though many stand,
+Each voice a note, each step a song,
+United heart of Nomashaen land.</p>
+      </div>
+      <div class="chorus-block">
+        <span class="verse-label">Chorus</span>
+        <p class="verse-text">Earth that holds us,
+Water that flows,
+Fire that guides us,
+Air that knows—
+Through change and time, through dark and light,
+The Four stand one, our path made right.
+In harmony we live and stand,
+All elements, one Nomashae.</p>
+      </div>
+      <div class="verse-block">
+        <span class="verse-label">Verse II</span>
+        <p class="verse-text">When storms may test our calm resolve,
+And shadows cross the rising sun,
+The ancient ways our doubts dissolve,
+For none are four, yet all are one.
+With strength of stone and mercy's tide,
+With fearless flame and freedom's breath,
+We walk the path where truths abide,
+In life, in peace, beyond all death.</p>
+      </div>
+      <div class="verse-block">
+        <span class="verse-label">Bridge</span>
+        <p class="verse-text">No crown of power, no rule by fear,
+But balance sworn by heart and hand,
+The past behind, the future near,
+Guarded by all who love this land.</p>
+      </div>
+      <div class="chorus-block">
+        <span class="verse-label">Final Chorus</span>
+        <p class="verse-text">Earth, Water, Fire, Air,
+Bound in balance, just and fair,
+From every soul our strength is drawn,
+A new united age is born.
+In harmony we rise and stand,
+All elements—one Nomashae.</p>
+      </div>`,
+
+      mk: `<div class="verse-block">
+        <span class="verse-label">Строфа I</span>
+        <p class="verse-text">Од планински здив до морска длабина,
+Од цврстит камен до горечки пламен,
+Четири сили се будат и чуват
+Нашата земја, завет и име.
+Родени во рамнотежа, силни во рамнотежа,
+Сите сме заедно и сите стоиме
+Секој глас — музика, секој чекор — песна,
+Обединето срце на Номашае.</p>
+      </div>
+      <div class="chorus-block">
+        <span class="verse-label">Рефрен</span>
+        <p class="verse-text">Земјата не држи,
+Водата тече,
+Огнот не води,
+Воздухот знае—
+Низ промена и време, темност и светлина,
+Четирите се заедно, патот го водат.
+Во хармонија живееме и стоиме,
+Сите елементи — едно Номашае.</p>
+      </div>
+      <div class="verse-block">
+        <span class="verse-label">Строфа II</span>
+        <p class="verse-text">Кога бура ќе ни ја тестира мирта,
+И сенки го пресекуваат сонцето,
+Старите начини ги разрешуваат сомнежите,
+Зашто четири се никој, а сите се едно.
+Со сила на камен и милост на плима,
+Со храбар пламен и слободен здив,
+Одиме по патот каде вистините стојат,
+Во животот, мирот, надвор од смртта.</p>
+      </div>
+      <div class="verse-block">
+        <span class="verse-label">Мост</span>
+        <p class="verse-text">Без круна на власт, без владеење на страв,
+Но рамнотежа заколнета со срце и рака,
+Минатото зад нас, иднината блиску,
+Чувана од сите што ја сакаат оваа земја.</p>
+      </div>
+      <div class="chorus-block">
+        <span class="verse-label">Финален Рефрен</span>
+        <p class="verse-text">Земја, Вода, Оган, Воздух,
+Сплетени во рамнотежа, правични и чисти,
+Од секоја душа силата ни црпи,
+Нова обединета ера родена е.
+Во хармонија се гордееме и стоиме,
+Сите елементи — едно Номашае.</p>
+      </div>`,
+
+      fb: `<div class="verse-block">
+        <span class="verse-label">Part I</span>
+        <p class="verse-text">Bo breth mo mon,
+Pa sol wa deep,
+Fo tor ru an fi,
+Fo tor wak, tu guard pa nem.
+Pa teka born, pa teka tor,
+Tu ri un, tu zan stand,
+Ev vox sil, ev step son,
+Un tor hon Nomasha.</p>
+      </div>
+      <div class="chorus-block">
+        <span class="verse-label">Korus</span>
+        <p class="verse-text">Ru hold tu,
+Wa ru flow,
+Fi ru guid tu,
+Bo ru no—
+Tru chan ta, tru dark li,
+Fo tor un, pa teka ri.
+Pa teka liv, pa teka stand,
+Fo tor un — Nomasha.</p>
+      </div>
+      <div class="verse-block">
+        <span class="verse-label">Part II</span>
+        <p class="verse-text">Wen storm test sil tu,
+Wen shad cross sol ri,
+Old pa teka brek dout,
+Fo yet un, al yet tu.
+Ru tor stone, wa pa tide,
+Fi no fear, bo free breth,
+Tu wak pa tru pat,
+Liv, pa, beyon end.</p>
+      </div>
+      <div class="verse-block">
+        <span class="verse-label">Brij</span>
+        <p class="verse-text">No kron pow, no rul fear,
+Pa teka swor by sil an hand,
+Past go bak, fut near,
+Guard by al ho lov hon.</p>
+      </div>
+      <div class="chorus-block">
+        <span class="verse-label">Fin Korus</span>
+        <p class="verse-text">Ru, Wa, Fi, Bo,
+Bound pa teka, jus an so,
+Ev sil giv tor tu,
+Nu age un ri nu.
+Pa teka ris, pa teka stand,
+Fo tor un — Nomasha.</p>
+      </div>`
+    };
+
+    /* i18n */
+    const i18n = {
+      en: {
+        "back":"Back", "nav-dark":"Dark", "nav-light":"Light",
+        "hero-label":"Republic of Nomashae", "hero-title":"National Culture", "hero-sub":"Harmony · Balance · The Four Elements",
+        "anthem-label":"National Anthem", "anthem-title":"Harmony of the Four", "anthem-sub":"Written by Eftimij Novakovski",
+        "video-label":"Official Recordings", "video-title":"Video Anthems",
+        "vid-full":"Full Anthem", "vid-inst":"Instrumental Anthem",
+        "lang-label":"Official Language", "lang-sub":"The living language of Nomashae",
+        "lang-intro":"Flyingo Bisdomic is a constructed language developed alongside the Republic of Nomashae. Inspired by the Air Nomads' free-flowing speech, it simplifies English phonetics into a lighter, faster form — stripping syllables, reshaping vowels, and replacing complex words with rooted elemental vocabulary.",
+        "feat1-label":"Writing System", "feat1-val":"Phonetic Latin", "feat1-sub":"Based on English alphabet, simplified spelling",
+        "feat2-label":"Word Order", "feat2-val":"SVO", "feat2-sub":"Subject · Verb · Object — same as English",
+        "feat3-label":"Core Influence", "feat3-val":"English + ATLA", "feat3-sub":"Air Nomad vocabulary roots many key words",
+        "feat4-label":"Status", "feat4-val":"Active & Evolving", "feat4-sub":"New words added regularly by the Prime Minister",
+        "phrase-title":"Common Phrases", "col-fb":"Flyingo Bisdomic", "col-en":"English", "col-mk":"Macedonian",
+        "hol-label":"Celebrations", "hol-title":"National Holidays", "hol-sub":"Days of peace, balance, and remembrance",
+        "hol1-date":"Whole Spring", "hol1-name":"Avatar Day Festival", "hol1-desc":"A season-long celebration honouring all Avatars past and present. Citizens add flowers to Avatar tombs and statues, reflect on balance, and gather in peace.",
+        "hol2-date":"26th January", "hol2-name":"Flying Koi Carnival", "hol2-desc":"A joyful carnival celebrating the beautiful flying koi of Nomashae's waters. A day of colour, community, and wonder — without the old-school thieves.",
+        "footer":"© 2026 Nomashae · Powered by the Elements"
+      },
+      mk: {
+        "back":"Назад", "nav-dark":"Темно", "nav-light":"Светло",
+        "hero-label":"Република Номашае", "hero-title":"Национална Култура", "hero-sub":"Хармонија · Рамнотежа · Четирите Елементи",
+        "anthem-label":"Национална Химна", "anthem-title":"Хармонија на Четирите", "anthem-sub":"Напишано од Ефтимиј Новаковски",
+        "video-label":"Официјални Снимки", "video-title":"Видео Химни",
+        "vid-full":"Целосна Химна", "vid-inst":"Инструментална Химна",
+        "lang-label":"Официјален Јазик", "lang-sub":"Живиот јазик на Номашае",
+        "lang-intro":"Флyingo Бисдомик е конструиран јазик развиен заедно со Република Номашае. Инспириран од слободниот говор на Воздушните Номади, ги поедноставува англиските фонетики во полесна, побрза форма — отстранувајќи слогови и заменувајќи сложени зборови со елементален речник.",
+        "feat1-label":"Писмо", "feat1-val":"Фонетски Латиница", "feat1-sub":"Базирано на англиска азбука, поедноставен правопис",
+        "feat2-label":"Редослед на зборови", "feat2-val":"ПГО", "feat2-sub":"Подмет · Глагол · Објект — исто како англиски",
+        "feat3-label":"Главно Влијание", "feat3-val":"Англиски + ATLA", "feat3-sub":"Речникот на Воздушните Номади е основа",
+        "feat4-label":"Статус", "feat4-val":"Активен и Еволуира", "feat4-sub":"Нови зборови редовно додава Премиерот",
+        "phrase-title":"Чести Фрази", "col-fb":"Флyingo Бисдомик", "col-en":"Англиски", "col-mk":"Македонски",
+        "hol-label":"Прослави", "hol-title":"Национални Празници", "hol-sub":"Денови на мир, рамнотежа и сеќавање",
+        "hol1-date":"Цело Пролет", "hol1-name":"Фестивал на Денот на Аватар", "hol1-desc":"Прослава во текот на целата сезона во чест на сите Аватари. Граѓаните ставаат цвеќе на гробовите и статуите на Аватарите и се собираат во мир.",
+        "hol2-date":"26 Јануари", "hol2-name":"Карневал на Летечките Крап", "hol2-desc":"Радосен карневал кој ги слави прекрасните летечки крапови на Номашае. Ден на боја, заедница и чудо.",
+        "footer":"© 2026 Номашае · Поддржано од Елементите"
+      },
+      fb: {
+        "back":"Bak", "nav-dark":"Darka", "nav-light":"Lighta",
+        "hero-label":"Repub Nomasha", "hero-title":"Nesh Kultur", "hero-sub":"Harmoni · Pa Teka · Fo Tor",
+        "anthem-label":"Nesh Anthema", "anthem-title":"Pa Teka Tor", "anthem-sub":"Writ bai Eftimij Novakovski",
+        "video-label":"Ofi Rekord", "video-title":"Vid Anthema",
+        "vid-full":"Ful Anthema", "vid-inst":"Instru Anthema",
+        "lang-label":"Ofishal Ling", "lang-sub":"Da liv ling ov Nomasha",
+        "lang-intro":"Flyingo Bisdomik es un konstrukt ling devlop wit Repub Nomasha. Inspai bai da bo-nomad fre spek, simplifai Inglish fonetik intu lighta, fasta form — stripn silab an replac komplex wrd wit elemnt vokab.",
+        "feat1-label":"Rit Sistm", "feat1-val":"Fonetik Latin", "feat1-sub":"Baisd on Inglish alfabet, simplifai spelin",
+        "feat2-label":"Wrd Orda", "feat2-val":"SVO", "feat2-sub":"Subjek · Verb · Objek — sem az Inglish",
+        "feat3-label":"Kor Inflens", "feat3-val":"Inglish + ATLA", "feat3-sub":"Bo Nomad vokab rootd mani ki wrd",
+        "feat4-label":"Stetus", "feat4-val":"Aktiv an Evolv", "feat4-sub":"Nu wrd adid regulr bai da Prim Ministra",
+        "phrase-title":"Komun Fraz", "col-fb":"Flyingo Bisdomik", "col-en":"Inglish", "col-mk":"Makedonian",
+        "hol-label":"Selebrasho", "hol-title":"Nesh Holidei", "hol-sub":"Dei ov pes, balans an memori",
+        "hol1-date":"Hol Spring", "hol1-name":"Avata Dei Festiv", "hol1-desc":"Un seson-long selebrasho honr al Avata. Sitisen add flowa tu Avata tomb an statyu, reflek on balans, an gatha in pes.",
+        "hol2-date":"26 Janur", "hol2-name":"Flyin Koi Karniv", "hol2-desc":"Un joyful karniv selebrat da byutiful flyin koi ov Nomasha wata. Un dei ov kola, komuniti an wonda.",
+        "footer":"© 2026 Nomasha · Powrd bai da Elemen"
+      }
+    };
+
+    const langs = ['en','mk','fb'];
+    const langLabels = {en:'EN', mk:'МК', fb:'FB'};
+    let langIdx = 0;
+    try {
+      const saved = localStorage.getItem('nmLang');
+      if (saved && langs.includes(saved)) langIdx = langs.indexOf(saved);
+    } catch(e) {}
+
+    function applyLang(l) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (i18n[l][k] !== undefined) el.innerHTML = i18n[l][k];
+      });
+      document.getElementById('lang-btn').textContent = langLabels[l];
+      document.getElementById('anthem-body').innerHTML = anthem[l] || anthem.en;
+      darkBtn.textContent = isDark ? i18n[l]['nav-light'] : i18n[l]['nav-dark'];
+    }
+
+    document.getElementById('lang-btn').addEventListener('click', () => {
+      langIdx = (langIdx + 1) % langs.length;
+      try { localStorage.setItem('nmLang', langs[langIdx]); } catch(e) {}
+      applyLang(langs[langIdx]);
+    });
+
+    applyLang(langs[langIdx]);
+    applyDark();
+  </script>
+</body>
+</html>

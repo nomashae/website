@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ministry of Technology | Nomashae</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --accent: #4A7C59;
+      --bg: #f7f7f5; --bg2: #efefec; --card: #ffffff;
+      --ink: #1a1a1a; --ink2: #555550;
+      --border: rgba(0,0,0,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.07);
+      --radius: 14px; --t: 0.3s ease;
+    }
+    [data-theme="dark"] {
+      --bg: #141414; --bg2: #1e1e1e; --card: #242424;
+      --ink: #f0f0ee; --ink2: #999992;
+      --border: rgba(255,255,255,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    [data-element="air"]   { --accent: #5B9BBF; }
+    [data-element="water"] { --accent: #3A8F8F; }
+    [data-element="fire"]  { --accent: #C4622D; }
+    [data-element="earth"] { --accent: #4A7C59; }
+    [data-theme="dark"][data-element="air"]   { --accent: #7bb8d8; }
+    [data-theme="dark"][data-element="water"] { --accent: #5abfbf; }
+    [data-theme="dark"][data-element="fire"]  { --accent: #e07a4a; }
+    [data-theme="dark"][data-element="earth"] { --accent: #6aad82; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg); color: var(--ink);
+      line-height: 1.7; transition: background var(--t), color var(--t);
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2.5rem; height: 64px;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      transition: background var(--t), border-color var(--t);
+    }
+    .nav-left { display: flex; align-items: center; gap: 0.75rem; }
+    .back-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      text-decoration: none; color: var(--ink2);
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .nav-brand {
+      font-size: 1rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); text-decoration: none;
+      transition: color var(--t);
+    }
+    .nav-right { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: transparent; border: 1.5px solid var(--border);
+      color: var(--ink2); padding: 0.35rem 0.9rem; border-radius: 8px;
+      cursor: pointer; font-family: 'Outfit', sans-serif;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: all 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .nav-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 2rem 4rem; text-align: center;
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      transition: background var(--t), border-color var(--t);
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%);
+      pointer-events: none; transition: background var(--t);
+    }
+    .hero-ministry {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .hero-icon {
+      width: 72px; height: 72px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border-radius: 18px; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      transition: background var(--t), border-color var(--t);
+    }
+    .hero-icon i { font-size: 1.8rem; color: var(--accent); transition: color var(--t); }
+    .hero-title {
+      font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 2px; margin-bottom: 0.5rem;
+      transition: color var(--t);
+    }
+    .hero-sub {
+      font-size: 0.9rem; color: var(--ink2); font-weight: 300;
+      max-width: 540px; margin: 0 auto 1.5rem;
+      transition: color var(--t);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      color: var(--accent); padding: 0.4rem 1rem; border-radius: 20px;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; transition: all var(--t);
+    }
+    .hero-badge i { font-size: 0.6rem; }
+
+    /* SECTIONS */
+    .section { padding: 4.5rem 2rem; border-top: 1px solid var(--border); transition: border-color var(--t); }
+    .section.alt { background: var(--bg2); transition: background var(--t), border-color var(--t); }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+    .sec-header { text-align: center; margin-bottom: 2.5rem; }
+    .sec-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .sec-title {
+      font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 1px; margin-bottom: 0.3rem;
+      transition: color var(--t);
+    }
+    .sec-sub { font-size: 0.85rem; color: var(--ink2); font-weight: 300; transition: color var(--t); }
+
+    .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade.in { opacity: 1; transform: none; }
+
+    /* RESPONSIBILITY GRID */
+    .resp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .resp-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.8rem;
+      box-shadow: var(--shadow); position: relative; overflow: hidden;
+      transition: background var(--t), border-color var(--t), transform 0.25s, box-shadow 0.25s;
+    }
+    .resp-card::after {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: var(--accent); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s ease, background var(--t);
+    }
+    .resp-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+    .resp-card:hover::after { transform: scaleX(1); }
+    .resp-icon {
+      width: 40px; height: 40px;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem; transition: background var(--t);
+    }
+    .resp-icon i { font-size: 1rem; color: var(--accent); transition: color var(--t); }
+    .resp-title { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.4rem; transition: color var(--t); }
+    .resp-desc { font-size: 0.82rem; font-weight: 300; color: var(--ink2); line-height: 1.7; transition: color var(--t); }
+
+    /* PROJECTS */
+    .projects-list { display: flex; flex-direction: column; gap: 1rem; }
+    .project-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius); padding: 1.5rem 1.8rem;
+      display: flex; align-items: center; gap: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t), transform 0.25s;
+    }
+    .project-card:hover { transform: translateX(4px); }
+    .project-icon {
+      width: 48px; height: 48px; flex-shrink: 0;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      transition: background var(--t);
+    }
+    .project-icon i { font-size: 1.2rem; color: var(--accent); transition: color var(--t); }
+    .project-info { flex: 1; }
+    .project-name { font-size: 0.98rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; transition: color var(--t); }
+    .project-desc { font-size: 0.82rem; font-weight: 300; color: var(--ink2); transition: color var(--t); }
+    .project-status {
+      flex-shrink: 0;
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; padding: 0.25rem 0.7rem;
+      border-radius: 20px;
+    }
+    .ps-live     { background: rgba(74,124,89,0.12);  color: #3a6b45; border: 1px solid rgba(74,124,89,0.25); }
+    .ps-dev      { background: rgba(90,155,191,0.12); color: #2e6e9e; border: 1px solid rgba(90,155,191,0.25); }
+    .ps-soon     { background: rgba(160,120,60,0.12); color: #7a5a20; border: 1px solid rgba(160,120,60,0.25); }
+    [data-theme="dark"] .ps-live { background: rgba(74,124,89,0.2);  color: #6aad82; }
+    [data-theme="dark"] .ps-dev  { background: rgba(90,155,191,0.2); color: #7bb8d8; }
+    [data-theme="dark"] .ps-soon { background: rgba(160,120,60,0.2); color: #c8a050; }
+
+    /* JIPS TEASER */
+    .jips-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t);
+    }
+    .jips-top {
+      padding: 2.5rem 2.5rem 0;
+      display: flex; align-items: center; gap: 1.2rem;
+    }
+    .jips-logo {
+      width: 56px; height: 56px; flex-shrink: 0;
+      background: var(--ink); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background var(--t);
+    }
+    .jips-logo span {
+      font-size: 1.1rem; font-weight: 800; color: var(--accent);
+      letter-spacing: -1px; transition: color var(--t);
+    }
+    .jips-name { font-size: 1.4rem; font-weight: 800; color: var(--ink); letter-spacing: 1px; transition: color var(--t); }
+    .jips-tagline { font-size: 0.82rem; color: var(--ink2); font-weight: 300; transition: color var(--t); }
+
+    .jips-body { padding: 1.5rem 2.5rem 2.5rem; }
+    .jips-desc { font-size: 0.92rem; font-weight: 300; color: var(--ink2); line-height: 1.85; margin-bottom: 1.5rem; transition: color var(--t); }
+
+    /* fake terminal */
+    .jips-terminal {
+      background: #0f1117; border-radius: 10px; overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .terminal-bar {
+      background: #1e2130; padding: 0.6rem 1rem;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .t-dot.red { background: #ff5f57; }
+    .t-dot.yellow { background: #ffbd2e; }
+    .t-dot.green { background: #28c840; }
+    .t-label { font-size: 0.65rem; color: #666; margin-left: 0.5rem; letter-spacing: 1px; }
+    .terminal-code {
+      padding: 1.2rem 1.5rem;
+      font-family: 'Courier New', monospace; font-size: 0.82rem;
+      line-height: 1.9; color: #cdd6f4;
+    }
+    .t-comment { color: #6c7086; }
+    .t-keyword { color: #cba6f7; }
+    .t-string  { color: #a6e3a1; }
+    .t-func    { color: #89b4fa; }
+    .t-num     { color: #fab387; }
+    .t-var     { color: #f38ba8; }
+
+    .jips-soon-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(160,120,60,0.1); color: #7a5a20;
+      border: 1px solid rgba(160,120,60,0.25);
+      padding: 0.5rem 1.1rem; border-radius: 20px;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    }
+    [data-theme="dark"] .jips-soon-badge { background: rgba(160,120,60,0.2); color: #c8a050; }
+
+    /* MINISTER */
+    .minister-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem;
+      display: flex; align-items: center; gap: 1.5rem;
+      box-shadow: var(--shadow); max-width: 480px; margin: 0 auto;
+      transition: background var(--t), border-color var(--t);
+    }
+    .minister-avatar {
+      width: 60px; height: 60px; flex-shrink: 0;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      border: 2px solid color-mix(in srgb, var(--accent) 30%, transparent);
+      transition: background var(--t), border-color var(--t);
+    }
+    .minister-avatar i { font-size: 1.4rem; color: var(--accent); transition: color var(--t); }
+    .minister-role {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.3rem; transition: color var(--t);
+    }
+    .minister-name { font-size: 1.05rem; font-weight: 700; color: var(--ink); transition: color var(--t); }
+    .minister-note { font-size: 0.78rem; color: var(--ink2); font-weight: 300; margin-top: 0.2rem; transition: color var(--t); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); text-align: center; padding: 2.5rem 1rem;
+      font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--ink2); transition: border-color var(--t), color var(--t);
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 1rem; }
+      .section { padding: 3rem 1.2rem; }
+      .jips-top { flex-direction: column; align-items: flex-start; }
+      .jips-body { padding: 1.2rem 1.5rem 2rem; }
+      .project-card { flex-wrap: wrap; }
+      .minister-card { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body data-theme="light" data-element="earth">
+
+  <nav>
+    <div class="nav-left">
+      <a href="./ministries.html" class="back-link">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Ministries
+      </a>
+      <a href="./index.html" class="nav-brand">Nomashae</a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn" id="dark-btn">Dark</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-ministry">Republic of Nomashae</span>
+    <div class="hero-icon"><i class="fa-solid fa-microchip"></i></div>
+    <h1 class="hero-title">Ministry of Technology</h1>
+    <p class="hero-sub">Maintaining and advancing the digital infrastructure of the Republic — from the official website to the Minecraft world server.</p>
+    <span class="hero-badge"><i class="fa-solid fa-circle-dot"></i> Active</span>
+  </div>
+
+  <!-- RESPONSIBILITIES -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">What We Do</span>
+        <h2 class="sec-title">Responsibilities</h2>
+        <p class="sec-sub">The core areas this ministry oversees</p>
+      </div>
+      <div class="resp-grid">
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-globe"></i></div>
+          <div class="resp-title">Official Website</div>
+          <div class="resp-desc">Develops and maintains nomashae.github.io/website — the Republic's official online presence, keeping it accurate, accessible, and up to date.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-server"></i></div>
+          <div class="resp-title">Minecraft Server</div>
+          <div class="resp-desc">Manages the digital territory of Nomashae — the Minecraft world where cities, regions, and land ownership exist. Handles uptime, access, and expansion.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-lock"></i></div>
+          <div class="resp-title">Digital Security</div>
+          <div class="resp-desc">Ensures all of Nomashae's digital assets are secure and protected. Responsible for access control across official platforms and systems.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-code"></i></div>
+          <div class="resp-title">Software & Tools</div>
+          <div class="resp-desc">Develops internal tools, scripts, and software that help run the Republic. Future home of the Jips programming language.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-database"></i></div>
+          <div class="resp-title">Data & Records</div>
+          <div class="resp-desc">Maintains digital records of citizens, land ownership, decrees, and national assets. Ensures data is stored reliably and can be accessed when needed.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-satellite-dish"></i></div>
+          <div class="resp-title">Communications</div>
+          <div class="resp-desc">Oversees official communication channels — ensuring citizens and the government can communicate reliably across platforms.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="section">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Work in Progress</span>
+        <h2 class="sec-title">Projects</h2>
+        <p class="sec-sub">Current and upcoming technology initiatives</p>
+      </div>
+      <div class="projects-list">
+        <div class="project-card">
+          <div class="project-icon"><i class="fa-solid fa-globe"></i></div>
+          <div class="project-info">
+            <div class="project-name">Official Website v3</div>
+            <div class="project-desc">Full redesign of the old official website with improved design, language support, and new pages.</div>
+          </div>
+          <span class="project-status ps-live">Live</span>
+        </div>
+        <div class="project-card">
+          <div class="project-icon"><i class="fa-solid fa-server"></i></div>
+          <div class="project-info">
+            <div class="project-name">Nomashae Minecraft Server</div>
+            <div class="project-desc">The official Minecraft world hosting all of Nomashae's cities and regions. Currently offline pending setup.</div>
+          </div>
+          <span class="project-status ps-dev">In Development</span>
+        </div>
+        <div class="project-card">
+          <div class="project-icon"><i class="fa-solid fa-terminal"></i></div>
+          <div class="project-info">
+            <div class="project-name">Jips Programming Language</div>
+            <div class="project-desc">Nomashae's own programming language, currently in early planning. More details to come.</div>
+          </div>
+          <span class="project-status ps-soon">in planning</span>
+        </div>
+        <div class="project-card">
+          <div class="project-icon"><i class="fa-solid fa-id-card"></i></div>
+          <div class="project-info">
+            <div class="project-name">Citizen Portal</div>
+            <div class="project-desc">A dedicated portal for citizens to manage their citizenship, view decrees, and interact with the Republic digitally.</div>
+          </div>
+          <span class="project-status ps-soon">Coming Soon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JIPS TEASER -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Coming Soon</span>
+        <h2 class="sec-title">Jips Programming Language</h2>
+        <p class="sec-sub">Nomashae's own language — built here, in this ministry</p>
+      </div>
+      <div class="jips-card">
+        <div class="jips-top">
+          <div class="jips-logo"><span>Ji</span></div>
+          <div>
+            <div class="jips-name">Jips</div>
+            <div class="jips-tagline">The official programming language of the Republic of Nomashae</div>
+          </div>
+        </div>
+        <div class="jips-body">
+          <p class="jips-desc">Jips is being developed by the Ministry of Technology as Nomashae's own programming language. Details about its syntax, purpose, and use cases will be revealed when the time comes. For now — watch this space.</p>
+
+          <!-- fake code preview -->
+          <div class="jips-terminal">
+            <div class="terminal-bar">
+              <div class="t-dot red"></div>
+              <div class="t-dot yellow"></div>
+              <div class="t-dot green"></div>
+              <span class="t-label">preview.jips</span>
+            </div>
+            <div class="terminal-code">
+              <span class="t-comment">// Jips — coming soon</span><br>
+              <span class="t-comment">// The GUI focused language</span><br>
+              <span class="t-comment">// Still in planning</span><br><br>
+              <span class="t-keyword">window</span> <span class="t-var">Hello</span> {<br>
+              &nbsp;&nbsp;<span class="t-func">ttext</span>(<span class="t-string">"Four Elements · One Nomashae"</span>)<br>
+              &nbsp;&nbsp;<span class="t-func">parButton</span>(<span class="t-string">"See national anthem"</span>, <span class="t-var">displayAnthem</span>)<br>
+              }<br>
+            </div>
+          </div>
+
+          <span class="jips-soon-badge"><i class="fa-solid fa-clock"></i>&nbsp; In Planning</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MINISTER -->
+  <div class="section">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Leadership</span>
+        <h2 class="sec-title">Minister of Technology</h2>
+      </div>
+      <div class="minister-card">
+        <div class="minister-avatar"><i class="fa-solid fa-user"></i></div>
+        <div>
+          <span class="minister-role">Minister of Technology</span>
+          <div class="minister-name">Eftimij Yipified Novakovski</div>
+          <div class="minister-note">Also serving as Prime Minister of the Republic of Nomashae</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer><p>© 2026 Nomashae · Ministry of Technology · Powered by the Elements</p></footer>
+
+  <script>
+    function getElement() {
+      const h = new Date().getHours();
+      if (h >= 6  && h < 12) return 'air';
+      if (h >= 12 && h < 18) return 'water';
+      if (h >= 18 && h < 22) return 'fire';
+      return 'earth';
+    }
+    document.body.setAttribute('data-element', getElement());
+
+    const darkBtn = document.getElementById('dark-btn');
+    let isDark = false;
+    try { isDark = localStorage.getItem('nmDark') === 'true'; } catch(e) {}
+    function applyDark() {
+      document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      darkBtn.classList.toggle('active', isDark);
+      darkBtn.textContent = isDark ? 'Light' : 'Dark';
+    }
+    darkBtn.addEventListener('click', () => {
+      isDark = !isDark;
+      try { localStorage.setItem('nmDark', isDark); } catch(e) {}
+      applyDark();
+    });
+    applyDark();
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NIaI — Nomashalian Intelligence & Investigation Bureau</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --accent: #1a3a5c;
+      --bg: #f7f7f5; --bg2: #efefec; --card: #ffffff;
+      --ink: #1a1a1a; --ink2: #555550;
+      --border: rgba(0,0,0,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.07);
+      --radius: 14px; --t: 0.3s ease;
+    }
+    [data-theme="dark"] {
+      --bg: #141414; --bg2: #1e1e1e; --card: #242424;
+      --ink: #f0f0ee; --ink2: #999992;
+      --border: rgba(255,255,255,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    [data-element="air"]   { --accent: #5B9BBF; }
+    [data-element="water"] { --accent: #3A8F8F; }
+    [data-element="fire"]  { --accent: #C4622D; }
+    [data-element="earth"] { --accent: #4A7C59; }
+    [data-theme="dark"][data-element="air"]   { --accent: #7bb8d8; }
+    [data-theme="dark"][data-element="water"] { --accent: #5abfbf; }
+    [data-theme="dark"][data-element="fire"]  { --accent: #e07a4a; }
+    [data-theme="dark"][data-element="earth"] { --accent: #6aad82; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg); color: var(--ink);
+      line-height: 1.7; transition: background var(--t), color var(--t);
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2.5rem; height: 64px;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      transition: background var(--t), border-color var(--t);
+    }
+    .nav-left { display: flex; align-items: center; gap: 0.75rem; }
+    .back-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      text-decoration: none; color: var(--ink2);
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .nav-brand {
+      font-size: 1rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); text-decoration: none;
+      transition: color var(--t);
+    }
+    .nav-right { display: flex; gap: 0.5rem; align-items: center; }
+    .nav-btn {
+      background: transparent; border: 1.5px solid var(--border);
+      color: var(--ink2); padding: 0.35rem 0.9rem; border-radius: 8px;
+      cursor: pointer; font-family: 'Outfit', sans-serif;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: all 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .nav-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 2rem 4rem; text-align: center;
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      transition: background var(--t), border-color var(--t);
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%);
+      pointer-events: none; transition: background var(--t);
+    }
+    .hero-ministry {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .hero-icon {
+      width: 72px; height: 72px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border-radius: 18px; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      transition: background var(--t), border-color var(--t);
+    }
+    .hero-icon i { font-size: 1.8rem; color: var(--accent); transition: color var(--t); }
+    .hero-title {
+      font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 2px; margin-bottom: 0.5rem;
+      transition: color var(--t);
+    }
+    .hero-sub {
+      font-size: 0.9rem; color: var(--ink2); font-weight: 300;
+      max-width: 560px; margin: 0 auto 1.5rem;
+      transition: color var(--t);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      color: var(--accent); padding: 0.4rem 1rem; border-radius: 20px;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; transition: all var(--t);
+    }
+
+    /* SECTIONS */
+    .section { padding: 4.5rem 2rem; border-top: 1px solid var(--border); transition: border-color var(--t); }
+    .section.alt { background: var(--bg2); transition: background var(--t), border-color var(--t); }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+    .sec-header { text-align: center; margin-bottom: 2.5rem; }
+    .sec-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .sec-title {
+      font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 1px; margin-bottom: 0.3rem;
+      transition: color var(--t);
+    }
+    .sec-sub { font-size: 0.85rem; color: var(--ink2); font-weight: 300; transition: color var(--t); }
+
+    .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade.in { opacity: 1; transform: none; }
+
+    /* STATS */
+    .stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-bottom: 3rem; }
+    .stat-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-top: 3px solid var(--accent); border-radius: var(--radius);
+      padding: 1.5rem; text-align: center; box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t);
+    }
+    .stat-num { font-size: 2.2rem; font-weight: 700; color: var(--accent); line-height: 1; transition: color var(--t); }
+    .stat-lbl { font-size: 0.65rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--ink2); margin-top: 0.4rem; transition: color var(--t); }
+
+    /* MISSION */
+    .mission-block {
+      background: var(--card); border: 1px solid var(--border);
+      border-left: 4px solid var(--accent); border-radius: var(--radius);
+      padding: 2rem; box-shadow: var(--shadow); margin-bottom: 2.5rem;
+      transition: background var(--t), border-color var(--t);
+    }
+    .mission-block h3 {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.8rem; transition: color var(--t);
+    }
+    .mission-block p { font-size: 0.88rem; font-weight: 300; color: var(--ink2); line-height: 1.85; margin-bottom: 0.7rem; transition: color var(--t); }
+    .mission-block p:last-child { margin-bottom: 0; }
+
+    /* PILLAR CARDS */
+    .resp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1rem; }
+    .resp-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.8rem;
+      box-shadow: var(--shadow); position: relative; overflow: hidden;
+      transition: background var(--t), border-color var(--t), transform 0.25s, box-shadow 0.25s;
+    }
+    .resp-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--accent); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s ease, background var(--t);
+    }
+    .resp-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+    .resp-card:hover::after { transform: scaleX(1); }
+    .resp-icon {
+      width: 40px; height: 40px;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem; transition: background var(--t);
+    }
+    .resp-icon i { font-size: 1rem; color: var(--accent); transition: color var(--t); }
+    .resp-title { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.4rem; transition: color var(--t); }
+    .resp-desc { font-size: 0.82rem; font-weight: 300; color: var(--ink2); line-height: 1.7; transition: color var(--t); }
+
+    /* CASES */
+    .cases-list { display: flex; flex-direction: column; gap: 0.8rem; }
+    .case-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t);
+    }
+    .case-head {
+      padding: 1.2rem 1.6rem; display: flex; align-items: center; gap: 1rem;
+      cursor: pointer; transition: background var(--t);
+    }
+    .case-head:hover { background: var(--bg2); }
+    .case-id {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 2px;
+      color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+      padding: 0.2rem 0.6rem; border-radius: 6px; white-space: nowrap; flex-shrink: 0;
+      transition: color var(--t), background var(--t), border-color var(--t);
+    }
+    .case-info { flex: 1; }
+    .case-name { font-size: 0.95rem; font-weight: 600; color: var(--ink); transition: color var(--t); }
+    .case-type { font-size: 0.72rem; color: var(--ink2); margin-top: 0.15rem; transition: color var(--t); }
+    .case-right { display: flex; align-items: center; gap: 0.8rem; flex-shrink: 0; }
+    .badge { font-size: 0.58rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 0.25rem 0.65rem; border-radius: 20px; }
+    .badge-open    { background: rgba(40,167,69,0.1);  color: #28a745; border: 1px solid rgba(40,167,69,0.25); }
+    .badge-closed  { background: var(--bg2); color: var(--ink2); border: 1px solid var(--border); }
+    .badge-pending { background: rgba(212,160,23,0.1); color: #b8860b; border: 1px solid rgba(212,160,23,0.25); }
+    .chevron { color: var(--ink2); font-size: 0.72rem; transition: transform var(--t), color var(--t); }
+    .chevron.open { transform: rotate(180deg); }
+    .case-body {
+      display: none; padding: 1.4rem 1.6rem; border-top: 1px solid var(--border);
+      background: var(--bg2); transition: background var(--t), border-color var(--t);
+    }
+    .case-body.open { display: block; }
+    .case-meta-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-bottom: 1rem; }
+    .cm-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--ink2); margin-bottom: 0.2rem; transition: color var(--t); }
+    .cm-value { font-size: 0.88rem; font-weight: 500; color: var(--ink); transition: color var(--t); }
+    .case-desc { font-size: 0.84rem; font-weight: 300; color: var(--ink2); line-height: 1.8; padding-top: 1rem; border-top: 1px solid var(--border); transition: color var(--t), border-color var(--t); }
+
+    /* THREATS */
+    .threats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1rem; }
+    .threat-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t), transform 0.25s, box-shadow 0.25s;
+    }
+    .threat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+    .threat-bar { height: 4px; }
+    .bar-low { background: #28a745; }
+    .bar-medium { background: #d4a017; }
+    .bar-high { background: #dc3545; }
+    .threat-inner { padding: 1.6rem; }
+    .threat-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; }
+    .threat-name { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.2rem; transition: color var(--t); }
+    .threat-code { font-size: 0.62rem; font-weight: 600; letter-spacing: 2px; color: var(--ink2); transition: color var(--t); }
+    .threat-desc { font-size: 0.82rem; font-weight: 300; color: var(--ink2); line-height: 1.75; margin-bottom: 1rem; transition: color var(--t); }
+    .threat-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .threat-tag {
+      font-size: 0.6rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+      color: var(--accent); padding: 0.2rem 0.55rem; border-radius: 6px;
+      transition: color var(--t), background var(--t), border-color var(--t);
+    }
+
+    /* PERSONNEL */
+    .personnel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 260px));
+      gap: 1rem;
+
+      max-width: 1000px;
+      margin: 0 auto;
+      justify-content: center;
+    }
+    .agent-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t), transform 0.25s, box-shadow 0.25s;
+    }
+    .agent-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+    .agent-top {
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+      padding: 1.4rem 1.6rem; display: flex; gap: 1rem; align-items: center;
+      transition: background var(--t), border-color var(--t);
+    }
+    .agent-avatar {
+      width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+      background: color-mix(in srgb, var(--accent) 20%, transparent);
+      border: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.88rem; font-weight: 700; color: var(--accent);
+      transition: background var(--t), border-color var(--t), color var(--t);
+    }
+    .agent-name { font-size: 1rem; font-weight: 700; color: var(--ink); line-height: 1.2; transition: color var(--t); }
+    .agent-callsign { font-size: 0.68rem; color: var(--accent); font-weight: 500; margin-top: 0.2rem; transition: color var(--t); }
+    .agent-rows { padding: 0.8rem 1.6rem 1.2rem; }
+    .agent-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.82rem;
+      transition: border-color var(--t);
+    }
+    .agent-row:last-child { border-bottom: none; }
+    .ar-label { color: var(--ink2); font-size: 0.68rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; transition: color var(--t); }
+    .ar-value { color: var(--ink); font-weight: 500; transition: color var(--t); }
+
+    /* CONTACT */
+    .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .contact-intro p { font-size: 0.88rem; font-weight: 300; color: var(--ink2); line-height: 1.85; margin-bottom: 1.5rem; transition: color var(--t); }
+    .channels { display: flex; flex-direction: column; gap: 0.8rem; }
+    .channel {
+      display: flex; gap: 1rem; align-items: center;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1rem 1.4rem; box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t), transform 0.2s;
+    }
+    .channel:hover { transform: translateX(4px); }
+    .channel-icon {
+      width: 36px; height: 36px; flex-shrink: 0; border-radius: 8px;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      display: flex; align-items: center; justify-content: center;
+      transition: background var(--t);
+    }
+    .channel-icon i { font-size: 0.9rem; color: var(--accent); transition: color var(--t); }
+    .ch-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--ink2); transition: color var(--t); }
+    .ch-value { font-size: 0.88rem; font-weight: 500; color: var(--ink); transition: color var(--t); }
+    .report-box {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t);
+    }
+    .report-box h3 {
+      font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 1.5rem;
+      letter-spacing: 1px; text-transform: uppercase; transition: color var(--t);
+    }
+    .form-field { margin-bottom: 1.2rem; }
+    .form-field label {
+      display: block; font-size: 0.65rem; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--ink2); margin-bottom: 0.4rem; transition: color var(--t);
+    }
+    .form-field input, .form-field select, .form-field textarea {
+      width: 100%; background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 8px; padding: 0.65rem 1rem; font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem; color: var(--ink); outline: none;
+      transition: border-color var(--t), background var(--t), color var(--t);
+    }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--accent); }
+    .form-field textarea { min-height: 110px; resize: vertical; }
+    .form-note { font-size: 0.73rem; color: var(--ink2); margin-bottom: 1.2rem; font-style: italic; transition: color var(--t); }
+    .submit-btn {
+      width: 100%; background: var(--accent); border: none; color: #fff;
+      padding: 0.85rem; border-radius: 8px; cursor: pointer;
+      font-family: 'Outfit', sans-serif; font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; transition: opacity 0.2s;
+    }
+    .submit-btn:hover { opacity: 0.85; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); text-align: center; padding: 2.5rem 1rem;
+      font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--ink2); transition: border-color var(--t), color var(--t);
+    }
+
+    @media (max-width: 700px) {
+      nav { padding: 0 1rem; }
+      .section { padding: 3rem 1.2rem; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .contact-layout { grid-template-columns: 1fr; }
+      .case-meta-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body data-theme="light" data-element="earth">
+
+  <nav>
+    <div class="nav-left">
+      <a href="./ministries.html" class="back-link">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Ministries
+      </a>
+      <a href="./index.html" class="nav-brand">Nomashae</a>
+    </div>
+    <div class="nav-right">
+      <div style="display:flex;gap:0.3rem">
+        <button class="nav-btn active" id="lb-en" onclick="setLang('en')">EN</button>
+        <button class="nav-btn" id="lb-mk" onclick="setLang('mk')">МК</button>
+        <button class="nav-btn" id="lb-fb" onclick="setLang('fb')">FB</button>
+      </div>
+      <button class="nav-btn" id="dark-btn">Dark</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-ministry" data-i18n="hero-label">Republic of Nomashae</span>
+    <div class="hero-icon"><i class="fa-solid fa-eye"></i></div>
+    <h1 class="hero-title" data-i18n="hero-title">NIaI</h1>
+    <p class="hero-sub" data-i18n="hero-sub">Nomashalian Intelligence and Investigation Bureau.</p>
+    <span class="hero-badge"><i class="fa-solid fa-circle-dot"></i> <span data-i18n="badge-active">Active</span></span>
+  </div>
+
+  <!-- MISSION + PILLARS -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-num">2</div>
+          <div class="stat-lbl" data-i18n="stat-agents">Active Agents</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">1</div>
+          <div class="stat-lbl" data-i18n="stat-cases">Open Cases</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">2</div>
+          <div class="stat-lbl" data-i18n="stat-threats">Monitored Threats</div>
+        </div>
+      </div>
+      <div class="mission-block">
+        <h3 data-i18n="mission-title">Our Mission</h3>
+        <p data-i18n="mission-p1">The Nomashalian Intelligence & Investigation Bureau — NIaI — exists to protect the sovereignty, security, and citizens of the Republic of Nomashae. We investigate threats to national stability, gather intelligence to inform government decisions, and uphold the rule of law across all regions.</p>
+        <p data-i18n="mission-p2">We operate with transparency where possible and discretion where necessary, always in service of the Republic's core values: balance, justice, and harmony.</p>
+      </div>
+      <div class="sec-header">
+        <span class="sec-label" data-i18n="pillars-label">What We Do</span>
+        <h2 class="sec-title" data-i18n="pillars-title">Operational Pillars</h2>
+        <p class="sec-sub" data-i18n="pillars-sub">The four core areas that define the Bureau's work</p>
+      </div>
+      <div class="resp-grid">
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="resp-title" data-i18n="pillar1-title">Internal Security</div>
+          <div class="resp-desc" data-i18n="pillar1-text">Monitoring and protecting Nomashae from threats within its borders and regions. The Bureau maintains awareness of risks to national stability at all times.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+          <div class="resp-title" data-i18n="pillar2-title">Investigation</div>
+          <div class="resp-desc" data-i18n="pillar2-text">Conducting thorough, fair investigations into criminal and civil matters. Every case is handled with integrity and in accordance with Nomashalian law.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-satellite-dish"></i></div>
+          <div class="resp-title" data-i18n="pillar3-title">Intelligence</div>
+          <div class="resp-desc" data-i18n="pillar3-text">Gathering and analysing information to keep the government and citizens informed. Intelligence operations are conducted within the legal framework of the Republic.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+          <div class="resp-title" data-i18n="pillar4-title">Rule of Law</div>
+          <div class="resp-desc" data-i18n="pillar4-text">All Bureau operations are conducted within Nomashae's legal framework. The NIaI works in close coordination with the Ministry of Justice.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASES -->
+  <div class="section">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label" data-i18n="cases-label">Investigations</span>
+        <h2 class="sec-title" data-i18n="cases-title">Active Cases</h2>
+        <p class="sec-sub" data-i18n="cases-sub">Cases cleared for public disclosure. Sensitive details may be withheld pending investigation.</p>
+      </div>
+      <div class="cases-list">
+        <div class="case-card">
+          <div class="case-head" onclick="toggleCase(this)">
+            <span class="case-id">NIAI-2026-001</span>
+            <div class="case-info">
+              <div class="case-name" data-i18n="case1-name">Republic Formation Review</div>
+              <div class="case-type" data-i18n="case1-type">Administrative · Constitutional</div>
+            </div>
+            <div class="case-right">
+              <span class="badge badge-open" data-i18n="badge-open">Open</span>
+              <i class="fa-solid fa-chevron-down chevron"></i>
+            </div>
+          </div>
+          <div class="case-body">
+            <div class="case-meta-row">
+              <div>
+                <div class="cm-label" data-i18n="cm-opened">Opened</div>
+                <div class="cm-value">1 Sept 2025</div>
+              </div>
+              <div>
+                <div class="cm-label" data-i18n="cm-agent">Lead Agent</div>
+                <div class="cm-value">AppaRider</div>
+              </div>
+              <div>
+                <div class="cm-label" data-i18n="cm-priority">Priority</div>
+                <div class="cm-value" data-i18n="priority-standard">Standard</div>
+              </div>
+            </div>
+            <div class="case-desc" data-i18n="case1-desc">Ongoing review of the constitutional formation of the Republic of Nomashae. This case documents the establishment of governmental structures, ministry formation, and legal framework development. Status updates are filed as new decrees and legislation are passed.</div>
+          </div>
+        </div>
+        <!-- ADD MORE CASES BELOW -->
+      </div>
+    </div>
+  </div>
+
+  <!-- THREATS -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label" data-i18n="threats-label">Intelligence</span>
+        <h2 class="sec-title" data-i18n="threats-title">Known Threats</h2>
+        <p class="sec-sub" data-i18n="threats-sub">Publicly disclosed threat assessments reviewed and updated by the NIaI assessment division.</p>
+      </div>
+      <div class="threats-grid">
+        <!-- <div class="threat-card">
+          <div class="threat-bar bar-low"></div>
+          <div class="threat-inner">
+            <div class="threat-top">
+              <div>
+                <div class="threat-name" data-i18n="threat1-name">External Diplomatic Pressure</div>
+                <div class="threat-code">THREAT-EXT-001</div>
+              </div>
+              <span class="badge badge-open" data-i18n="level-low">Low</span>
+            </div>
+            <div class="threat-desc" data-i18n="threat1-desc">Potential diplomatic challenges stemming from Nomashae's status as an unrecognised micronation. No active hostile actors identified. Classified as low risk and monitored.</div>
+            <div class="threat-tags">
+              <span class="threat-tag" data-i18n="tag-diplomatic">Diplomatic</span>
+              <span class="threat-tag" data-i18n="tag-external">External</span>
+              <span class="threat-tag" data-i18n="tag-monitored">Monitored</span>
+            </div>
+          </div>
+        </div>
+        <div class="threat-card">
+          <div class="threat-bar bar-low"></div>
+          <div class="threat-inner">
+            <div class="threat-top">
+              <div>
+                <div class="threat-name" data-i18n="threat2-name">Digital Infrastructure Risk</div>
+                <div class="threat-code">THREAT-TEC-001</div>
+              </div>
+              <span class="badge badge-open" data-i18n="level-low">Low</span>
+            </div>
+            <div class="threat-desc" data-i18n="threat2-desc">The Republic's digital presence is hosted on external platforms. Risk of service disruption or policy changes affecting Nomashae's online sovereignty. Ministry of Technology is actively addressing this.</div>
+            <div class="threat-tags">
+              <span class="threat-tag" data-i18n="tag-technology">Technology</span>
+              <span class="threat-tag" data-i18n="tag-infrastructure">Infrastructure</span>
+              <span class="threat-tag" data-i18n="tag-monitored">Monitored</span>
+            </div>
+          </div>
+        </div> -->
+
+        <div class="threat-card">
+          <div class="threat-bar bar-low"></div>
+          <div class="threat-inner">
+            <div class="threat-top">
+              <div>
+                <div class="threat-name" data-i18n="nothreat-name">No known threats at the moment.</div>
+                <div class="threat-code">INFO-NOTHREATS</div>
+              </div>
+              <span class="badge badge-open" data-i18n="level-info">Info</span>
+            </div>
+            <div class="threat-desc" data-i18n="nothreat-desc">The Bureau is working hard to keep you safe.</div>
+            <div class="threat-tags">
+              <span class="threat-tag" data-i18n="tag-info">Info</span>
+            </div>
+          </div>
+        </div>
+        <!-- ADD MORE THREATS BELOW -->
+      </div>
+    </div>
+  </div>
+
+  <!-- PERSONNEL -->
+  <div class="section">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label" data-i18n="personnel-label">Leadership</span>
+        <h2 class="sec-title" data-i18n="personnel-title">Bureau Personnel</h2>
+        <p class="sec-sub" data-i18n="personnel-sub">Publicly registered agents and officers of the NIaI. Classified personnel are not listed here.</p>
+      </div>
+      <div class="personnel-grid">
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-avatar">EN</div>
+            <div>
+              <div class="agent-name">Eftimij Novakovski</div>
+              <div class="agent-callsign" data-i18n="callsign1">Callsign: Yipified</div>
+            </div>
+          </div>
+          <div class="agent-rows">
+            <div class="agent-row">
+              <span class="ar-label" data-i18n="ar-role">Role</span>
+              <span class="ar-value" data-i18n="agent1-role">Director of Intelligence</span>
+            </div>
+            <div class="agent-row">
+              <span class="ar-label" data-i18n="ar-division">Division</span>
+              <span class="ar-value" data-i18n="agent1-division">Technology & Operations</span>
+            </div>
+            <div class="agent-row">
+              <span class="ar-label" data-i18n="ar-status">Status</span>
+              <span class="ar-value" style="color:#28a745" data-i18n="status-active">Active</span>
+            </div>
+            <div class="agent-row">
+              <span class="ar-label" data-i18n="ar-clearance">Clearance</span>
+              <span class="ar-value" data-i18n="clearance-top">Level 3 — Top</span>
+            </div>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-avatar">KD</div>
+            <div>
+              <div class="agent-name">Krste Dimov</div>
+              <div class="agent-callsign" data-i18n="callsign2">Callsign: AppaRider</div>
+            </div>
+          </div>
+          <div class="agent-rows">
+            <div class="agent-row">
+              <span class="ar-label" data-i18n="ar-role">Role</span>
+              <span class="ar-value" data-i18n="agent2-role">Bureau Chief</span>
+            </div>
+            <div class="agent-row">
+              <span class="ar-label" data-i18n="ar-division">Division</span>
+              <span class="ar-value" data-i18n="agent2-division">Investigation & Security</span>
+            </div>
+            <div class="agent-row">
+              <span class="ar-label" data-i18n="ar-status">Status</span>
+              <span class="ar-value" style="color:#28a745" data-i18n="status-active">Active</span>
+            </div>
+            <div class="agent-row">
+              <span class="ar-label" data-i18n="ar-clearance">Clearance</span>
+              <span class="ar-value" data-i18n="clearance-top">Level 3 — Top</span>
+            </div>
+          </div>
+        </div>
+        <!-- ADD MORE AGENTS BELOW -->
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label" data-i18n="contact-label">Get In Touch</span>
+        <h2 class="sec-title" data-i18n="contact-title">Contact & Report</h2>
+        <p class="sec-sub" data-i18n="contact-sub">Submit tips, reports, or general enquiries to the Bureau.</p>
+      </div>
+      <div class="contact-layout">
+        <div class="contact-intro">
+          <p data-i18n="contact-p1">The NIaI maintains open communication channels for citizens of Nomashae and members of the public. If you have information relevant to an active investigation, a security concern, or a general enquiry, use the form or one of the direct channels listed below.</p>
+          <p data-i18n="contact-p2">All reports are handled with discretion. Anonymous submissions are accepted.</p>
+          <div class="channels">
+            <div class="channel">
+              <div class="channel-icon"><i class="fa-brands fa-discord"></i></div>
+              <div>
+                <div class="ch-label" data-i18n="ch-discord">Discord</div>
+                <div class="ch-value">Nomashae Official Server</div>
+              </div>
+            </div>
+            <div class="channel">
+              <div class="channel-icon"><i class="fa-solid fa-globe"></i></div>
+              <div>
+                <div class="ch-label" data-i18n="ch-portal">Main Portal</div>
+                <div class="ch-value">nomashae.github.io/website</div>
+              </div>
+            </div>
+            <div class="channel">
+              <div class="channel-icon"><i class="fa-solid fa-landmark"></i></div>
+              <div>
+                <div class="ch-label" data-i18n="ch-secure">Secure Reports</div>
+                <div class="ch-value" data-i18n="ch-secure-val">Via Ministry of Justice</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="report-box">
+          <h3><i class="fa-solid fa-file-circle-plus" style="margin-right:0.5rem;color:var(--accent)"></i><span data-i18n="form-title">Submit a Report</span></h3>
+          <div class="form-field">
+            <label data-i18n="form-name">Your Name (or leave blank for anonymous)</label>
+            <input id="f-name" type="text" placeholder="Anonymous"/>
+          </div>
+          <div class="form-field">
+            <label data-i18n="form-type">Report Type</label>
+            <select id="f-type">
+              <option data-i18n="opt1">Security Concern</option>
+              <option data-i18n="opt2">Investigation Tip</option>
+              <option data-i18n="opt3">Citizen Complaint</option>
+              <option data-i18n="opt4">General Enquiry</option>
+              <option data-i18n="opt5">Other</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label data-i18n="form-details">Details</label>
+            <textarea id="f-details" placeholder="Describe your report or enquiry..."></textarea>
+          </div>
+          <p class="form-note" data-i18n="form-note">* For urgent matters contact the Bureau directly via Discord.</p>
+          <button class="submit-btn" onclick="submitReport()">
+            <i class="fa-solid fa-paper-plane" style="margin-right:0.5rem"></i>
+            <span data-i18n="form-submit">Submit Report</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer><p>© 2026 Nomashae · Nomashalian Intelligence & Investigation Bureau · Powered by the Elements</p></footer>
+
+  <script>
+    // ── ELEMENT THEMING (matches all other ministry pages) ──
+    (function() {
+      const h = new Date().getHours();
+      let el = 'earth';
+      if (h >= 6  && h < 12) el = 'air';
+      if (h >= 12 && h < 18) el = 'water';
+      if (h >= 18 && h < 22) el = 'fire';
+      document.body.setAttribute('data-element', el);
+    })();
+
+    // ── DARK MODE ──
+    const darkBtn = document.getElementById('dark-btn');
+    let isDark = false;
+    try { isDark = localStorage.getItem('nmDark') === 'true'; } catch(e) {}
+    function applyDark() {
+      document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      darkBtn.classList.toggle('active', isDark);
+      darkBtn.textContent = isDark ? 'Light' : 'Dark';
+    }
+    darkBtn.addEventListener('click', () => {
+      isDark = !isDark;
+      try { localStorage.setItem('nmDark', isDark); } catch(e) {}
+      applyDark();
+    });
+    applyDark();
+
+    // ── SCROLL ANIMATIONS ──
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+
+    // ── CASE ACCORDION ──
+    function toggleCase(header) {
+      const body = header.nextElementSibling;
+      const chevron = header.querySelector('.chevron');
+      body.classList.toggle('open');
+      chevron.classList.toggle('open');
+    }
+
+    // ── MAILTO FORM ──
+    function submitReport() {
+      const name    = document.getElementById('f-name').value.trim() || 'Anonymous';
+      const type    = document.getElementById('f-type').value;
+      const details = document.getElementById('f-details').value.trim();
+      if (!details) { alert('Please enter some details before submitting.'); return; }
+      const subject = encodeURIComponent('[NIaI Report] ' + type + ' — from ' + name);
+      const body    = encodeURIComponent('Name: ' + name + '\nReport Type: ' + type + '\n\nDetails:\n' + details);
+      window.location.href = 'mailto:nomashalianinteligence@gmail.com?subject=' + subject + '&body=' + body;
+    }
+
+    // ── STATIC TRANSLATIONS ──
+    const EN = {
+      "hero-label":"Republic of Nomashae","hero-title":"NIaI","hero-sub":"Internal security, investigation, and intelligence in service of the Republic.",
+      "badge-active":"Active","stat-agents":"Active Agents","stat-cases":"Open Cases","stat-threats":"Monitored Threats",
+      "mission-title":"Our Mission",
+      "mission-p1":"The Nomashalian Intelligence & Investigation Bureau — NIaI — exists to protect the sovereignty, security, and citizens of the Republic of Nomashae. We investigate threats to national stability, gather intelligence to inform government decisions, and uphold the rule of law across all regions.",
+      "mission-p2":"We operate with transparency where possible and discretion where necessary, always in service of the Republic's core values: balance, justice, and harmony.",
+      "pillars-label":"What We Do","pillars-title":"Operational Pillars","pillars-sub":"The four core areas that define the Bureau's work",
+      "pillar1-title":"Internal Security","pillar1-text":"Monitoring and protecting Nomashae from threats within its borders and regions. The Bureau maintains awareness of risks to national stability at all times.",
+      "pillar2-title":"Investigation","pillar2-text":"Conducting thorough, fair investigations into criminal and civil matters. Every case is handled with integrity and in accordance with Nomashalian law.",
+      "pillar3-title":"Intelligence","pillar3-text":"Gathering and analysing information to keep the government and citizens informed. Intelligence operations are conducted within the legal framework of the Republic.",
+      "pillar4-title":"Rule of Law","pillar4-text":"All Bureau operations are conducted within Nomashae's legal framework. The NIaI works in close coordination with the Ministry of Justice.",
+      "cases-label":"Investigations","cases-title":"Active Cases","cases-sub":"Cases cleared for public disclosure. Sensitive details may be withheld pending investigation.",
+      "case1-name":"Republic Formation Review","case1-type":"Administrative · Constitutional",
+      "badge-open":"Open","cm-opened":"Opened","cm-agent":"Lead Agent","cm-priority":"Priority","priority-standard":"Standard",
+      "case1-desc":"Ongoing review of the constitutional formation of the Republic of Nomashae. This case documents the establishment of governmental structures, ministry formation, and legal framework development. Status updates are filed as new decrees and legislation are passed.",
+      "threats-label":"Intelligence","threats-title":"Known Threats","threats-sub":"Publicly disclosed threat assessments reviewed and updated by the NIaI assessment division.",
+      "threat1-name":"External Diplomatic Pressure","level-low":"Low",
+      "threat1-desc":"Potential diplomatic challenges stemming from Nomashae's status as an unrecognised micronation. No active hostile actors identified. Classified as low risk and monitored.",
+      "tag-diplomatic":"Diplomatic","tag-external":"External","tag-monitored":"Monitored",
+      "threat2-name":"Digital Infrastructure Risk",
+      "threat2-desc":"The Republic's digital presence is hosted on external platforms. Risk of service disruption or policy changes affecting Nomashae's online sovereignty. Ministry of Technology is actively addressing this.",
+      "tag-technology":"Technology","tag-infrastructure":"Infrastructure",
+      "personnel-label":"Leadership","personnel-title":"Bureau Personnel","personnel-sub":"Publicly registered agents and officers of the NIaI. Classified personnel are not listed here.",
+      "callsign1":"Callsign: Yipified","callsign2":"Callsign: AppaRider",
+      "ar-role":"Role","ar-division":"Division","ar-status":"Status","ar-clearance":"Clearance",
+      "agent1-role":"Director of Intelligence","agent1-division":"Technology & Operations",
+      "agent2-role":"Bureau Chief","agent2-division":"Investigation & Security",
+      "status-active":"Active","clearance-top":"Level 3 — Top",
+      "contact-label":"Get In Touch","contact-title":"Contact & Report","contact-sub":"Submit tips, reports, or general enquiries to the Bureau.",
+      "contact-p1":"The NIaI maintains open communication channels for citizens of Nomashae and members of the public. If you have information relevant to an active investigation, a security concern, or a general enquiry, use the form or one of the direct channels listed below.",
+      "contact-p2":"All reports are handled with discretion. Anonymous submissions are accepted.",
+      "ch-discord":"Discord","ch-portal":"Main Portal","ch-secure":"Secure Reports","ch-secure-val":"Via Ministry of Justice",
+      "form-title":"Submit a Report","form-name":"Your Name (or leave blank for anonymous)","form-type":"Report Type","form-details":"Details",
+      "opt1":"Security Concern","opt2":"Investigation Tip","opt3":"Citizen Complaint","opt4":"General Enquiry","opt5":"Other",
+      "form-note":"* For urgent matters contact the Bureau directly via Discord.","form-submit":"Submit Report",
+
+
+      "nothreat-name":"No known threats at the moment.",
+      "level-info":"Info",
+      "nothreat-desc":"The Bureau is working hard to keep you safe.",
+      "tag-info":"Info"
+
+
+    };
+    const MK = {
+      "hero-label":"Република Номашае","hero-title":"НИаИ","hero-sub":"Внатрешна безбедност, истрага и разузнавање во служба на Републиката.",
+      "badge-active":"Активно","stat-agents":"Активни агенти","stat-cases":"Отворени случаи","stat-threats":"Следени закани",
+      "mission-title":"Нашата мисија",
+      "mission-p1":"Номашалското биро за разузнавање и истрага — НИаИ — постои за да ги заштити суверенитетот, безбедноста и граѓаните на Република Номашае. Ги истражуваме заканите по националната стабилност, собираме разузнавачки податоци и го одржуваме владеењето на правото низ сите региони.",
+      "mission-p2":"Работиме со транспарентност каде е можно и со дискреција каде е потребно, секогаш во служба на основните вредности на Републиката: рамнотежа, правда и хармонија.",
+      "pillars-label":"Што Правиме","pillars-title":"Оперативни столбови","pillars-sub":"Четирите основни области кои ја дефинираат работата на Бирото",
+      "pillar1-title":"Внатрешна безбедност","pillar1-text":"Следење и заштита на Номашае од закани во нејзините граници. Бирото одржува свесност за ризиците по националната стабилност во секое време.",
+      "pillar2-title":"Истрага","pillar2-text":"Спроведување темелни и праведни истраги по кривични и граѓански прашања. Секој случај се води со интегритет и во согласност со номашалскиот закон.",
+      "pillar3-title":"Разузнавање","pillar3-text":"Собирање и анализа на информации за да се информираат владата и граѓаните. Операциите се спроведуваат во законската рамка на Републиката.",
+      "pillar4-title":"Владеење на правото","pillar4-text":"Сите операции на Бирото се спроведуваат во законската рамка на Номашае. НИаИ работи во блиска соработка со Министерството за правда.",
+      "cases-label":"Истраги","cases-title":"Активни случаи","cases-sub":"Случаи одобрени за јавно откривање. Чувствителните детали може да бидат задржани.",
+      "case1-name":"Преглед на формирањето на Републиката","case1-type":"Административно · Уставно",
+      "badge-open":"Отворен","cm-opened":"Отворен на","cm-agent":"Водечки агент","cm-priority":"Приоритет","priority-standard":"Стандарден",
+      "case1-desc":"Тековен преглед на уставното формирање на Република Номашае. Овој случај ги документира воспоставувањето на владините структури, формирањето на министерствата и развојот на правната рамка.",
+      "threats-label":"Разузнавање","threats-title":"Познати закани","threats-sub":"Јавно обелоденети проценки на заканите прегледувани од Одделот за проценка на НИаИ.",
+      "threat1-name":"Надворешен дипломатски притисок","level-low":"Низок",
+      "threat1-desc":"Потенцијални дипломатски предизвици поради статусот на Номашае. Нема активни непријателски актери. Класифицирано како низок ризик.",
+      "tag-diplomatic":"Дипломатско","tag-external":"Надворешно","tag-monitored":"Следено",
+      "threat2-name":"Ризик на дигиталната инфраструктура",
+      "threat2-desc":"Дигиталното присуство на Републиката е сместено на надворешни платформи. Ризик од прекин на услугата. Министерството за технологија активно го решава ова.",
+      "tag-technology":"Технологија","tag-infrastructure":"Инфраструктура",
+      "personnel-label":"Раководство","personnel-title":"Персонал на Бирото","personnel-sub":"Јавно регистрирани агенти и службеници на НИаИ. Класифициран персонал не е наведен.",
+      "callsign1":"Повикен знак: Yipified","callsign2":"Повикен знак: AppaRider",
+      "ar-role":"Улога","ar-division":"Оддел","ar-status":"Статус","ar-clearance":"Дозвола",
+      "agent1-role":"Директор на разузнавање","agent1-division":"Технологија и операции",
+      "agent2-role":"Шеф на биро","agent2-division":"Истрага и безбедност",
+      "status-active":"Активен","clearance-top":"Ниво 3 — Врвна",
+      "contact-label":"Контактирајте нè","contact-title":"Контакт и пријава","contact-sub":"Поднесете совети, извештаи или општи прашања до Бирото.",
+      "contact-p1":"НИаИ одржува отворени комуникациски канали за граѓаните на Номашае и членовите на јавноста. Ако имате информации релевантни за истрага или безбедносна загриженост, користете го формуларот или директните канали.",
+      "contact-p2":"Сите извештаи се третираат со дискреција. Се прифаќаат анонимни поднесоци.",
+      "ch-discord":"Discord","ch-portal":"Главен портал","ch-secure":"Безбедни извештаи","ch-secure-val":"Преку Министерството за правда",
+      "form-title":"Поднеси извештај","form-name":"Вашето ime (или оставете празно за анонимно)","form-type":"Вид на извештај","form-details":"Детали",
+      "opt1":"Безбедносна загриженост","opt2":"Совет за истрага","opt3":"Жалба на граѓанин","opt4":"Општо прашање","opt5":"Друго",
+      "form-note":"* За итни прашања контактирајте го Бирото директно преку Discord.","form-submit":"Поднеси извештај",
+
+
+      "nothreat-name":"Нема познати закани во моментот.",
+      "level-info":"Инфо",
+      "nothreat-desc":"Бирото работи тешко за да ве заштити",
+      "tag-info":"Инфо"
+    };
+    const FB = {
+      "hero-label":"Ripablik ov Nomashei","hero-title":"NIaI","hero-sub":"Internol sekyuriti, investigeishon, and intelijenss in servis ov da Ripablik.",
+      "badge-active":"Aktiv","stat-agents":"Aktiv Ejents","stat-cases":"Open Keisses","stat-threats":"Monitord Trets",
+      "mission-title":"Our Mishon",
+      "mission-p1":"Da Nomashaelian Intelijenss & Investigeishon Byuro — NIaI — egzists tu protekt da sovrinty, sekyriti, and sitisenss ov da Ripablik ov Nomashei. Wi investigeit trets tu nashonal stabiliti, gadr intelijenss tu inform govornment desishons, and uphould da rul ov lor akros al rejons.",
+      "mission-p2":"Wi opereitt wid transparensi wer possibel and diskreshon wer nesesseri, olweis in servis ov da Ripablik's kor valuss: balans, justis, and harmoni.",
+      "pillars-label":"Wat Wi Du","pillars-title":"Operashonal Pillerss","pillars-sub":"Da for kor areass dat defein da Byuro's werk",
+      "pillar1-title":"Internol Sekyriti","pillar1-text":"Monitering and protekting Nomashei from trets widin its borders. Da Byuro meinteins awarness ov risks tu nashonal stabiliti at ol teims.",
+      "pillar2-title":"Investigeishon","pillar2-text":"Kondukting thorow, fer investigeishons intu kriminal and sivil maters. Evri keis is handeld wid integrity and in akordans wid Nomashaelian lor.",
+      "pillar3-title":"Intelijenss","pillar3-text":"Gadring and analysing informeishon tu keep da govornment and sitisenss informd. Opereshons ar kondukted widin da legal fremwurk ov da Ripablik.",
+      "pillar4-title":"Rul ov Lor","pillar4-text":"Al Byuro opereshons ar kondukted widin Nomashei's legal fremwurk. Da NIaI werks in kloss koordineishon wid da Ministri ov Justis.",
+      "cases-label":"Investigeishons","cases-title":"Aktiv Keisses","cases-sub":"Keisses kleird for pablik disklosher. Sensitiv diteils mei bi witheld pending investigeishon.",
+      "case1-name":"Ripablik Formeishon Reviw","case1-type":"Administretiv · Konstitushonal",
+      "badge-open":"Open","cm-opened":"Opennd","cm-agent":"Leed Ejent","cm-priority":"Prioriti","priority-standard":"Standard",
+      "case1-desc":"Ongowing reviw ov da konstitushonal formeishon ov da Ripablik ov Nomashei. Dis keis dokumentss da establisment ov govornmental strukchers, ministri formeishon, and legal fremwurk devlopment.",
+      "threats-label":"Intelijenss","threats-title":"Noun Trets","threats-sub":"Pablikli disklosd tret assessments reviwd and updeitd by da NIaI divishon.",
+      "threat1-name":"Eksternel Diplomutik Preshur","level-low":"Lou",
+      "threat1-desc":"Potenshol diplomutik chalenjes steming from Nomashei's steitus az an unrekogneisd mikroneshon. No aktiv hostaill aktorss identified. Klassifeid az lou risk.",
+      "tag-diplomatic":"Diplomutik","tag-external":"Eksternel","tag-monitored":"Moniterd",
+      "threat2-name":"Dijital Infrastrakcher Risk",
+      "threat2-desc":"Da Ripablik's dijital prezens is hosstd on eksternel platfforms. Risk ov servis disrapshon. Da Ministri ov Teknoloji is aktivli adresing dis.",
+      "tag-technology":"Teknoloji","tag-infrastructure":"Infrastrakcher",
+      "personnel-label":"Leedership","personnel-title":"Byuro Personel","personnel-sub":"Pablikli rejisterd ejents and offiserss ov da NIaI. Klassifeid personel ar not listd.",
+      "callsign1":"Kolsein: Yipified","callsign2":"Kolsein: AppaRider",
+      "ar-role":"Rol","ar-division":"Divishon","ar-status":"Steitus","ar-clearance":"Klirans",
+      "agent1-role":"Direktor ov Intelijenss","agent1-division":"Teknoloji & Opereshons",
+      "agent2-role":"Byuro Cheef","agent2-division":"Investigeishon & Sekyriti",
+      "status-active":"Aktiv","clearance-top":"Level 3 — Top",
+      "contact-label":"Get In Tuch","contact-title":"Kontakt & Riport","contact-sub":"Sabmit tips, riports, or jeneral inkwiriz tu da Byuro.",
+      "contact-p1":"Da NIaI meinteins open komunikeishon chanelss for sitisenss ov Nomashei and memberss ov da pablik. If yu hav informeishon relivant tu an aktiv investigeishon or sekyriti konsern, yuus da form or wun ov da direkt chanelss listd below.",
+      "contact-p2":"Al riports ar handeld wid diskreshon. Anonimuss sabmishons ar akseptd.",
+      "ch-discord":"Discord","ch-portal":"Mein Portal","ch-secure":"Sekyr Riports","ch-secure-val":"Via Ministri ov Justis",
+      "form-title":"Sabmit un Riport","form-name":"Yor Neim (or leev blank for anonimuss)","form-type":"Riport Teip","form-details":"Diteils",
+      "opt1":"Sekyriti Konsern","opt2":"Investigeishon Tip","opt3":"Sitisen Komplent","opt4":"Jeneral Inkwiri","opt5":"Uder",
+      "form-note":"* For urjent maters kontakt da Byuro direktli via Discord.","form-submit":"Sabmit Riport",
+
+
+      "nothreat-name":"Ne knei threti in moment.",
+      "level-info":"Infor",
+      "nothreat-desc":"Da Biro es vorking hard du keep tu safi.",
+      "tag-info":"Infor"
+    };
+
+    const LANGS = { en: EN, mk: MK, fb: FB };
+
+    function setLang(lang) {
+      ['en','mk','fb'].forEach(l => document.getElementById('lb-'+l).classList.toggle('active', l === lang));
+      const strings = LANGS[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (strings[key] !== undefined) el.innerHTML = strings[key];
+      });
+    }
+  </script>
+</body>
+</html>
