@@ -26,8 +26,18 @@ const i18n = {
         "p2sig":"<span class=\"sig-date\">Signed 26 Jan 2026</span>Eftimij Novakovski",
 
         //fot
-        "footer":"© 2026 Nomashae · Powered by the Elements"
+        "footer":"© 2026 Nomashae · Powered by the Elements",
 
+        //constitution
+        "constitution":"Constitution",
+        "constitution-title":"Constitution of Nomashae",
+        "constitution-descr":"The Constitution of Republic of Nomashae",
+        "buttontranslate":"<a href=\"./assets/constitution/Constitution.pdf\" class=\"btnbtn\">View Constitution</a>",
+
+        "minist":"Minsitries",
+        "tgbotr-bobas":"The governing bodies of the Republic - built on balance and service",
+        "sactive":"active",
+        "sdev":"in development"
 
     },
     mk: {
@@ -57,7 +67,18 @@ const i18n = {
         "p2sig":"<span class=\"sig-date\">Потпишано 26 Јан 2026</span>Ефтимиј Новаковски",
 
         //fot
-        "footer":"© 2026 Номашае · Поддржано од Елементите"
+        "footer":"© 2026 Номашае · Поддржано од Елементите",
+
+        //constitution
+        "constitution":"Устав",
+        "constitution-title":"Устав на Номашае",
+        "constitution-descr":"Уставот на Република Номашае",
+        "buttontranslate":"<a href=\"./assets/constitution/Устав.pdf\" class=\"btnbtn\">Прочитај го Уставот</a>",
+
+        "minist":"Министерства",
+        "tgbotr-bobas":"Владеечките тела на републиката - на база на баланс и услуга",
+        "sactive":"Активни",
+        "sdev":"Во развивање"
 
     },
     fb: {
@@ -87,9 +108,18 @@ const i18n = {
         "p2sig":"<span class=\"sig-date\">Sig 26 Jen 2026</span>Eftimij Novakovski",
 
         //fot
-        "footer":"© 2026 Nomasha · Powrd bai da Elemen"
+        "footer":"© 2026 Nomasha · Powrd bai da Elemen",
 
-        
+        //constitution
+        "constitution":"Constit",
+        "constitution-title":"Constit od Nomasha",
+        "constitution-descr":"Da Constit od Republik od Nomasha",
+        "buttontranslate":"<a href=\"./assets/constitution/Konstiti.pdf\" class=\"btnbtn\">Vivi Constit</a>",
+
+        "minist":"Ministar",
+        "tgbotr-bobas":"Da gova tela od da Repub - Boila ode Balans end servis",
+        "sactive":"Aktiv",
+        "sdev":"im develip"
     }
 };
 

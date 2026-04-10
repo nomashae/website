@@ -265,6 +265,10 @@
     .btn-solid { background: var(--accent); color: #fff; border-color: var(--accent); }
     .btn-solid:hover { opacity: 0.85; }
 
+    #activeh {
+      border-color: var(--accent);
+    }
+
     @media (max-width: 640px) {
       nav { padding: 0 1rem; }
       .video-grid { grid-template-columns: 1fr; }
@@ -406,7 +410,7 @@
         <p class="sec-sub" data-i18n="hol-sub">Days of peace, balance, and remembrance</p>
       </div>
       <div class="holiday-grid">
-        <div class="holiday-card">
+        <div class="holiday-card" id="activeh">
           <span class="holiday-date" data-i18n="hol1-date">Whole Spring</span>
           <div class="holiday-name" data-i18n="hol1-name">Avatar Day Festival</div>
           <div class="holiday-desc" data-i18n="hol1-desc">A season-long celebration honouring all Avatars past and present. Citizens add flowers to Avatar tombs and statues, reflect on balance, and gather in peace.</div>
@@ -415,6 +419,11 @@
           <span class="holiday-date" data-i18n="hol2-date">26th January</span>
           <div class="holiday-name" data-i18n="hol2-name">Flying Koi Carnival</div>
           <div class="holiday-desc" data-i18n="hol2-desc">A joyful carnival celebrating the beautiful flying koi of Nomashae's waters. A day of colour, community, and wonder — without the old-school thieves.</div>
+        </div>
+        <div class="holiday-card">
+          <span class="holiday-date" data-i18n="hol3-date">1st September</span>
+          <div class="holiday-name" data-i18n="hol3-name">Republic Day</div>
+          <div class="holiday-desc" data-i18n="hol3-desc">A holiday deticated to the establishment and creation of the republic. All the way back in September 1st, 2025.</div>
         </div>
       </div>
     </div>
@@ -626,7 +635,8 @@ Fo tor un — Nomasha.</p>
         "hol-label":"Celebrations", "hol-title":"National Holidays", "hol-sub":"Days of peace, balance, and remembrance",
         "hol1-date":"Whole Spring", "hol1-name":"Avatar Day Festival", "hol1-desc":"A season-long celebration honouring all Avatars past and present. Citizens add flowers to Avatar tombs and statues, reflect on balance, and gather in peace.",
         "hol2-date":"26th January", "hol2-name":"Flying Koi Carnival", "hol2-desc":"A joyful carnival celebrating the beautiful flying koi of Nomashae's waters. A day of colour, community, and wonder — without the old-school thieves.",
-        "footer":"© 2026 Nomashae · Powered by the Elements"
+        "footer":"© 2026 Nomashae · Powered by the Elements",
+        "hol3-date":"1st September", "hol3-name":"Independence Day", "hol3-desc":"A holiday deticated to the establishment and creation of the republic. Created all the way back in September 1st, 2025."
       },
       mk: {
         "back":"Назад", "nav-dark":"Темно", "nav-light":"Светло",
@@ -644,7 +654,8 @@ Fo tor un — Nomasha.</p>
         "hol-label":"Прослави", "hol-title":"Национални Празници", "hol-sub":"Денови на мир, рамнотежа и сеќавање",
         "hol1-date":"Цело Пролет", "hol1-name":"Фестивал на Денот на Аватар", "hol1-desc":"Прослава во текот на целата сезона во чест на сите Аватари. Граѓаните ставаат цвеќе на гробовите и статуите на Аватарите и се собираат во мир.",
         "hol2-date":"26 Јануари", "hol2-name":"Карневал на Летечките Крап", "hol2-desc":"Радосен карневал кој ги слави прекрасните летечки крапови на Номашае. Ден на боја, заедница и чудо.",
-        "footer":"© 2026 Номашае · Поддржано од Елементите"
+        "footer":"© 2026 Номашае · Поддржано од Елементите",
+        "hol3-date":"1ви Септември", "hol3-name":"Ден на Независност", "hol3-desc":"Празник посветен на основањето и созадвањето на републиката. Креирана назад на 1ви Септември, 2025"
       },
       fb: {
         "back":"Bak", "nav-dark":"Darka", "nav-light":"Lighta",
@@ -662,7 +673,8 @@ Fo tor un — Nomasha.</p>
         "hol-label":"Selebrasho", "hol-title":"Nesh Holidei", "hol-sub":"Dei ov pes, balans an memori",
         "hol1-date":"Hol Spring", "hol1-name":"Avata Dei Festiv", "hol1-desc":"Un seson-long selebrasho honr al Avata. Sitisen add flowa tu Avata tomb an statyu, reflek on balans, an gatha in pes.",
         "hol2-date":"26 Janur", "hol2-name":"Flyin Koi Karniv", "hol2-desc":"Un joyful karniv selebrat da byutiful flyin koi ov Nomasha wata. Un dei ov kola, komuniti an wonda.",
-        "footer":"© 2026 Nomasha · Powrd bai da Elemen"
+        "footer":"© 2026 Nomasha · Powrd bai da Elemen",
+        "hol3-date":"1 Sepa", "hol3-name":"Ona Liberna Freea", "hol3-desc":"Holidei amse deosa end kreata da Repub. Establisha bak im 1 Sepa, 2025"
       }
     };
 

@@ -252,40 +252,41 @@
 
   <nav>
     <div class="nav-left">
-      <a href="./index.html" class="back-link">
+      <a href="./index.html" class="back-link" data-i18n="tback">
         <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
         Back
       </a>
-      <a href="./index.html" class="nav-brand">Nomashae</a>
+      <a href="./index.html" class="nav-brand" data-i18n="ntnmsh">Nomashae</a>
     </div>
     <div class="nav-right">
       <button class="nav-btn" id="dark-btn">Dark</button>
+      <button class="nav-btn" id="lang-btn">EN</button>
     </div>
   </nav>
 
   <!-- HERO -->
   <div class="hero">
-    <span class="hero-label">Republic of Nomashae</span>
-    <h1 class="hero-title">Ministries</h1>
-    <p class="hero-sub">The governing bodies of the Republic — built on balance and service</p>
+    <span class="hero-label" data-i18n="ron">Republic of Nomashae</span>
+    <h1 class="hero-title" data-i18n="minist">Ministries</h1>
+    <p class="hero-sub" data-i18n="tgbotr-bobas">The governing bodies of the Republic - built on balance and service</p>
   </div>
 
   <!-- STATS BAR -->
   <div class="stats-bar">
     <div class="stat">
-      <span class="stat-num">5</span>
-      <span class="stat-label">Active</span>
+      <span class="stat-num">7</span>
+      <span class="stat-label" data-i18n="sactive">Active</span>
     </div>
     <div class="stat">
       <span class="stat-num">1</span>
-      <span class="stat-label">In Development</span>
+      <span class="stat-label" data-i18n="sdev">In Development</span>
     </div>
     <div class="stat">
-      <span class="stat-num">6</span>
-      <span class="stat-label">Coming Soon</span>
+      <span class="stat-num">5</span>
+      <span class="stat-label" data-i18n="scomingsoon">Coming Soon</span>
     </div>
     <div class="stat">
-      <span class="stat-num">12</span>
+      <span class="stat-num">13</span>
       <span class="stat-label">Total Planned</span>
     </div>
   </div>
@@ -344,6 +345,22 @@
         <div class="ministry-desc">Internal security, investigation, and intelligence in service of the Republic.</div>
         <span class="ministry-status status-active">Active</span>
       </a>
+      <a href="./mi&pw.html" class="ministry-card">
+        <div class="ministry-icon"><i class="fa-solid fa-helmet-safety"></i></div>
+        <div class="ministry-name">Ministry of Infrastructure &amp; Public Works
+          <i class="fa-solid fa-arrow-right arrow"></i>
+        </div>
+        <div class="ministry-desc">Oversees the planning and construction of roads, buildings, and public utilities across Nomashae's cities and regions. Manages city development, land expansion, and the upkeep of public spaces in the Minecraft world.</div>
+        <span class="ministry-status status-active">Active</span>
+      </a>
+      <a href="./nosa.html" class="ministry-card">
+        <div class="ministry-icon"><i class="fa-solid fa-rocket"></i></div>
+        <div class="ministry-name">Nomashae Orbital & Space Agency
+          <i class="fa-solid fa-arrow-right arrow"></i>
+        </div>
+        <div class="ministry-desc">Nomashae looks beyond its borders — past the sky itself. NOSA is the Republic's agency for orbital research, satellite operations, deep-space exploration, and the defence of Nomashae from threats beyond the atmosphere.</div>
+        <span class="ministry-status status-active">Active</span>
+      </a>
     </div>
   </div>
 
@@ -370,11 +387,12 @@
         </div> -->
 
         <div class="ministry-card">
-          <div class="ministry-icon"><i class="fa-solid fa-helmet-safety"></i></div>
-          <div class="ministry-name">Ministry of Infrastructure &amp; Public Works</div>
-          <div class="ministry-desc">Oversees the planning and construction of roads, buildings, and public utilities across Nomashae's cities and regions. Manages city development, land expansion, and the upkeep of public spaces in the Minecraft world.</div>
-          <span class="ministry-status status-dev">In development</span>
+          <div class="ministry-icon"><i class="fa-solid fa-coins"></i></div>
+          <div class="ministry-name">Ministry of Finance &amp; Treasury</div>
+          <div class="ministry-desc">Manages Nomashae's economy and currency — Copper, Silver, and Gold Pices. Oversees land pricing, trade between cities and regions, banking institutions, and the overall economic health of the Republic.</div>
+          <span class="ministry-status status-soon">Coming Soon</span>
         </div>
+        
       </div>
     </div>
   </div>
@@ -405,12 +423,7 @@
           <span class="ministry-status status-soon">Coming Soon</span>
         </div>
 
-        <div class="ministry-card">
-          <div class="ministry-icon"><i class="fa-solid fa-coins"></i></div>
-          <div class="ministry-name">Ministry of Finance &amp; Treasury</div>
-          <div class="ministry-desc">Manages Nomashae's economy and currency — Copper, Silver, and Gold Pices. Oversees land pricing, trade between cities and regions, banking institutions, and the overall economic health of the Republic.</div>
-          <span class="ministry-status status-soon">Coming Soon</span>
-        </div>
+        
 
         <!-- <div class="ministry-card">
           <div class="ministry-icon"><i class="fa-solid fa-scale-balanced"></i></div>
@@ -452,6 +465,8 @@
   </div>
 
   <footer><p>© 2026 Nomashae · Powered by the Elements</p></footer>
+
+  <script src="./bigTranslations.js"></script>
 
   <script>
     function getElement() {

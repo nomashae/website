@@ -76,7 +76,7 @@
     /* HERO */
     .hero {
       padding: 5rem 2rem 4rem; text-align: center;
-      background: var(--bg2); border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border); /*background: var(--bg2);*/
       transition: background var(--t), border-color var(--t);
     }
     .hero-label {
@@ -93,6 +93,9 @@
       font-size: 0.9rem; color: var(--ink2); font-weight: 300;
       font-style: italic; transition: color var(--t);
     }
+
+    .section { padding: 5rem 2rem; border-top: 1px solid var(--border); transition: border-color var(--t); }
+    .section.alt { background: var(--bg2); transition: background var(--t), border-color var(--t); justify-content: center; align-items: center; text-align: center;}
 
     /* MAIN LAYOUT */
     .decrees-wrap {
@@ -244,6 +247,27 @@
       color: var(--ink2); transition: border-color var(--t), color var(--t);
     }
 
+    .btnbtn {
+      display: block;
+      width: fit-content;
+      
+      text-decoration: none;
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      padding: 0.85rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: opacity 0.2s;
+
+      margin: 0 auto;
+    }
+
     @media (max-width: 600px) {
       nav { padding: 0 1rem; }
       .decrees-wrap { padding: 2.5rem 1.2rem; }
@@ -298,6 +322,16 @@
     <p class="hero-sub" data-i18n="pdan">Official orders, press releases and announcements</p>
   </div>
 
+  <div class="section alt">
+    <span class="hero-label" data-i18n="constitution">Constitution</span>
+    <h1 class="hero-title" data-i18n="constitution-title">Constitution of Nomashae</h1>
+    <p class="hero-sub" data-i18n="constitution-decsr">The Constitution of Republic of Nomashae</p>
+    <h1 class="hero-label"> </h1> <!--Placeholder--->
+    <div data-i18n="buttontranslate">
+      <a href="./assets/constitution/Constitution.pdf" class="btnbtn">View Constitution</a>
+    </div>
+  </div>
+
   <div class="decrees-wrap">
 
     <!--
@@ -338,7 +372,7 @@
 
     ═══════════════════════════════════════════
     -->
-
+    
     <!-- DECREE 1 — Press Release -->
     <div class="decree">
       <div class="decree-header">
@@ -422,7 +456,7 @@
     applyDark();
   </script>
 
-  <script src="./executive_orders.js"></script>
+  <script src="./bigTranslations.js"></script>
 
   <script>
   const topBtn = document.getElementById('topBtn');

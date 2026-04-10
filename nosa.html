@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>N.O.S.A. — Nomashae Orbital & Space Agency</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --accent: #e8c96b;
+      --accent2: #c0392b;
+      --bg:   #0a0a0f;
+      --bg2:  #0f0f1a;
+      --bg3:  #13131f;
+      --card: #12121e;
+      --ink:  #f0ede6;
+      --ink2: #9a94a8;
+      --ink3: #5a5468;
+      --border: rgba(255,255,255,0.07);
+      --shadow: 0 2px 20px rgba(0,0,0,0.5);
+      --radius: 14px; --t: 0.3s ease;
+      --font: 'Outfit', sans-serif;
+    }
+
+    /* stars background */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg); color: var(--ink);
+      line-height: 1.7; min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* STARFIELD */
+    #stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .star {
+      position: absolute; border-radius: 50%;
+      background: #fff; opacity: 0;
+      animation: twinkle var(--d, 4s) ease-in-out infinite var(--delay, 0s);
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; }
+      50% { opacity: var(--peak, 0.7); }
+    }
+
+    /* everything above stars */
+    nav, .hero, .section, footer { position: relative; z-index: 1; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2.5rem; height: 64px;
+      background: rgba(10,10,15,0.85); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-left { display: flex; align-items: center; gap: 0.75rem; }
+    .back-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      text-decoration: none; color: var(--ink2);
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .nav-brand {
+      font-size: 1rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); text-decoration: none;
+    }
+    .nav-right { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: transparent; border: 1.5px solid var(--border);
+      color: var(--ink2); padding: 0.35rem 0.9rem; border-radius: 8px;
+      cursor: pointer; font-family: var(--font);
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: all 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .nav-btn:hover, .nav-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: 6rem 2rem 5rem; text-align: center;
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 120%, rgba(232,201,107,0.08), transparent 60%),
+        radial-gradient(ellipse at 20% 50%, rgba(192,57,43,0.06), transparent 50%);
+      pointer-events: none;
+    }
+    .hero-logo {
+      width: 220px; height: auto; margin: 0 auto 2rem;
+      display: block; filter: drop-shadow(0 0 24px rgba(232,201,107,0.3));
+      animation: floatLogo 6s ease-in-out infinite;
+    }
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .hero-eyebrow {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem;
+    }
+    .hero-title {
+      font-size: clamp(2.2rem, 7vw, 4rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 3px; margin-bottom: 0.5rem;
+      line-height: 1.1;
+    }
+    .hero-title span { color: var(--accent); }
+    .hero-full {
+      font-size: 0.78rem; font-weight: 300; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--ink2); margin-bottom: 1.2rem;
+    }
+    .hero-sub {
+      font-size: 0.92rem; color: var(--ink2); font-weight: 300;
+      max-width: 560px; margin: 0 auto 2rem; line-height: 1.85;
+    }
+    .hero-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      background: rgba(232,201,107,0.08);
+      border: 1px solid rgba(232,201,107,0.2);
+      color: var(--accent); padding: 0.35rem 0.9rem; border-radius: 20px;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .chip.red {
+      background: rgba(192,57,43,0.1);
+      border-color: rgba(192,57,43,0.25);
+      color: #e74c3c;
+    }
+
+    /* SECTIONS */
+    .section { padding: 4.5rem 2rem; border-top: 1px solid var(--border); }
+    .section.alt { background: var(--bg2); }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+    .sec-header { text-align: center; margin-bottom: 2.5rem; }
+    .sec-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem;
+    }
+    .sec-title {
+      font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 1px; margin-bottom: 0.3rem;
+    }
+    .sec-sub { font-size: 0.85rem; color: var(--ink2); font-weight: 300; }
+
+    .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade.in { opacity: 1; transform: none; }
+
+    /* PILLAR CARDS */
+    .resp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1rem; }
+    .resp-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.8rem;
+      box-shadow: var(--shadow); position: relative; overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .resp-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--accent); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .resp-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.6); border-color: rgba(232,201,107,0.15); }
+    .resp-card:hover::after { transform: scaleX(1); }
+    .resp-icon {
+      width: 42px; height: 42px;
+      background: rgba(232,201,107,0.08);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem; border: 1px solid rgba(232,201,107,0.15);
+    }
+    .resp-icon i { font-size: 1rem; color: var(--accent); }
+    .resp-title { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.4rem; }
+    .resp-desc { font-size: 0.82rem; font-weight: 300; color: var(--ink2); line-height: 1.75; }
+
+    /* MISSIONS */
+    .missions-list { display: flex; flex-direction: column; gap: 1rem; }
+    .mission-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .mission-card:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(0,0,0,0.6); border-color: rgba(232,201,107,0.15); }
+    .mission-top {
+      padding: 1.3rem 1.6rem; display: flex; align-items: center; gap: 1rem;
+    }
+    .mission-icon {
+      width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
+      background: rgba(232,201,107,0.08); border: 1px solid rgba(232,201,107,0.15);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mission-icon i { font-size: 1.1rem; color: var(--accent); }
+    .mission-info { flex: 1; }
+    .mission-name { font-size: 0.98rem; font-weight: 700; color: var(--ink); margin-bottom: 0.1rem; }
+    .mission-code { font-size: 0.62rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--ink3); }
+    .mission-right { flex-shrink: 0; }
+    .m-badge {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; padding: 0.25rem 0.65rem; border-radius: 20px;
+    }
+    .m-planned  { background: rgba(232,201,107,0.1); color: var(--accent); border: 1px solid rgba(232,201,107,0.25); }
+    .m-active   { background: rgba(40,167,69,0.1); color: #4caf50; border: 1px solid rgba(40,167,69,0.25); }
+    .m-research { background: rgba(91,155,191,0.1); color: #5b9bbf; border: 1px solid rgba(91,155,191,0.25); }
+    .mission-body {
+      padding: 0 1.6rem 1.4rem; border-top: 1px solid var(--border);
+    }
+    .mission-desc { font-size: 0.84rem; font-weight: 300; color: var(--ink2); line-height: 1.8; padding-top: 1rem; }
+    .mission-meta { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    .mm-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--ink3); margin-bottom: 0.2rem; }
+    .mm-value { font-size: 0.85rem; font-weight: 500; color: var(--ink); }
+
+    /* LEADERSHIP */
+    .leaders-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 680px; margin: 0 auto; }
+    .leader-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .leader-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.6); }
+    .leader-top {
+      background: rgba(232,201,107,0.06);
+      border-bottom: 1px solid rgba(232,201,107,0.12);
+      padding: 1.4rem 1.6rem; display: flex; gap: 1rem; align-items: center;
+    }
+    .leader-avatar {
+      width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(232,201,107,0.12);
+      border: 2px solid rgba(232,201,107,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 700; color: var(--accent);
+    }
+    .leader-name { font-size: 0.98rem; font-weight: 700; color: var(--ink); }
+    .leader-handle { font-size: 0.68rem; color: var(--accent); font-weight: 500; margin-top: 0.15rem; }
+    .leader-rows { padding: 0.8rem 1.6rem 1.2rem; }
+    .leader-row {
+      display: flex; justify-content: space-between;
+      padding: 0.45rem 0; border-bottom: 1px solid var(--border);
+      font-size: 0.82rem;
+    }
+    .leader-row:last-child { border-bottom: none; }
+    .lr-label { color: var(--ink2); font-size: 0.68rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+    .lr-value { color: var(--ink); font-weight: 500; }
+
+    /* NASA SECTION */
+    .nasa-block {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+    }
+    .nasa-disclaimer {
+      background: rgba(192,57,43,0.08); border-bottom: 1px solid rgba(192,57,43,0.2);
+      padding: 1rem 1.6rem; display: flex; gap: 0.8rem; align-items: flex-start;
+    }
+    .nasa-disclaimer i { color: #e74c3c; font-size: 0.9rem; margin-top: 0.2rem; flex-shrink: 0; }
+    .nasa-disclaimer p { font-size: 0.78rem; font-weight: 300; color: var(--ink2); line-height: 1.7; }
+    .nasa-disclaimer p strong { color: var(--ink); font-weight: 600; }
+    .nasa-inner { padding: 1.8rem; }
+    .nasa-inner h3 { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 0.4rem; }
+    .nasa-inner p { font-size: 0.85rem; font-weight: 300; color: var(--ink2); line-height: 1.8; margin-bottom: 1.4rem; }
+    .nasa-link {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: rgba(232,201,107,0.08); border: 1px solid rgba(232,201,107,0.2);
+      color: var(--accent); padding: 0.7rem 1.2rem; border-radius: 8px;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .nasa-link:hover { background: rgba(232,201,107,0.14); border-color: rgba(232,201,107,0.4); }
+
+    /* LIVESTREAM EMBED */
+    .stream-wrap {
+      margin-top: 2rem; border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--border); aspect-ratio: 16/9; width: 100%;
+      background: #000;
+    }
+    .stream-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); text-align: center; padding: 2.5rem 1rem;
+      font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--ink3);
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 1rem; }
+      .section { padding: 3rem 1.2rem; }
+      .leaders-grid { grid-template-columns: 1fr; }
+      .mission-meta { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STARFIELD -->
+  <div id="stars"></div>
+
+  <nav>
+    <div class="nav-left">
+      <a href="./index.html" class="back-link">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Nomashae
+      </a>
+      <span class="nav-brand">N.O.S.A.</span>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn" id="dark-btn">Light</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <img src="./assets/nosa/logo.png" alt="NOSA Logo" class="hero-logo"/>
+    <span class="hero-eyebrow">Republic of Nomashae</span>
+    <h1 class="hero-title"><span>N.O.S.A.</span></h1>
+    <p class="hero-full">Nomashae Orbital & Space Agency</p>
+    <p class="hero-sub">Nomashae looks beyond its borders — past the sky itself. NOSA is the Republic's agency for orbital research, satellite operations, deep-space exploration, and the defence of Nomashae from threats beyond the atmosphere.</p>
+    <div class="hero-chips">
+      <span class="chip"><i class="fa-solid fa-circle-dot" style="color:#4caf50"></i> Active</span>
+      <span class="chip"><i class="fa-solid fa-satellite"></i> Orbital Operations</span>
+      <span class="chip"><i class="fa-solid fa-flask"></i> Research</span>
+      <span class="chip red"><i class="fa-solid fa-shield-halved"></i> Space Defence</span>
+    </div>
+  </div>
+
+  <!-- MISSION PILLARS -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Why We Exist</span>
+        <h2 class="sec-title">Agency Pillars</h2>
+        <p class="sec-sub">The four core directives that guide every NOSA operation</p>
+      </div>
+      <div class="resp-grid">
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-rocket"></i></div>
+          <div class="resp-title">Exploration & Research</div>
+          <div class="resp-desc">NOSA conducts scientific research into orbital mechanics, celestial phenomena, and deep-space environments. Knowledge gathered beyond our atmosphere informs all of Nomashae's technological progress.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-satellite"></i></div>
+          <div class="resp-title">Satellite Communications</div>
+          <div class="resp-desc">Maintaining and expanding Nomashae's orbital communication network. NOSA satellites ensure uninterrupted contact between all regions of the Republic, no matter the conditions on the ground.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="resp-title">Space Defence</div>
+          <div class="resp-desc">Monitoring near-orbital space for threats — from rogue objects to hostile interference. NOSA coordinates with the Ministry of Defence to ensure Nomashae's sovereignty extends to the edge of the atmosphere.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-earth-americas"></i></div>
+          <div class="resp-title">Observation & Intelligence</div>
+          <div class="resp-desc">NOSA's orbital assets provide critical ground observation data — monitoring Nomashae's regions, borders, and natural environment from above. Data is shared with the relevant ministries and the NIaI.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLANNED MISSIONS -->
+  <div class="section">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Beyond the Atmosphere</span>
+        <h2 class="sec-title">Our Missions</h2>
+        <p class="sec-sub">NOSA's active mission roster — from orbital operations to deep-space objectives</p>
+      </div>
+      <div class="missions-list">
+
+        <div class="mission-card">
+          <div class="mission-top">
+            <div class="mission-icon"><i class="fa-solid fa-moon"></i></div>
+            <div class="mission-info">
+              <div class="mission-name">Project Moonwatch</div>
+              <div class="mission-code">NOSA-001 · Earthly Lunar Exploration</div>
+            </div>
+            <div class="mission-right"><span class="m-badge m-active">Active</span></div>
+          </div>
+          <div class="mission-body">
+            <div class="mission-desc">Nomashae's first lunar mission. Project Moonreach aims to help understand the lunar phases, gathering data of how it changes over the weeks couting potential sites for future long-range operations. Inspired by the Air Nomad spirit of exploration and freedom.</div>
+            <div class="mission-meta">
+              <div><div class="mm-label">Lead</div><div class="mm-value">Krste Dimov</div></div>
+              <div><div class="mm-label">Target</div><div class="mm-value">Lunar Body</div></div>
+              <div><div class="mm-label">Status</div><div class="mm-value" style="color:#4caf50">Active</div></div>
+            </div>
+          </div>
+        </div>
+
+        
+          
+
+      </div>
+    </div>
+  </div>
+
+  <!-- LEADERSHIP -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Command</span>
+        <h2 class="sec-title">Agency Leadership</h2>
+        <p class="sec-sub">NOSA is jointly led by both founders of the Republic</p>
+      </div>
+      <div class="leaders-grid">
+        <div class="leader-card">
+          <div class="leader-top">
+            <div class="leader-avatar">EN</div>
+            <div>
+              <div class="leader-name">Eftimij Novakovski</div>
+              <div class="leader-handle">Callsign: Yipified</div>
+            </div>
+          </div>
+          <div class="leader-rows">
+            <div class="leader-row">
+              <span class="lr-label">Role</span>
+              <span class="lr-value">Director of Operations</span>
+            </div>
+            <div class="leader-row">
+              <span class="lr-label">Focus</span>
+              <span class="lr-value">Tech & Exploration</span>
+            </div>
+            <div class="leader-row">
+              <span class="lr-label">Missions</span>
+              <span class="lr-value">NOSA-001</span>
+            </div>
+            <div class="leader-row">
+              <span class="lr-label">Status</span>
+              <span class="lr-value" style="color:#4caf50">Active</span>
+            </div>
+          </div>
+        </div>
+        <div class="leader-card">
+          <div class="leader-top">
+            <div class="leader-avatar">KD</div>
+            <div>
+              <div class="leader-name">Krste Dimov</div>
+              <div class="leader-handle">Callsign: AppaRider</div>
+            </div>
+          </div>
+          <div class="leader-rows">
+            <div class="leader-row">
+              <span class="lr-label">Role</span>
+              <span class="lr-value">Director of Defence</span>
+            </div>
+            <div class="leader-row">
+              <span class="lr-label">Focus</span>
+              <span class="lr-value">Security & Satellites</span>
+            </div>
+            <div class="leader-row">
+              <span class="lr-label">Missions</span>
+              <span class="lr-value">NOSA-001</span>
+            </div>
+            <div class="leader-row">
+              <span class="lr-label">Status</span>
+              <span class="lr-value" style="color:#4caf50">Active</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NASA + ARTEMIS -->
+  <div class="section">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Watching the Stars</span>
+        <h2 class="sec-title">Following Human Space Exploration</h2>
+        <p class="sec-sub">NOSA monitors real-world space programmes as part of its research mission</p>
+      </div>
+      <div class="nasa-block">
+        <div class="nasa-disclaimer">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <p><strong>Disclaimer:</strong> NOSA is not affiliated with, endorsed by, or connected to NASA in any way. NASA (National Aeronautics and Space Administration) is a real agency of the United States government. The content below is shared for educational and inspirational purposes only — NOSA simply watches, learns, and examines.</p>
+        </div>
+        <div class="nasa-inner">
+          <h3>NASA — A Programme NOSA Follows</h3>
+          <p>As part of its ongoing research mandate, NOSA keeps a close eye on NASA's space exploration efforts. Their Artemis programme — humanity's return to the Moon — is of particular interest to NOSA's own Project Moonreach planning. We do not represent NASA, speak for NASA, or claim any association with their work. We just really like space.</p>
+          <a href="https://www.youtube.com/@NASA" target="_blank" rel="noopener" class="nasa-link">
+            <i class="fa-brands fa-youtube"></i> NASA on YouTube
+          </a>
+          <div class="stream-wrap">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/6RwfNBtepa4?si=MrReMR84TkfTO_w-" title="NASA Live Stream" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section alt">
+    <div class="section-inner fade">
+        <div class="sec-header">
+            <span class="sec-label">Project Moonwatch</span>
+            <h2 class="sec-title">A Widget of The Moon Phases</h2>
+            <p class="sec-sub">NOSA activly watches the moon pahses</p>
+        </div>
+        <!-- <a target="blank"
+	style="text-decoration:none;"
+	href="https://moonphase.guide/"> -->
+		<div class="sec-header">
+            <img src="https://moonphase.guide/module/MZ0pqcW1RWVVsWFdETE1kNmp6eDFQcDhIRmhJSFZGaFovL3VKRnREaGZmWjJaNWhzcTNQbm9xcUM4OHpnbDNjeUhUbXF1Y2FsNFJtM2pkeEFMUWNHK0E9PQ.png" />
+        </div>
+		<div class="sec-header">
+            <h2 class="sec-title"><a href="https://moonphase.guide/" target="_blank" rel="noopener" class="nasa-link"> <i class="fa-solid fa-moon"></i> This widget is brought to you by MoonPhase</a></h2>
+        </div>
+    </div>
+  </div>
+
+  <footer><p>© 2026 Nomashae · N.O.S.A. — Nomashae Orbital & Space Agency · Ad Astra</p></footer>
+
+  <script>
+    // Starfield
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 180; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random() * 2.5 + 0.5;
+      s.style.cssText = `
+        width:${size}px; height:${size}px;
+        top:${Math.random()*100}%; left:${Math.random()*100}%;
+        --d:${(Math.random()*5+2).toFixed(1)}s;
+        --delay:-${(Math.random()*6).toFixed(1)}s;
+        --peak:${(Math.random()*0.6+0.2).toFixed(2)};
+      `;
+      starsEl.appendChild(s);
+    }
+
+    // Dark/light toggle (starts dark)
+    const darkBtn = document.getElementById('dark-btn');
+    let isLight = false;
+    try { isLight = localStorage.getItem('nosaLight') === 'true'; } catch(e) {}
+    function applyTheme() {
+      if (isLight) {
+        document.documentElement.style.setProperty('--bg',   '#f7f7f5');
+        document.documentElement.style.setProperty('--bg2',  '#efefec');
+        document.documentElement.style.setProperty('--bg3',  '#e8e8e0');
+        document.documentElement.style.setProperty('--card', '#ffffff');
+        document.documentElement.style.setProperty('--ink',  '#1a1a1a');
+        document.documentElement.style.setProperty('--ink2', '#555550');
+        document.documentElement.style.setProperty('--ink3', '#999990');
+        document.documentElement.style.setProperty('--border', 'rgba(0,0,0,0.08)');
+        document.documentElement.style.setProperty('--shadow', '0 2px 12px rgba(0,0,0,0.07)');
+        darkBtn.textContent = 'Dark';
+        darkBtn.classList.add('active');
+      } else {
+        document.documentElement.style.removeProperty('--bg');
+        document.documentElement.style.removeProperty('--bg2');
+        document.documentElement.style.removeProperty('--bg3');
+        document.documentElement.style.removeProperty('--card');
+        document.documentElement.style.removeProperty('--ink');
+        document.documentElement.style.removeProperty('--ink2');
+        document.documentElement.style.removeProperty('--ink3');
+        document.documentElement.style.removeProperty('--border');
+        document.documentElement.style.removeProperty('--shadow');
+        darkBtn.textContent = 'Light';
+        darkBtn.classList.remove('active');
+      }
+    }
+    darkBtn.addEventListener('click', () => {
+      isLight = !isLight;
+      try { localStorage.setItem('nosaLight', isLight); } catch(e) {}
+      applyTheme();
+    });
+    applyTheme();
+
+    // Scroll animations
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
