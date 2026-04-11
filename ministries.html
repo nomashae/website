@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ministries | Nomashae</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --accent: #4A7C59;
+      --bg: #f7f7f5; --bg2: #efefec; --card: #ffffff;
+      --ink: #1a1a1a; --ink2: #555550;
+      --border: rgba(0,0,0,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.07);
+      --radius: 14px; --t: 0.3s ease;
+    }
+    [data-theme="dark"] {
+      --bg: #141414; --bg2: #1e1e1e; --card: #242424;
+      --ink: #f0f0ee; --ink2: #999992;
+      --border: rgba(255,255,255,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    [data-element="air"]   { --accent: #5B9BBF; }
+    [data-element="water"] { --accent: #3A8F8F; }
+    [data-element="fire"]  { --accent: #C4622D; }
+    [data-element="earth"] { --accent: #4A7C59; }
+    [data-theme="dark"][data-element="air"]   { --accent: #7bb8d8; }
+    [data-theme="dark"][data-element="water"] { --accent: #5abfbf; }
+    [data-theme="dark"][data-element="fire"]  { --accent: #e07a4a; }
+    [data-theme="dark"][data-element="earth"] { --accent: #6aad82; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg); color: var(--ink);
+      line-height: 1.7; transition: background var(--t), color var(--t);
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2.5rem; height: 64px;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      transition: background var(--t), border-color var(--t);
+    }
+    .nav-left { display: flex; align-items: center; gap: 0.75rem; }
+    .back-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      text-decoration: none; color: var(--ink2);
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .nav-brand {
+      font-size: 1rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); text-decoration: none;
+      transition: color var(--t);
+    }
+    .nav-right { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: transparent; border: 1.5px solid var(--border);
+      color: var(--ink2); padding: 0.35rem 0.9rem; border-radius: 8px;
+      cursor: pointer; font-family: 'Outfit', sans-serif;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: all 0.2s;
+    }
+    .nav-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 2rem 4rem; text-align: center;
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      transition: background var(--t), border-color var(--t);
+    }
+    .hero-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .hero-title {
+      font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 2px; margin-bottom: 0.5rem;
+      transition: color var(--t);
+    }
+    .hero-sub {
+      font-size: 0.9rem; color: var(--ink2); font-weight: 300;
+      font-style: italic; transition: color var(--t);
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      display: flex; justify-content: center; gap: 0;
+      border-bottom: 1px solid var(--border);
+      transition: border-color var(--t);
+    }
+    .stat {
+      padding: 1.5rem 3rem; text-align: center;
+      border-right: 1px solid var(--border);
+      transition: border-color var(--t);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-size: 1.8rem; font-weight: 700; color: var(--accent);
+      display: block; line-height: 1; margin-bottom: 0.3rem;
+      transition: color var(--t);
+    }
+    .stat-label {
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--ink2);
+      transition: color var(--t);
+    }
+
+    /* SECTION */
+    .section { padding: 4rem 2rem; border-top: 1px solid var(--border); transition: border-color var(--t); }
+    .section.alt { background: var(--bg2); transition: background var(--t), border-color var(--t); }
+    .section-inner { max-width: 1000px; margin: 0 auto; }
+    .sec-header { text-align: center; margin-bottom: 2.5rem; }
+    .sec-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .sec-title {
+      font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 1px; margin-bottom: 0.3rem;
+      transition: color var(--t);
+    }
+    .sec-sub { font-size: 0.85rem; color: var(--ink2); font-weight: 300; transition: color var(--t); }
+
+    .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade.in { opacity: 1; transform: none; }
+
+    /* MINISTRY GRID */
+    .ministry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    /* MINISTRY CARD */
+    .ministry-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      box-shadow: var(--shadow);
+      position: relative; overflow: hidden;
+      transition: background var(--t), border-color var(--t), transform 0.25s, box-shadow 0.25s;
+      text-decoration: none; color: inherit; display: block;
+    }
+    .ministry-card::after {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: var(--card-accent, var(--accent));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s ease, background var(--t);
+    }
+    .ministry-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+    .ministry-card:hover::after { transform: scaleX(1); }
+
+    /* CLICKABLE ACTIVE CARD */
+    a.ministry-card { cursor: pointer; }
+    a.ministry-card .ministry-name {
+      display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;
+    }
+    a.ministry-card .ministry-name .arrow {
+      font-size: 0.75rem; color: var(--accent); opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 0.2s, transform 0.2s, color var(--t);
+      flex-shrink: 0;
+    }
+    a.ministry-card:hover .ministry-name .arrow {
+      opacity: 1; transform: translateX(0);
+    }
+
+    a.ministry-card {
+      margin-bottom: 20px;
+    }
+
+    .ministry-icon {
+      width: 44px; height: 44px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
+      transition: background var(--t);
+    }
+    .ministry-icon i {
+      font-size: 1.2rem; color: var(--accent); transition: color var(--t);
+    }
+    .ministry-name {
+      font-size: 0.95rem; font-weight: 700; color: var(--ink);
+      margin-bottom: 0.5rem; line-height: 1.4;
+      transition: color var(--t);
+    }
+    .ministry-desc {
+      font-size: 0.82rem; font-weight: 300; color: var(--ink2);
+      line-height: 1.7; transition: color var(--t);
+    }
+    .ministry-status {
+      display: inline-block; margin-top: 1rem;
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; padding: 0.22rem 0.65rem;
+      border-radius: 20px;
+    }
+
+    /* STATUS COLORS */
+    .status-active {
+      background: rgba(74,124,89,0.12); color: #3a6b45;
+      border: 1px solid rgba(74,124,89,0.25);
+    }
+    .status-dev {
+      background: rgba(90,155,191,0.12); color: #2e6e9e;
+      border: 1px solid rgba(90,155,191,0.25);
+    }
+    .status-soon {
+      background: rgba(160,120,60,0.12); color: #7a5a20;
+      border: 1px solid rgba(160,120,60,0.25);
+    }
+    [data-theme="dark"] .status-active { background: rgba(74,124,89,0.2);  color: #6aad82; }
+    [data-theme="dark"] .status-dev    { background: rgba(90,155,191,0.2); color: #7bb8d8; }
+    [data-theme="dark"] .status-soon   { background: rgba(160,120,60,0.2); color: #c8a050; }
+
+    /* NOTICE CARD */
+    .notice-card {
+      background: var(--card); border: 1px dashed var(--border);
+      border-radius: var(--radius); padding: 2.5rem;
+      text-align: center; color: var(--ink2);
+      font-size: 0.88rem; font-weight: 300; font-style: italic;
+      transition: background var(--t), border-color var(--t), color var(--t);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); text-align: center; padding: 2.5rem 1rem;
+      font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--ink2); transition: border-color var(--t), color var(--t);
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 1rem; }
+      .stats-bar { flex-wrap: wrap; }
+      .stat { padding: 1.2rem 1.5rem; flex: 1 1 33%; }
+      .section { padding: 3rem 1.2rem; }
+    }
+  </style>
+</head>
+<body data-theme="light" data-element="earth">
+
+  <nav>
+    <div class="nav-left">
+      <a href="./index.html" class="back-link" data-i18n="tback">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Back
+      </a>
+      <a href="./index.html" class="nav-brand" data-i18n="ntnmsh">Nomashae</a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn" id="dark-btn">Dark</button>
+      <button class="nav-btn" id="lang-btn">EN</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-label" data-i18n="ron">Republic of Nomashae</span>
+    <h1 class="hero-title" data-i18n="minist">Ministries</h1>
+    <p class="hero-sub" data-i18n="tgbotr-bobas">The governing bodies of the Republic - built on balance and service</p>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat">
+      <span class="stat-num">9</span>
+      <span class="stat-label" data-i18n="sactive">Active</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">3</span>
+      <span class="stat-label" data-i18n="sdev">In Development</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">4</span>
+      <span class="stat-label" data-i18n="scomingsoon">Coming Soon</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">16</span>
+      <span class="stat-label">Total Planned</span>
+    </div>
+  </div>
+
+  <!-- ACTIVE MINISTRIES -->
+  <div class="section">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Operational</span>
+        <h2 class="sec-title">Active Ministries</h2>
+        <p class="sec-sub">Currently operational and serving the Republic</p>
+      </div>
+      <!-- Active cards use <a> to be clickable. Add href="./ministry_xxx.html" for each. -->
+      <a href="./mtechnology.html" class="ministry-card">
+        <div class="ministry-icon"><i class="fa-solid fa-microchip"></i></div>
+        <div class="ministry-name">
+          Ministry of Technology
+          <i class="fa-solid fa-arrow-right arrow"></i>
+        </div>
+        <div class="ministry-desc">Oversees the digital infrastructure of Nomashae, including the official website, Minecraft server, and any future digital systems. Responsible for keeping the nation's technology running, secure, and up to date.</div>
+        <span class="ministry-status status-active">Active</span>
+      </a>
+      <a href="./mdefence.html" class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="ministry-name">
+            Ministry of Defence
+            <i class="fa-solid fa-arrow-right arrow"></i>
+          </div>
+          <div class="ministry-desc">Responsible for the protection and security of Nomashae. True to the Air Nomad philosophy, Nomashae's defence is built on de-escalation and peace — only acting when absolutely necessary.</div>
+          <span class="ministry-status status-active">Active</span>
+      </a>
+      <a href="./mia.html" class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-landmark"></i></div>
+          <div class="ministry-name">
+            Ministry of Internal Affairs
+            <i class="fa-solid fa-arrow-right arrow"></i>
+          </div>
+          <div class="ministry-desc">Manages the day-to-day administration of Nomashae's internal regions, handles citizen relations, and ensures that the laws and decrees of the Republic are upheld across all territories.</div>
+          <span class="ministry-status status-active">Active</span>
+      </a>
+      <a href="./mjustice.html" class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+          <div class="ministry-name">
+            Ministry of Justice
+            <i class="fa-solid fa-arrow-right arrow"></i>
+          </div>
+          <div class="ministry-desc">Will establish Nomashae's own legal framework, currently operating under the Macedonian justice system. Responsible for drafting laws, handling disputes, and ensuring fairness and balance for all citizens.</div>
+          <span class="ministry-status status-active">Active</span>
+      </a>
+      <a href="./niai.html" class="ministry-card">
+        <div class="ministry-icon"><i class="fa-solid fa-eye"></i></div>
+        <div class="ministry-name">
+          Nomashaelian Intelligence and Investigeishon Bureau
+          <i class="fa-solid fa-arrow-right arrow"></i>
+        </div>
+        <div class="ministry-desc">Internal security, investigation, and intelligence in service of the Republic.</div>
+        <span class="ministry-status status-active">Active</span>
+      </a>
+      <a href="./mi&pw.html" class="ministry-card">
+        <div class="ministry-icon"><i class="fa-solid fa-helmet-safety"></i></div>
+        <div class="ministry-name">Ministry of Infrastructure &amp; Public Works
+          <i class="fa-solid fa-arrow-right arrow"></i>
+        </div>
+        <div class="ministry-desc">Oversees the planning and construction of roads, buildings, and public utilities across Nomashae's cities and regions. Manages city development, land expansion, and the upkeep of public spaces in the Minecraft world.</div>
+        <span class="ministry-status status-active">Active</span>
+      </a>
+      <a href="./nosa.html" class="ministry-card">
+        <div class="ministry-icon"><i class="fa-solid fa-rocket"></i></div>
+        <div class="ministry-name">Nomashae Orbital & Space Agency
+          <i class="fa-solid fa-arrow-right arrow"></i>
+        </div>
+        <div class="ministry-desc">Nomashae looks beyond its borders — past the sky itself. NOSA is the Republic's agency for orbital research, satellite operations, deep-space exploration, and the defence of Nomashae from threats beyond the atmosphere.</div>
+        <span class="ministry-status status-active">Active</span>
+      </a>
+      <a href="./mfinancetresury.html" class="ministry-card">
+        <div class="ministry-icon"><i class="fa-solid fa-coins"></i></div>
+        <div class="ministry-name">Ministry of Finance &amp; Treasury
+          <i class="fa-solid fa-arrow-right arrow"></i>
+        </div>
+        <div class="ministry-desc">Manages Nomashae's economy and currency - Copper, Silver, and Gold Pices. Oversees land pricing, trade between cities and regions, banking institutions, and the overall economic health of the Republic.</div>
+        <span class="ministry-status status-active">Active</span>
+      </a>
+      <a href="./mculturalheritage.html" class="ministry-card">
+        <div class="ministry-icon"><i class="fa-solid fa-palette"></i></div>
+        <div class="ministry-name">Ministry of Culture &amp; Heritage
+          <i class="fa-solid fa-arrow-right arrow"></i>
+        </div>
+        <div class="ministry-desc">Preserves and promotes the unique culture of Nomashae — its ATLA-inspired traditions, national holidays, anthem, coat of arms, and flag. Works alongside the Prime Minister to develop new cultural initiatives.</div>
+        <span class="ministry-status status-active">Active</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- IN DEVELOPMENT -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">In Progress</span>
+        <h2 class="sec-title">Ministries in Development</h2>
+        <p class="sec-sub">Being built and structured — not yet operational</p>
+      </div>
+      <div class="ministry-grid">
+        <!-- <div class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="ministry-name">Ministry of Defence</div>
+          <div class="ministry-desc">Responsible for the protection and security of Nomashae. True to the Air Nomad philosophy, Nomashae's defence is built on de-escalation and peace — only acting when absolutely necessary.</div>
+          <span class="ministry-status status-dev">In Development</span>
+        </div> -->
+        <!-- <div class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-landmark"></i></div>
+          <div class="ministry-name">Ministry of Internal Affairs</div>
+          <div class="ministry-desc">Manages the day-to-day administration of Nomashae's internal regions, handles citizen relations, and ensures that the laws and decrees of the Republic are upheld across all territories.</div>
+          <span class="ministry-status status-soon">Coming Soon</span>
+        </div> -->
+
+        <!-- <div class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-coins"></i></div>
+          <div class="ministry-name">Ministry of Finance &amp; Treasury</div>
+          <div class="ministry-desc">Manages Nomashae's economy and currency — Copper, Silver, and Gold Pices. Oversees land pricing, trade between cities and regions, banking institutions, and the overall economic health of the Republic.</div>
+          <span class="ministry-status status-soon">Coming Soon</span>
+        </div> -->
+
+        <div class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-book-open"></i></div>
+          <div class="ministry-name">Ministry of Education &amp; Knowledge</div>
+          <div class="ministry-desc">Responsible for the documentation and teaching of Flyingo Bisdomic, Nomashae's history, and the principles of balance and harmony. Maintains official guides, records, and knowledge resources for all citizens.</div>
+          <span class="ministry-status status-dev">In Development</span>
+        </div>
+
+        <div class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-map"></i></div>
+          <div class="ministry-name">Ministry of Tourism</div>
+          <div class="ministry-desc">Promotes Nomashae to the outside world, manages relations with visiting citizens and tourists, and oversees the beauty and accessibility of Nomashae's cities and regions in the Minecraft world.</div>
+          <span class="ministry-status status-dev">In Development</span>
+        </div>
+
+        <div class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-earth-europe"></i></div>
+          <div class="ministry-name">Ministry of External Affairs</div>
+          <div class="ministry-desc">Handles all diplomatic relations with other micronations. Nomashae recognises all micronations and this ministry works to build alliances, open dialogue, and foster collaboration across the micronational community.</div>
+          <span class="ministry-status status-dev">In Development</span>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- COMING SOON -->
+  <div class="section">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Planned</span>
+        <h2 class="sec-title">Coming Soon</h2>
+        <p class="sec-sub">Planned ministries that will be established as Nomashae grows</p>
+      </div>
+      <div class="ministry-grid">
+
+        <!-- <div class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-map"></i></div>
+          <div class="ministry-name">Ministry of Tourism</div>
+          <div class="ministry-desc">Promotes Nomashae to the outside world, manages relations with visiting citizens and tourists, and oversees the beauty and accessibility of Nomashae's cities and regions in the Minecraft world.</div>
+          <span class="ministry-status status-soon">Coming Soon</span>
+        </div> -->
+
+
+
+        <!-- <div class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-earth-europe"></i></div>
+          <div class="ministry-name">Ministry of External Affairs</div>
+          <div class="ministry-desc">Handles all diplomatic relations with other micronations. Nomashae recognises all micronations and this ministry works to build alliances, open dialogue, and foster collaboration across the micronational community.</div>
+          <span class="ministry-status status-soon">Coming Soon</span>
+        </div> -->
+
+        
+
+        <!-- <div class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+          <div class="ministry-name">Ministry of Justice</div>
+          <div class="ministry-desc">Will establish Nomashae's own legal framework, currently operating under the Macedonian justice system. Responsible for drafting laws, handling disputes, and ensuring fairness and balance for all citizens.</div>
+          <span class="ministry-status status-soon">Coming Soon</span>
+        </div> -->
+
+        <!-- <div class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-helmet-safety"></i></div>
+          <div class="ministry-name">Ministry of Infrastructure &amp; Public Works</div>
+          <div class="ministry-desc">Oversees the planning and construction of roads, buildings, and public utilities across Nomashae's cities and regions. Manages city development, land expansion, and the upkeep of public spaces in the Minecraft world.</div>
+          <span class="ministry-status status-soon">Coming Soon</span>
+        </div> -->
+
+        <!-- <div class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-palette"></i></div>
+          <div class="ministry-name">Ministry of Culture &amp; Heritage</div>
+          <div class="ministry-desc">Preserves and promotes the unique culture of Nomashae — its ATLA-inspired traditions, national holidays, anthem, coat of arms, and flag. Works alongside the Prime Minister to develop new cultural initiatives.</div>
+          <span class="ministry-status status-soon">Coming Soon</span>
+        </div> -->
+
+        <!-- <div class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-book-open"></i></div>
+          <div class="ministry-name">Ministry of Education &amp; Knowledge</div>
+          <div class="ministry-desc">Responsible for the documentation and teaching of Flyingo Bisdomic, Nomashae's history, and the principles of balance and harmony. Maintains official guides, records, and knowledge resources for all citizens.</div>
+          <span class="ministry-status status-soon">Coming Soon</span>
+        </div> -->
+
+        <div class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-leaf"></i></div>
+          <div class="ministry-name">Ministry of Digital Environment &amp; Natural Resources</div>
+          <div class="ministry-desc">Manages the flora, fauna, and natural landscapes of Nomashae's Minecraft world — from flower forests and cave flora to aquatic life and ancient landscapes. Ensures the environment is protected and sustainably developed.</div>
+          <span class="ministry-status status-soon">Coming Soon</span>
+        </div>
+        
+        <div class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-newspaper"></i></div>
+          <div class="ministry-name">Ministry of Communication</div>
+          <div class="ministry-desc">is dedicated to maintaining the transparency, integrity, and reach of the national narrative. Its primary purpose is to ensure that information flows efficiently within the nation and that our global digital presence accurately reflects our values and progress.</div>
+          <span class="ministry-status status-soon">Coming Soon</span>
+        </div>
+
+        <div class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-gamepad"></i></div>
+          <div class="misitry-name">Ministry of Gaming &amp; Sport</div>
+          <div class="ministry-desc">is dedicated to fostering community, sportsmanship, and excellence through competitive and cooperative play. We believe that a nation that plays together stays together, and it is our mission to provide the infrastructure for national entertainment and digital athletics.</div>
+          <div class="ministry-status status-soon">Coming Soon</div>
+        </div>
+
+        <div class="ministry-card">
+          <div class="ministry-icon"><i class="fa-solid fa-hospital"></i></div>
+          <div class="ministry-name">Ministry of Public Health &amp; Digital Wellbeing</div>
+          <div class="ministry-desc">is dedicated to the social, mental, and digital vitality of the nation. Our goal is to foster a respectful community environment where every citizen can contribute without burnout, ensuring that our digital growth never comes at the cost of personal wellbeing.</div>
+          <div class="ministry-status status-soon">Coming Soon</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer><p>© 2026 Nomashae · Powered by the Elements</p></footer>
+
+  <script src="./bigTranslations.js"></script>
+
+  <script>
+    function getElement() {
+      const h = new Date().getHours();
+      if (h >= 6  && h < 12) return 'air';
+      if (h >= 12 && h < 18) return 'water';
+      if (h >= 18 && h < 22) return 'fire';
+      return 'earth';
+    }
+    document.body.setAttribute('data-element', getElement());
+
+    const darkBtn = document.getElementById('dark-btn');
+    let isDark = false;
+    try { isDark = localStorage.getItem('nmDark') === 'true'; } catch(e) {}
+    function applyDark() {
+      document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      darkBtn.classList.toggle('active', isDark);
+      darkBtn.textContent = isDark ? 'Light' : 'Dark';
+    }
+    darkBtn.addEventListener('click', () => {
+      isDark = !isDark;
+      try { localStorage.setItem('nmDark', isDark); } catch(e) {}
+      applyDark();
+    });
+    applyDark();
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Apply for Citizenship | Republic of Nomashae</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --accent: #4A7C59;
+      --bg: #f7f7f5; --bg2: #efefec; --card: #ffffff;
+      --ink: #1a1a1a; --ink2: #555550;
+      --border: rgba(0,0,0,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.07);
+      --radius: 14px; --t: 0.3s ease;
+    }
+    [data-theme="dark"] {
+      --bg: #141414; --bg2: #1e1e1e; --card: #242424;
+      --ink: #f0f0ee; --ink2: #999992;
+      --border: rgba(255,255,255,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    [data-element="air"]   { --accent: #5B9BBF; }
+    [data-element="water"] { --accent: #3A8F8F; }
+    [data-element="fire"]  { --accent: #C4622D; }
+    [data-element="earth"] { --accent: #4A7C59; }
+    [data-theme="dark"][data-element="air"]   { --accent: #7bb8d8; }
+    [data-theme="dark"][data-element="water"] { --accent: #5abfbf; }
+    [data-theme="dark"][data-element="fire"]  { --accent: #e07a4a; }
+    [data-theme="dark"][data-element="earth"] { --accent: #6aad82; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg); color: var(--ink);
+      line-height: 1.7; transition: background var(--t), color var(--t);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2.5rem; height: 64px;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      transition: background var(--t), border-color var(--t);
+    }
+    .nav-brand {
+      font-size: 1rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); text-decoration: none;
+      transition: color var(--t);
+    }
+    .nav-right { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: transparent; border: 1.5px solid var(--border);
+      color: var(--ink2); padding: 0.35rem 0.9rem; border-radius: 8px;
+      cursor: pointer; font-family: 'Outfit', sans-serif;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: all 0.2s;
+    }
+    .nav-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 2rem 4rem; text-align: center;
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      transition: background var(--t), border-color var(--t);
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .hero-icon {
+      width: 72px; height: 72px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border-radius: 18px; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      transition: background var(--t), border-color var(--t);
+    }
+    .hero-icon i { font-size: 1.8rem; color: var(--accent); transition: color var(--t); }
+    .hero-title {
+      font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 2px; margin-bottom: 0.5rem;
+      transition: color var(--t);
+    }
+    .hero-sub {
+      font-size: 0.9rem; color: var(--ink2); font-weight: 300;
+      max-width: 520px; margin: 0 auto 1.5rem; line-height: 1.8;
+      transition: color var(--t);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      color: var(--accent); padding: 0.4rem 1rem; border-radius: 20px;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; transition: all var(--t);
+    }
+
+    /* MAIN */
+    .page-wrap {
+      max-width: 760px; margin: 0 auto; padding: 4rem 2rem;
+    }
+
+    /* NOTICE BOX */
+    .notice {
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+      border-radius: var(--radius); padding: 1.4rem 1.8rem;
+      margin-bottom: 2.5rem; display: flex; gap: 1rem; align-items: flex-start;
+      transition: background var(--t), border-color var(--t);
+    }
+    .notice i { color: var(--accent); font-size: 1.1rem; margin-top: 0.15rem; flex-shrink: 0; transition: color var(--t); }
+    .notice p { font-size: 0.84rem; font-weight: 300; color: var(--ink2); line-height: 1.75; transition: color var(--t); }
+    .notice p strong { font-weight: 600; color: var(--ink); transition: color var(--t); }
+
+    /* FORM CARD */
+    .form-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t);
+    }
+    .form-section-title {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem;
+      padding-bottom: 0.6rem; border-bottom: 1px solid var(--border);
+      transition: color var(--t), border-color var(--t);
+    }
+    .form-divider {
+      height: 1px; background: var(--border); margin: 2rem 0;
+      transition: background var(--t);
+    }
+    .form-field { margin-bottom: 1.4rem; }
+    .form-field:last-of-type { margin-bottom: 0; }
+    .form-field label {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--ink2); margin-bottom: 0.5rem;
+      transition: color var(--t);
+    }
+    .form-field label .req {
+      color: var(--accent); font-size: 0.75rem; transition: color var(--t);
+    }
+    .form-field label .opt {
+      font-size: 0.58rem; font-weight: 500; letter-spacing: 1px;
+      color: var(--ink2); opacity: 0.6; text-transform: none;
+    }
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%; background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 10px; padding: 0.8rem 1.1rem;
+      font-family: 'Outfit', sans-serif; font-size: 0.9rem;
+      color: var(--ink); outline: none;
+      transition: border-color 0.2s, background var(--t), color var(--t);
+    }
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--accent);
+      background: var(--card);
+    }
+    .form-field textarea { min-height: 100px; resize: vertical; }
+    .field-hint {
+      font-size: 0.72rem; font-weight: 300; color: var(--ink2);
+      margin-top: 0.4rem; display: flex; gap: 0.4rem; align-items: flex-start;
+      transition: color var(--t);
+    }
+    .field-hint i { font-size: 0.65rem; margin-top: 0.2rem; color: var(--accent); flex-shrink: 0; transition: color var(--t); }
+
+    /* REGION SELECTOR */
+    .region-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 0.6rem;
+    }
+    .region-option { display: none; }
+    .region-label {
+      display: flex; align-items: center; gap: 0.7rem;
+      background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 10px; padding: 0.75rem 1rem; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .region-label:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 5%, transparent); }
+    .region-option:checked + .region-label {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      color: var(--accent);
+    }
+    .region-dot {
+      width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0;
+      border: 2px solid var(--border); transition: all 0.2s;
+    }
+    .region-option:checked + .region-label .region-dot {
+      background: var(--accent); border-color: var(--accent);
+    }
+    .region-text { font-size: 0.82rem; font-weight: 500; transition: color var(--t); }
+    .region-sub { font-size: 0.65rem; font-weight: 300; color: var(--ink2); transition: color var(--t); }
+
+    /* SUBMIT */
+    .submit-wrap { margin-top: 2rem; }
+    .submit-btn {
+      width: 100%; background: var(--accent); border: none; color: #fff;
+      padding: 1rem; border-radius: 10px; cursor: pointer;
+      font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; transition: opacity 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 0.7rem;
+    }
+    .submit-btn:hover { opacity: 0.85; }
+    .submit-note {
+      text-align: center; font-size: 0.72rem; font-weight: 300; color: var(--ink2);
+      margin-top: 1rem; line-height: 1.7; transition: color var(--t);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); text-align: center; padding: 2.5rem 1rem;
+      font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--ink2); transition: border-color var(--t), color var(--t);
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 1rem; }
+      .form-card { padding: 1.5rem; }
+      .region-grid { grid-template-columns: 1fr 1fr; }
+      .page-wrap { padding: 2.5rem 1rem; }
+    }
+  </style>
+</head>
+<body data-theme="light" data-element="earth">
+
+  <nav>
+    <div class="nav-left">
+      <a href="./index.html" class="nav-brand">Nomashae</a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn" id="dark-btn">Dark</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-eyebrow">Ministry of Internal Affairs</span>
+    <div class="hero-icon"><i class="fa-solid fa-id-card"></i></div>
+    <h1 class="hero-title">Apply for Citizenship</h1>
+    <p class="hero-sub">Become an official citizen of the Republic of Nomashae. Fill out the form below and your application will be reviewed by the Ministry of Internal Affairs.</p>
+    <span class="hero-badge"><i class="fa-solid fa-circle-dot"></i> Applications Open</span>
+  </div>
+
+  <div class="page-wrap">
+
+    <!-- NOTICE -->
+    <div class="notice">
+      <i class="fa-solid fa-circle-info"></i>
+      <p><strong>Privacy notice:</strong> You are advised to use a username or alias rather than your real name. Nomashae is a community-first republic — your identity in the Republic is yours to define. Your application is sent directly to the Ministry of Internal Affairs for review.</p>
+    </div>
+
+    <div class="form-card">
+
+      <!-- IDENTITY -->
+      <div class="form-section-title"><i class="fa-solid fa-user" style="margin-right:0.5rem"></i>Identity</div>
+
+      <div class="form-field">
+        <label>Citizen Username <span class="req">*</span></label>
+        <input type="text" id="f-username" placeholder="e.g. FireLord99, AirNomadKai…" maxlength="40"/>
+        <div class="field-hint">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>Use a username or alias — you are advised <strong>not</strong> to use your real name. This will be your official name within the Republic.</span>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label>Gender <span class="opt">(optional)</span></label>
+        <select id="f-pronouns">
+          <option value="">— Select or leave blank for anonymous —</option>
+          <option>He / Him</option>
+          <option>She / Her</option>
+        </select>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <!-- REGION -->
+      <div class="form-section-title"><i class="fa-solid fa-map-location-dot" style="margin-right:0.5rem"></i>Region Selection</div>
+
+      <div class="form-field">
+        <label>Choose Your Region <span class="req">*</span></label>
+        <div class="region-grid" id="region-grid">
+
+          <div>
+            <input class="region-option" type="radio" name="region" id="r-air-n" value="Northern Air Temple"/>
+            <label class="region-label" for="r-air-n">
+              <span class="region-dot"></span>
+              <span><span class="region-text">Northern Air Temple</span><br><span class="region-sub">Air · Northern</span></span>
+            </label>
+          </div>
+
+          <div>
+            <input class="region-option" type="radio" name="region" id="r-air-e" value="Eastern Air Temple"/>
+            <label class="region-label" for="r-air-e">
+              <span class="region-dot"></span>
+              <span><span class="region-text">Eastern Air Temple</span><br><span class="region-sub">Air · Eastern</span></span>
+            </label>
+          </div>
+
+          <div>
+            <input class="region-option" type="radio" name="region" id="r-air-s" value="Southern Air Temple"/>
+            <label class="region-label" for="r-air-s">
+              <span class="region-dot"></span>
+              <span><span class="region-text">Southern Air Temple</span><br><span class="region-sub">Air · Southern</span></span>
+            </label>
+          </div>
+
+          <div>
+            <input class="region-option" type="radio" name="region" id="r-air-w" value="Western Air Temple"/>
+            <label class="region-label" for="r-air-w">
+              <span class="region-dot"></span>
+              <span><span class="region-text">Western Air Temple</span><br><span class="region-sub">Air · Western</span></span>
+            </label>
+          </div>
+
+          <div>
+            <input class="region-option" type="radio" name="region" id="r-water-n" value="Northern Water Tribe"/>
+            <label class="region-label" for="r-water-n">
+              <span class="region-dot"></span>
+              <span><span class="region-text">Northern Water Tribe</span><br><span class="region-sub">Water · Northern</span></span>
+            </label>
+          </div>
+
+          <div>
+            <input class="region-option" type="radio" name="region" id="r-water-s" value="Southern Water Tribe"/>
+            <label class="region-label" for="r-water-s">
+              <span class="region-dot"></span>
+              <span><span class="region-text">Southern Water Tribe</span><br><span class="region-sub">Water · Southern</span></span>
+            </label>
+          </div>
+
+          <div>
+            <input class="region-option" type="radio" name="region" id="r-earth" value="Earth Kingdom"/>
+            <label class="region-label" for="r-earth">
+              <span class="region-dot"></span>
+              <span><span class="region-text">Earth Kingdom</span><br><span class="region-sub">Earth · Central</span></span>
+            </label>
+          </div>
+
+          <div>
+            <input class="region-option" type="radio" name="region" id="r-fire" value="Fire Nation"/>
+            <label class="region-label" for="r-fire">
+              <span class="region-dot"></span>
+              <span><span class="region-text">Fire Nation</span><br><span class="region-sub">Fire · Southern</span></span>
+            </label>
+          </div>
+
+        </div>
+        <div class="field-hint" style="margin-top:0.6rem">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>Your region is where you will officially reside within Nomashae. You can request a transfer later through the Ministry of Internal Affairs.</span>
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <!-- ABOUT YOU -->
+      <div class="form-section-title"><i class="fa-solid fa-comment" style="margin-right:0.5rem"></i>About You</div>
+
+      <div class="form-field">
+        <label>Why do you want to join Nomashae? <span class="req">*</span></label>
+        <textarea id="f-reason" placeholder="Tell us a little about yourself and why you want to become a citizen…"></textarea>
+      </div>
+
+      <div class="form-field">
+        <label>Any skills or roles you'd like to contribute? <span class="opt">(optional)</span></label>
+        <input type="text" id="f-skills" placeholder="e.g. building, coding, writing, art, music…"/>
+        <div class="field-hint">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>This helps the Ministry match you with opportunities within the Republic. You are not committing to anything at this stage.</span>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label>How did you hear about Nomashae? <span class="opt">(optional)</span></label>
+        <select id="f-source">
+          <option value="">— Select —</option>
+          <option>I know one of the founders personally</option>
+          <option>Discord</option>
+          <option>YouTube</option>
+          <option>Minecraft community</option>
+          <option>Word of mouth</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <!-- SUBMIT -->
+      <div class="submit-wrap">
+        <button class="submit-btn" onclick="submitApplication()">
+          <i class="fa-solid fa-paper-plane"></i>
+          Submit Application
+        </button>
+        <p class="submit-note">
+          Clicking submit will open your email client with your application pre-filled.<br>
+          Send the email to complete your application. The Ministry will review it and get back to you.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer><p>© 2026 Nomashae · Ministry of Internal Affairs · Citizenship Applications</p></footer>
+
+  <script>
+    // element theming
+    (function() {
+      const h = new Date().getHours();
+      let el = 'earth';
+      if (h >= 6  && h < 12) el = 'air';
+      if (h >= 12 && h < 18) el = 'water';
+      if (h >= 18 && h < 22) el = 'fire';
+      document.body.setAttribute('data-element', el);
+    })();
+
+    // dark mode
+    const darkBtn = document.getElementById('dark-btn');
+    let isDark = false;
+    try { isDark = localStorage.getItem('nmDark') === 'true'; } catch(e) {}
+    function applyDark() {
+      document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      darkBtn.classList.toggle('active', isDark);
+      darkBtn.textContent = isDark ? 'Light' : 'Dark';
+    }
+    darkBtn.addEventListener('click', () => {
+      isDark = !isDark;
+      try { localStorage.setItem('nmDark', isDark); } catch(e) {}
+      applyDark();
+    });
+    applyDark();
+
+    // submit
+    function submitApplication() {
+      const username = document.getElementById('f-username').value.trim();
+      const pronouns = document.getElementById('f-pronouns').value;
+      const region   = document.querySelector('input[name="region"]:checked');
+      const reason   = document.getElementById('f-reason').value.trim();
+      const skills   = document.getElementById('f-skills').value.trim();
+      const source   = document.getElementById('f-source').value;
+
+      if (!username) {
+        alert('Please enter a username before submitting.'); return;
+      }
+      if (!region) {
+        alert('Please select a region before submitting.'); return;
+      }
+      if (!reason) {
+        alert('Please tell us why you want to join before submitting.'); return;
+      }
+
+      const subject = encodeURIComponent('Citizenship Application — ' + username);
+      const body = encodeURIComponent(
+        'CITIZENSHIP APPLICATION\n' +
+        '========================\n\n' +
+        'Username:    ' + username + '\n' +
+        'Pronouns:    ' + (pronouns || 'Not specified') + '\n' +
+        'Region:      ' + region.value + '\n\n' +
+        '--- Why I want to join ---\n' +
+        reason + '\n\n' +
+        '--- Skills / Roles ---\n' +
+        (skills || 'Not specified') + '\n\n' +
+        '--- How they heard about Nomashae ---\n' +
+        (source || 'Not specified') + '\n\n' +
+        '========================\n' +
+        'Submitted via nomashae.github.io/website/citizenship.html'
+      );
+
+      window.location.href = 'mailto:mia.noamshae@gmail.com?subject=' + subject + '&body=' + body;
+    }
+  </script>
+</body>
+</html>

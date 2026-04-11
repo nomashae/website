@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta name="google-site-verification" content="L_N7rXV0lEhPIfd57tULn8VB7o4ksbl5o_1hAgUr95M" />
+  
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>Nomashae</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  
+  <style>
+    :root {
+      --accent: #4A7C59; --accent2: #2e5c3e;
+      --bg: #f7f7f5; --bg2: #efefec; --card: #ffffff;
+      --ink: #1a1a1a; --ink2: #555550;
+      --border: rgba(0,0,0,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.07);
+      --radius: 14px; --t: 0.3s ease;
+    }
+    [data-theme="dark"] {
+      --bg: #141414; --bg2: #1e1e1e; --card: #242424;
+      --ink: #f0f0ee; --ink2: #999992;
+      --border: rgba(255,255,255,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    [data-element="air"]   { --accent: #5B9BBF; --accent2: #3a7a9e; }
+    [data-element="water"] { --accent: #3A8F8F; --accent2: #2a6e6e; }
+    [data-element="fire"]  { --accent: #C4622D; --accent2: #9e4420; }
+    [data-element="earth"] { --accent: #4A7C59; --accent2: #2e5c3e; }
+    [data-theme="dark"][data-element="air"]   { --accent: #7bb8d8; }
+    [data-theme="dark"][data-element="water"] { --accent: #5abfbf; }
+    [data-theme="dark"][data-element="fire"]  { --accent: #e07a4a; }
+    [data-theme="dark"][data-element="earth"] { --accent: #6aad82; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg); color: var(--ink);
+      line-height: 1.7;
+      transition: background var(--t), color var(--t);
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2.5rem; height: 64px;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      transition: background var(--t), border-color var(--t);
+    }
+
+    .announce {
+      position: sticky;
+      top: 64px;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      height: 40px; /* Reduced height for a sleeker ticker look */
+      background: var(--bg2); /* Using the secondary bg for contrast */
+      border-bottom: 1px solid var(--border);
+      overflow: hidden; /* Hide the text when it's outside the bar */
+      white-space: nowrap;
+
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+
+    .announce span {
+      display: inline-block;
+      padding-left: 100%; /* Start the text off-screen to the right */
+      animation: scroll-text 20s linear infinite;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--accent);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transform: translateZ(0); /* Another way to trigger the GPU */
+    }
+
+    /* The Animation */
+    @keyframes scroll-text {
+      0%   { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-100%, 0, 0); }
+    }
+
+    /* Pause on hover so people can actually read it! */
+    .announce:hover span {
+      animation-play-state: paused;
+    }
+
+    .nav-left { display: flex; align-items: center; gap: 0.75rem; }
+    .nav-brand {
+      font-size: 1rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); text-decoration: none;
+      transition: color var(--t);
+    }
+    .el-badge {
+      font-size: 0.6rem; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent);
+      border: 1.5px solid var(--accent); padding: 0.2rem 0.6rem;
+      border-radius: 20px; opacity: 0.7;
+      transition: color var(--t), border-color var(--t);
+    }
+    .nav-right { display: flex; gap: 0.5rem; align-items: center; }
+    .nav-btn {
+      background: transparent; border: 1.5px solid var(--border);
+      color: var(--ink2); padding: 0.35rem 0.9rem; border-radius: 8px;
+      cursor: pointer; font-family: 'Outfit', sans-serif;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: all 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .nav-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      min-height: calc(100vh - 64px);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 4rem 2rem 5rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute;
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 70%);
+      pointer-events: none; transition: background var(--t);
+    }
+    .hero-flag {
+      width: 648px;
+      height: 432px;
+      box-shadow: var(--shadow), 0 0 0 1px var(--border);
+      margin-bottom: 2.5rem; position: relative; z-index: 1;
+      transition: transform 0.4s, box-shadow 0.4s;
+    }
+    .hero-flag:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 20px 50px rgba(0,0,0,0.13), 0 0 0 1px var(--border); }
+    .hero-title {
+      font-size: clamp(2.8rem, 9vw, 6.5rem); font-weight: 700;
+      letter-spacing: 8px; text-transform: uppercase; color: var(--ink);
+      line-height: 1; margin-bottom: 0.6rem;
+      position: relative; z-index: 1; transition: color var(--t);
+    }
+    .hero-title span { color: var(--accent); transition: color var(--t); }
+    .hero-motto {
+      font-size: 0.82rem; font-weight: 400; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--ink2); margin-bottom: 2.8rem;
+      position: relative; z-index: 1; transition: color var(--t);
+    }
+    .hero-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; position: relative; z-index: 1; }
+
+    .btn {
+      padding: 0.75rem 2rem; border-radius: 10px; text-decoration: none;
+      font-family: 'Outfit', sans-serif; font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      transition: all 0.22s; display: inline-block; cursor: pointer;
+      border: 1.5px solid transparent;
+    }
+    .btn-solid { background: var(--accent); color: #fff; border-color: var(--accent); transition: background var(--t), border-color var(--t), opacity 0.2s; }
+    .btn-solid:hover { opacity: 0.85; }
+    .btn-outline { background: transparent; color: var(--ink); border-color: var(--border); transition: border-color 0.2s, color 0.2s; }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* SECTIONS */
+    .section { padding: 5rem 2rem; border-top: 1px solid var(--border); transition: border-color var(--t); }
+    .section.alt { background: var(--bg2); transition: background var(--t), border-color var(--t); }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+    .sec-header { text-align: center; margin-bottom: 3rem; }
+    .sec-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .sec-title {
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 1px; margin-bottom: 0.4rem;
+      transition: color var(--t);
+    }
+    .sec-sub { font-size: 0.88rem; color: var(--ink2); font-weight: 300; transition: color var(--t); }
+
+    .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade.in { opacity: 1; transform: none; }
+
+    /* GOV */
+    .gov-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .gov-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem 1.5rem; text-align: center;
+      box-shadow: var(--shadow); position: relative; overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s, background var(--t), border-color var(--t);
+      cursor: default;
+    }
+    .gov-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--accent); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s ease, background var(--t);
+    }
+    .gov-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+    .gov-card:hover::after { transform: scaleX(1); }
+    .gov-role {
+      font-size: 0.6rem; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .gov-name { font-size: 1rem; font-weight: 500; color: var(--ink); line-height: 1.5; transition: color var(--t); }
+
+    /* LANGUAGE */
+    .lang-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      max-width: 580px; margin: 0 auto; box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t);
+    }
+    .lang-header {
+      padding: 0.7rem 1.5rem; background: var(--accent);
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: background var(--t);
+    }
+    .lang-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.45); }
+    .lang-title-bar { font-size: 0.68rem; font-weight: 600; color: rgba(255,255,255,0.9); letter-spacing: 2px; text-transform: uppercase; }
+    .lang-body { padding: 2rem; border-bottom: 1px solid var(--border); transition: border-color var(--t); }
+    .lang-fb { font-size: 1.05rem; font-weight: 400; color: var(--ink); margin-bottom: 0.6rem; font-style: italic; transition: color var(--t); }
+    .lang-en { font-size: 0.82rem; color: var(--ink2); transition: color var(--t); }
+    .lang-actions { padding: 1.2rem 1.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+    /* ABOUT */
+    .about-text {
+      max-width: 540px; margin: 0 auto; text-align: center;
+      font-size: 0.95rem; font-weight: 300; color: var(--ink2); line-height: 2;
+      transition: color var(--t);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); text-align: center; padding: 2.5rem 1rem;
+      font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--ink2); transition: border-color var(--t), color var(--t);
+    }
+
+    .docs {
+      display: block;
+      width: fit-content;
+      
+      text-decoration: none;
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      padding: 0.85rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: opacity 0.2s;
+
+      margin: 0 auto;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 1rem; }
+      .el-badge { display: none; }
+      .gov-grid { grid-template-columns: 1fr 1fr; }
+      .section { padding: 3.5rem 1.2rem; }
+    }
+  </style>
+
+  <style>
+  #topBtn {
+    position: fixed;
+    bottom: 130px;
+    right: 30px;
+    padding: 16px 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    cursor: pointer;
+    background-color: var(--bg);
+    /* color: var(--ink); */
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  #topBtn.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  </style>
+</head>
+<body data-theme="light" data-element="earth">
+
+  <nav>
+    <div class="nav-left">
+      <a href="#" class="nav-brand" data-i18n="brand">Nomashae</a>
+      <span class="el-badge" id="el-badge">Earth</span>
+    </div>
+    <div class="nav-right">
+      <a href="./executive_orders.html" class="nav-btn" data-i18n="nav-decrees">Decrees</a>
+      <a href="./culture.html" class="nav-btn" data-i18n="nav-culture">Culture</a>
+      <a href="./citizenship.html" class="nav-btn" data-i18n="nav-citizenship">Become a citizen</a>
+      <a href="./ministries.html" class="nav-btn" data-i18n="nav-ministries">Ministries</a>
+      <button class="nav-btn" id="dark-btn">Dark</button>
+      <button class="nav-btn" id="lang-btn">EN</button>
+    </div>
+  </nav>
+
+  <div class="announce">
+    <span>Nomashae is celebrating 2 holidays: Avatar Day Festival (March 20 - June 20) and Easter (April 10 - April 13). The President and Prime Minister are wishing you happy holidays! &nbsp;&nbsp;&nbsp;&nbsp;</span>
+  </div>
+
+  <header class="hero">
+    <img src="./assets/Flag.png" alt="Flag of Nomashae" class="hero-flag">
+    <h1 class="hero-title">Noma<span>shae</span></h1>
+    <p class="hero-motto" data-i18n="motto">Four Elements · One Nomashae</p>
+    <div class="hero-btns">
+      <a href="./executive_orders.html" class="btn btn-solid" data-i18n="btn-decrees">Decrees</a>
+      <a href="./culture.html" class="btn btn-outline" data-i18n="btn-culture">Culture</a>
+    </div>
+  </header>
+
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label" data-i18n="gov-label">Republic of Nomashae</span>
+        <h2 class="sec-title" data-i18n="gov-title">Government</h2>
+        <p class="sec-sub" data-i18n="gov-sub">Democratic leadership structure</p>
+      </div>
+      <div class="gov-grid">
+        <div class="gov-card"><span class="gov-role" data-i18n="role-pm">Prime Minister</span><span class="gov-name">Eftimij<br>Yipified Novakovski</span></div>
+        <div class="gov-card"><span class="gov-role" data-i18n="role-pres">President</span><span class="gov-name">Krste<br>AppaRider Dimov</span></div>
+        <div class="gov-card"><span class="gov-role" data-i18n="role-affairs">Affairs</span><span class="gov-name">Eftimij<br>Yipified Novakovski</span></div>
+        <div class="gov-card"><span class="gov-role" data-i18n="role-culture">Culture</span><span class="gov-name">Eftimij<br>Yipified Novakovski</span></div>
+      </div>
+      <a href="./gov.html" class="docs">View Goverment Structure</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label" data-i18n="lang-label">Official Language</span>
+        <h2 class="sec-title">Flyingo Bisdomic</h2>
+        <p class="sec-sub" data-i18n="lang-sub">The living language of Nomashae — shaped by air, motion, and balance.</p>
+      </div>
+      <div class="lang-card">
+        <div class="lang-header">
+          <div class="lang-dot"></div><div class="lang-dot"></div><div class="lang-dot"></div>
+          <span class="lang-title-bar">flyingo bisdomic</span>
+        </div>
+        <div class="lang-body">
+          <p class="lang-fb" data-i18n="lang-ex-fb">Modrn dei es da best dei for skai surf. Nex, mi had un pom an smol chok bar.</p>
+          <p class="lang-en" data-i18n="lang-ex-en">"Modern day is the best day for sky surfing. Next, I had an apple and a small chocolate bar."</p>
+        </div>
+        <div class="lang-actions">
+          <a href="./assets/Flyingo_Bisdomic_Complete_Guide_Nomashae.pdf" class="btn btn-solid" data-i18n="lang-guide">Language Guide</a>
+          <a href="./assets/Flying Bisonick & Flyingo Bisdomic.pdf" class="btn btn-outline" data-i18n="lang-old">Old Guide</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label" data-i18n="about-label">Est. 1 September 2025</span>
+        <h2 class="sec-title" data-i18n="about-title">About Nomashae</h2>
+      </div>
+      <p class="about-text" data-i18n="about-text">Founded in 2025, Nomashae is a democratic micronation inspired by the nomadic spirit and energy of Avatar: The Last Airbender. Built on the philosophy of balance, peace, and harmony across all four elements.</p>
+    </div>
+  </div>
+
+  <footer id="footer"><p data-i18n="footer">© 2026 Nomashae · Powered by the Elements</p></footer>
+
+  <button id="topBtn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"><i class="fa-solid fa-angles-up fa-xl" style="color: var(--ink);"></i></button>
+
+  <script>
+    const elements = {
+      air:   { name: {en:'Air',   mk:'Воздух', fb:'Bo'} },
+      water: { name: {en:'Water', mk:'Вода',   fb:'Wa'} },
+      fire:  { name: {en:'Fire',  mk:'Оган',   fb:'Fi'} },
+      earth: { name: {en:'Earth', mk:'Земја',  fb:'Ru'} }
+    };
+
+    function getElement() {
+      const h = new Date().getHours();
+      if (h >= 6  && h < 12) return 'air';
+      if (h >= 12 && h < 18) return 'water';
+      if (h >= 18 && h < 22) return 'fire';
+      return 'earth';
+    }
+
+    const currentEl = getElement();
+    document.body.setAttribute('data-element', currentEl);
+
+    function updateBadge() {
+      const l = langs[langIdx];
+      document.getElementById('el-badge').textContent = elements[currentEl].name[l] || elements[currentEl].name.en;
+    }
+
+    // Dark mode — persisted
+    const darkBtn = document.getElementById('dark-btn');
+    let isDark = false;
+    try { isDark = localStorage.getItem('nmDark') === 'true'; } catch(e) {}
+    function applyDark() {
+      document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      darkBtn.classList.toggle('active', isDark);
+      const l = langs[langIdx];
+      darkBtn.textContent = isDark ? (i18n[l]['nav-light'] || 'Light') : (i18n[l]['nav-dark'] || 'Dark');
+    }
+    darkBtn.addEventListener('click', () => {
+      isDark = !isDark;
+      try { localStorage.setItem('nmDark', isDark); } catch(e) {}
+      applyDark();
+    });
+
+    // Scroll fade
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+
+    // i18n
+    const i18n = {
+      en: {
+        "brand":"Nomashae","motto":"Four Elements · One Nomashae",
+        "nav-decrees":"Decrees","nav-culture":"Culture","nav-dark":"Dark","nav-light":"Light",
+        "btn-decrees":"Decrees","btn-culture":"Culture",
+        "gov-label":"Republic of Nomashae","gov-title":"Government","gov-sub":"Democratic leadership structure",
+        "role-pm":"Prime Minister","role-pres":"President","role-affairs":"Affairs","role-culture":"Culture",
+        "lang-label":"Official Language","lang-sub":"The living language of Nomashae — shaped by air, motion, and balance.",
+        "lang-ex-fb":"Modrn dei es da best dei for skai surf. Nex, mi had un pom an smol chok bar.",
+        "lang-ex-en":'"Modern day is the best day for sky surfing. Next, I had an apple and a small chocolate bar."',
+        "lang-guide":"Language Guide","lang-old":"Old Guide",
+        "about-label":"Est. 1 September 2025","about-title":"About Nomashae",
+        "about-text":"Founded in 2025, Nomashae is a democratic micronation inspired by the nomadic spirit and energy of Avatar: The Last Airbender. Built on the philosophy of balance, peace, and harmony across all four elements.",
+        "footer":"© 2026 Nomashae · Powered by the Elements"
+      },
+      mk: {
+        "brand":"Номашае","motto":"Четири Елементи · Едно Номашае",
+        "nav-decrees":"Декрети","nav-culture":"Култура","nav-dark":"Темно","nav-light":"Светло",
+        "btn-decrees":"Декрети","btn-culture":"Култура",
+        "gov-label":"Република Номашае","gov-title":"Влада","gov-sub":"Демократска структура на раководство",
+        "role-pm":"Премиер","role-pres":"Претседател","role-affairs":"Надворешни Работи","role-culture":"Култура",
+        "lang-label":"Официјален Јазик","lang-sub":"Живиот јазик на Номашае — обликуван од воздух, движење и рамнотежа.",
+        "lang-ex-fb":"Modrn dei es da best dei for skai surf. Nex, mi had un pom an smol chok bar.",
+        "lang-ex-en":'"Денешниот ден е најдобар ден за сурфање по небо. Потоа, јадев јаболко и мала чоколада."',
+        "lang-guide":"Јазичен Водич","lang-old":"Стар Водич",
+        "about-label":"Осн. 1 Септември 2025","about-title":"За Номашае",
+        "about-text":"Основана во 2025, Номашае е демократска микронација инспирирана од номадскиот дух на Аватар: Последниот мајстор на воздухот. Изградена на филозофијата на рамнотежа, мир и хармонија.",
+        "footer":"© 2026 Номашае · Поддржано од Елементите"
+      },
+      fb: {
+        "brand":"Nomasha","motto":"Fo Tor Un · Nomasha",
+        "nav-decrees":"Ofi Ord","nav-culture":"Kulturana","nav-dark":"Darka","nav-light":"Lighta",
+        "btn-decrees":"Ofi Ord","btn-culture":"Kulturana",
+        "gov-label":"Repub Nomasha","gov-title":"Gova","gov-sub":"Demo strukt ov lida",
+        "role-pm":"Prim Ministra","role-pres":"Prezida","role-affairs":"Afarana","role-culture":"Kulturana",
+        "lang-label":"Ofishal Ling","lang-sub":"Dis es da liv ling ov Nomasha — shapd bai bo, motio an balans.",
+        "lang-ex-fb":"Modrn dei es da best dei for skai surf. Nex, mi had un pom an smol chok bar.",
+        "lang-ex-en":'"Modern day is the best day for sky surfing. Next, I had an apple and a small chocolate bar."',
+        "lang-guide":"Ling Gid","lang-old":"Orig Gid",
+        "about-label":"Fond 1 Sep 2025","about-title":"Abaut Nomasha",
+        "about-text":"Fond 2025, Nomasha es un demo-nesh inspai bai da nomad spirita an bo-enerji ov Avata. Bild on da filosof ov balans, pes an harmoni.",
+        "footer":"© 2026 Nomasha · Powrd bai da Elemen"
+      }
+    };
+
+    const langs = ['en','mk','fb'];
+    const langLabels = {en:'EN', mk:'МК', fb:'FB'};
+    let langIdx = 0;
+    try {
+      const saved = localStorage.getItem('nmLang');
+      if (saved && langs.includes(saved)) langIdx = langs.indexOf(saved);
+    } catch(e) {}
+
+    function applyLang(l) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (i18n[l][k] !== undefined) el.innerHTML = i18n[l][k];
+      });
+      document.getElementById('lang-btn').textContent = langLabels[l];
+      darkBtn.textContent = isDark ? i18n[l]['nav-light'] : i18n[l]['nav-dark'];
+      updateBadge();
+    }
+
+    document.getElementById('lang-btn').addEventListener('click', () => {
+      langIdx = (langIdx + 1) % langs.length;
+      try { localStorage.setItem('nmLang', langs[langIdx]); } catch(e) {}
+      applyLang(langs[langIdx]);
+    });
+
+    applyLang(langs[langIdx]);
+    applyDark();
+  </script>
+
+  <script>
+  const topBtn = document.getElementById('topBtn');
+  const footer = document.getElementById('footer');
+
+  window.addEventListener('scroll', () => {
+    const footerTop = footer.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+
+    if (footerTop <= windowHeight) {
+      topBtn.classList.add('visible');
+    } else {
+      topBtn.classList.remove('visible');
+    }
+  });
+  </script>
+</body>
+</html>

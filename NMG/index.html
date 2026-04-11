@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Daily Scroll | Nomashae Media Group</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --paper: #faf8f4; --paper2: #f3f0ea; --paper3: #e8e3d8;
+      --ink: #1a1710; --ink2: #5a5649; --ink3: #9a9488;
+      --accent: #8B2020;
+      --card: #ffffff; --border: rgba(0,0,0,0.1);
+      --shadow: 0 2px 16px rgba(0,0,0,0.06);
+      --radius: 4px; --t: 0.3s ease;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+    [data-theme="dark"] {
+      --paper: #0f0e0c; --paper2: #181612; --paper3: #242018;
+      --ink: #f0ede6; --ink2: #a09a8e; --ink3: #665f55;
+      --card: #1c1a16; --border: rgba(255,255,255,0.08);
+      --shadow: 0 2px 16px rgba(0,0,0,0.4);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); background: var(--paper); color: var(--ink); line-height: 1.7; transition: background var(--t), color var(--t); }
+
+    .masthead { background: var(--paper2); border-bottom: 3px double var(--ink3); padding: 0.5rem 2rem; display: flex; justify-content: space-between; align-items: center; transition: background var(--t); }
+    .masthead-left { font-size: 0.65rem; color: var(--ink3); letter-spacing: 1px; }
+    .masthead-right { display: flex; gap: 0.5rem; align-items: center; }
+    .mast-btn { background: transparent; border: 1px solid var(--border); color: var(--ink2); padding: 0.25rem 0.7rem; border-radius: var(--radius); cursor: pointer; font-family: var(--font-body); font-size: 0.65rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s; text-decoration: none; display: inline-block; }
+    .mast-btn:hover, .mast-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    .lang-row { display: flex; gap: 0.3rem; }
+    .lang-btn { background: transparent; border: 1px solid var(--border); color: var(--ink3); padding: 0.2rem 0.55rem; border-radius: var(--radius); cursor: pointer; font-family: var(--font-body); font-size: 0.6rem; font-weight: 600; letter-spacing: 1px; transition: all 0.2s; }
+    .lang-btn:hover, .lang-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    .newspaper-header { text-align: center; padding: 2.5rem 2rem 1.5rem; border-bottom: 1px solid var(--ink3); transition: background var(--t); }
+    .nmg-label { font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase; color: var(--ink3); margin-bottom: 0.5rem; display: block; }
+    .paper-title { font-family: var(--font-display); font-size: clamp(2.8rem, 8vw, 5.5rem); font-weight: 900; color: var(--ink); letter-spacing: -1px; line-height: 1; margin-bottom: 0.5rem; transition: color var(--t); }
+    .paper-title em { font-style: italic; color: var(--accent); }
+    .paper-motto { font-family: var(--font-display); font-style: italic; font-size: 0.85rem; color: var(--ink3); }
+    .header-rule { display: flex; align-items: center; gap: 1rem; margin: 1.2rem 2rem 0; }
+    .header-rule::before, .header-rule::after { content: ''; flex: 1; height: 1px; background: var(--ink3); }
+    .header-rule-icon { color: var(--accent); font-size: 0.7rem; }
+
+    .cat-nav { border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; overflow-x: auto; scrollbar-width: none; transition: background var(--t); }
+    .cat-nav::-webkit-scrollbar { display: none; }
+    .cat-btn { background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--ink2); padding: 0.75rem 1rem; cursor: pointer; font-family: var(--font-body); font-size: 0.72rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; transition: all 0.2s; }
+    .cat-btn:hover { color: var(--accent); }
+    .cat-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+    .main-wrap { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .featured { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem; cursor: pointer; }
+    .featured:hover .feat-title { color: var(--accent); }
+    .feat-img { background: var(--paper3); border-radius: var(--radius); aspect-ratio: 16/9; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .feat-img img { width: 100%; height: 100%; object-fit: cover; }
+    .feat-content { display: flex; flex-direction: column; justify-content: center; gap: 0.8rem; }
+    .feat-cat { font-size: 0.6rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); }
+    .feat-title { font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; color: var(--ink); line-height: 1.3; transition: color 0.2s; }
+    .feat-excerpt { font-size: 0.88rem; color: var(--ink2); line-height: 1.7; font-weight: 300; }
+    .feat-meta { font-size: 0.68rem; color: var(--ink3); display: flex; gap: 1rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; cursor: pointer; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s, background var(--t), border-color var(--t); }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+    .card:hover .card-title { color: var(--accent); }
+    .card-img { background: var(--paper3); aspect-ratio: 16/9; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .card-img img { width: 100%; height: 100%; object-fit: cover; }
+    .card-body { padding: 1.2rem; }
+    .card-cat { font-size: 0.58rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+    .card-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--ink); line-height: 1.35; margin-bottom: 0.5rem; transition: color 0.2s; }
+    .card-excerpt { font-size: 0.80rem; color: var(--ink2); line-height: 1.6; font-weight: 300; margin-bottom: 0.8rem; }
+    .card-meta { font-size: 0.62rem; color: var(--ink3); display: flex; gap: 0.8rem; }
+    .empty { text-align: center; padding: 5rem 2rem; color: var(--ink3); }
+    .empty i { font-size: 3rem; margin-bottom: 1rem; display: block; }
+    .empty h3 { font-family: var(--font-display); font-size: 1.3rem; color: var(--ink2); margin-bottom: 0.5rem; }
+
+    .reader { position: fixed; inset: 0; z-index: 200; background: var(--paper); overflow-y: auto; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+    .reader.open { opacity: 1; pointer-events: all; }
+    .reader-nav { position: sticky; top: 0; background: var(--paper); border-bottom: 1px solid var(--border); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; transition: background var(--t); }
+    .back-btn { display: flex; align-items: center; gap: 0.5rem; background: transparent; border: none; cursor: pointer; color: var(--ink2); font-family: var(--font-body); font-size: 0.72rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
+    .back-btn:hover { color: var(--accent); }
+    .back-btn svg { width: 16px; height: 16px; fill: currentColor; }
+    .reader-body { max-width: 720px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+    .r-cat { font-size: 0.6rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; display: block; }
+    .r-title { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; transition: color var(--t); }
+    .r-byline { font-size: 0.75rem; color: var(--ink3); margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .r-content { font-size: 0.97rem; line-height: 1.85; color: var(--ink); transition: color var(--t); }
+    .r-content h2 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; margin: 2rem 0 0.8rem; }
+    .r-content h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.6rem; }
+    .r-content p { margin-bottom: 1.2rem; font-weight: 300; }
+    .r-content blockquote { border-left: 3px solid var(--accent); padding: 0.8rem 1.2rem; background: var(--paper2); margin: 1.5rem 0; font-style: italic; color: var(--ink2); border-radius: 0 4px 4px 0; }
+    .r-content img { width: 100%; border-radius: var(--radius); margin: 1.5rem 0; }
+    .r-content ul, .r-content ol { padding-left: 1.5rem; margin-bottom: 1.2rem; }
+    .r-content li { margin-bottom: 0.4rem; font-weight: 300; }
+    .trans-notice { display: flex; align-items: center; gap: 0.6rem; background: var(--paper2); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.7rem 1rem; margin-bottom: 1.5rem; font-size: 0.75rem; color: var(--ink3); }
+    .trans-notice i { color: var(--accent); }
+    .spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid var(--ink3); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 0.3rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    footer { border-top: 3px double var(--ink3); text-align: center; padding: 2rem; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--ink3); }
+
+    @media (max-width: 640px) {
+      .featured { grid-template-columns: 1fr; }
+      .main-wrap { padding: 1rem; }
+      .masthead { flex-direction: column; gap: 0.5rem; padding: 0.7rem 1rem; }
+    }
+  </style>
+</head>
+<body data-theme="light">
+
+  <div class="masthead">
+    <span class="masthead-left">
+      <i class="fa-solid fa-scroll" style="margin-right:0.4rem;color:var(--accent)"></i>
+      Nomashae Media Group &nbsp;·&nbsp; <span id="mast-date"></span>
+    </span>
+    <div class="masthead-right">
+      <div class="lang-row">
+        <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
+        <button class="lang-btn" onclick="setLang('mk',this)">МК</button>
+        <button class="lang-btn" onclick="setLang('fb',this)">FB</button>
+      </div>
+      <button class="mast-btn" id="dark-btn" onclick="toggleDark()">Dark</button>
+      <a href="./index.html" class="mast-btn">← Nomashae</a>
+    </div>
+  </div>
+
+  <div class="newspaper-header">
+    <span class="nmg-label">Nomashae Media Group</span>
+    <h1 class="paper-title">The Daily <em>Scroll</em></h1>
+    <p class="paper-motto">"Truth in every word, balance in every story"</p>
+    <div class="header-rule"><span class="header-rule-icon"><i class="fa-solid fa-wind"></i></span></div>
+  </div>
+
+  <div class="cat-nav">
+    <button class="cat-btn active" onclick="filterCat('all',this)">All</button>
+    <button class="cat-btn" onclick="filterCat('government',this)">Government</button>
+    <button class="cat-btn" onclick="filterCat('technology',this)">Technology</button>
+    <button class="cat-btn" onclick="filterCat('culture',this)">Culture</button>
+    <button class="cat-btn" onclick="filterCat('defence',this)">Defence</button>
+    <button class="cat-btn" onclick="filterCat('general',this)">General</button>
+  </div>
+
+  <div class="main-wrap"><div id="feed"></div></div>
+
+  <footer><p>© 2026 Nomashae Media Group &nbsp;·&nbsp; The Daily Scroll &nbsp;·&nbsp; <em>Truth in every word</em></p></footer>
+
+  <div class="reader" id="reader">
+    <div class="reader-nav">
+      <button class="back-btn" onclick="closeReader()">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Back
+      </button>
+      <div class="lang-row">
+        <button class="lang-btn active" id="r-en" onclick="readerLang('en')">EN</button>
+        <button class="lang-btn" id="r-mk" onclick="readerLang('mk')">МК</button>
+        <button class="lang-btn" id="r-fb" onclick="readerLang('fb')">FB</button>
+      </div>
+    </div>
+    <div class="reader-body" id="reader-body"></div>
+  </div>
+
+  <script>
+  // ════════════════════════════════════════════════════════
+  //  CONFIG — paste your Gemini API key here
+  // ════════════════════════════════════════════════════════
+  const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE";
+  // ════════════════════════════════════════════════════════
+
+  // ════════════════════════════════════════════════════════
+  //  ARTICLES — hardcoded, newest first.
+  //  To add: paste a new object at the TOP of the array.
+  //
+  //  category: "government" | "technology" | "culture" |
+  //            "defence"    | "general"
+  //  cover:    image path e.g. "./assets/img.jpg" or null
+  //
+  //  MK + FB translations are AI-generated on first open,
+  //  then cached in localStorage so they only run once.
+  // ════════════════════════════════════════════════════════
+  const ARTICLES = [
+
+    {
+      id: 1,
+      category: "general",
+      cover: null,
+      title: "The Daily Scroll Launches — Nomashae's First Official News Outlet",
+      excerpt: "The Nomashae Media Group announces the launch of The Daily Scroll, the Republic's first and only official news publication.",
+      author: "Eftimij Novakovski",
+      date: "6 March 2026",
+      body: `
+        <p>Today marks a historic moment for the Republic of Nomashae. The Nomashae Media Group proudly announces the launch of <strong>The Daily Scroll</strong> — the first official news outlet of the Republic, dedicated to keeping every citizen informed, engaged, and connected to the life of their nation.</p>
+        <h2>A Voice for the Republic</h2>
+        <p>The Daily Scroll will cover everything from government decrees and policy updates to cultural events, technological progress, and general news from across Nomashae's regions. Rooted in the values of balance, truth, and harmony that define this nation, every story will be held to the highest standard of honest reporting.</p>
+        <blockquote>"Truth in every word, balance in every story."</blockquote>
+        <p>We look forward to serving the people of Nomashae. Welcome to The Daily Scroll.</p>
+      `,
+    },
+
+    // ── PASTE NEW ARTICLES ABOVE THIS LINE ──
+
+  ];
+  // ════════════════════════════════════════════════════════
+
+  const CATS = {
+    government: 'Government & Decrees', technology: 'Technology',
+    culture: 'Culture & Heritage', defence: 'Defence & Security', general: 'General News',
+  };
+
+  let currentLang = 'en';
+  let activeCat = 'all';
+  let currentArticle = null;
+  let readerCurrentLang = 'en';
+  let transCache = {};
+  try { transCache = JSON.parse(localStorage.getItem('nmg_trans') || '{}'); } catch(e) {}
+
+  // ── INIT ──
+  document.getElementById('mast-date').textContent =
+    new Date().toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  try { if (localStorage.getItem('nmDark') === 'true') applyDark(true); } catch(e) {}
+  render();
+
+  // ── DARK MODE ──
+  function toggleDark() { applyDark(document.body.getAttribute('data-theme') !== 'dark'); }
+  function applyDark(on) {
+    document.body.setAttribute('data-theme', on ? 'dark' : 'light');
+    const btn = document.getElementById('dark-btn');
+    btn.textContent = on ? 'Light' : 'Dark';
+    btn.classList.toggle('active', on);
+    try { localStorage.setItem('nmDark', on); } catch(e) {}
+  }
+
+  // ── LANGUAGE (front page) ──
+  function setLang(lang, btn) {
+    currentLang = lang;
+    document.querySelectorAll('.masthead-right .lang-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  }
+
+  // ── CATEGORY FILTER ──
+  function filterCat(cat, btn) {
+    activeCat = cat;
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  }
+
+  // ── FEED ──
+  function getField(a, field) {
+    if (currentLang === 'en') return a[field];
+    const c = transCache[`${a.id}_${currentLang}`];
+    return (c && c[field]) ? c[field] : a[field];
+  }
+
+  function render() {
+    const list = activeCat === 'all' ? ARTICLES : ARTICLES.filter(a => a.category === activeCat);
+    const feed = document.getElementById('feed');
+    if (!list.length) {
+      feed.innerHTML = `<div class="empty"><i class="fa-solid fa-newspaper"></i><h3>No articles yet</h3><p>Check back soon.</p></div>`;
+      return;
+    }
+    const [top, ...rest] = list;
+    let html = featuredHTML(top);
+    if (rest.length) html += `<div class="grid">${rest.map(cardHTML).join('')}</div>`;
+    feed.innerHTML = html;
+  }
+
+  function imgHTML(a, cls) {
+    return a.cover
+      ? `<div class="${cls}-img"><img src="${a.cover}" alt=""/></div>`
+      : `<div class="${cls}-img"><i class="fa-solid fa-newspaper" style="font-size:${cls==='feat'?'3':'2'}rem;color:var(--ink3)"></i></div>`;
+  }
+
+  function featuredHTML(a) {
+    return `<div class="featured" onclick="openArticle(${a.id})">
+      ${imgHTML(a,'feat')}
+      <div class="feat-content">
+        <div class="feat-cat">${CATS[a.category]||a.category}</div>
+        <div class="feat-title">${getField(a,'title')}</div>
+        <div class="feat-excerpt">${getField(a,'excerpt')}</div>
+        <div class="feat-meta">
+          <span><i class="fa-solid fa-user"></i> ${a.author}</span>
+          <span><i class="fa-regular fa-calendar"></i> ${a.date}</span>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function cardHTML(a) {
+    return `<div class="card" onclick="openArticle(${a.id})">
+      ${imgHTML(a,'card')}
+      <div class="card-body">
+        <div class="card-cat">${CATS[a.category]||a.category}</div>
+        <div class="card-title">${getField(a,'title')}</div>
+        <div class="card-excerpt">${getField(a,'excerpt')}</div>
+        <div class="card-meta">
+          <span><i class="fa-solid fa-user"></i> ${a.author}</span>
+          <span><i class="fa-regular fa-calendar"></i> ${a.date}</span>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // ── READER ──
+  function openArticle(id) {
+    currentArticle = ARTICLES.find(a => a.id === id);
+    readerCurrentLang = currentLang;
+    renderReader();
+    document.getElementById('reader').classList.add('open');
+    document.getElementById('reader').scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeReader() {
+    document.getElementById('reader').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function readerLang(lang) {
+    readerCurrentLang = lang;
+    ['en','mk','fb'].forEach(l => {
+      const b = document.getElementById('r-'+l);
+      if (b) b.classList.toggle('active', l === lang);
+    });
+    renderReader();
+  }
+
+  async function renderReader() {
+    const a = currentArticle; if (!a) return;
+    const cached = transCache[`${a.id}_${readerCurrentLang}`];
+    const needsTranslation = readerCurrentLang !== 'en' && !cached;
+
+    let title = a.title, body = a.body;
+    if (!needsTranslation && cached) { title = cached.title || title; body = cached.body || body; }
+
+    ['en','mk','fb'].forEach(l => {
+      const b = document.getElementById('r-'+l);
+      if (b) b.classList.toggle('active', l === readerCurrentLang);
+    });
+
+    const imgHtml = a.cover ? `<img src="${a.cover}" alt="" style="width:100%;border-radius:4px;margin-bottom:2rem"/>` : '';
+    const notice = needsTranslation
+      ? `<div class="trans-notice" id="trans-notice"><span class="spinner"></span><i class="fa-solid fa-language"></i> <span id="trans-msg">Translating with Gemini…</span></div>`
+      : '';
+
+    document.getElementById('reader-body').innerHTML = `
+      <span class="r-cat">${CATS[a.category]||a.category}</span>
+      <h1 class="r-title" id="r-title">${title}</h1>
+      <div class="r-byline">
+        <span><i class="fa-solid fa-user"></i> ${a.author}</span>
+        <span><i class="fa-regular fa-calendar"></i> ${a.date}</span>
+      </div>
+      ${imgHtml}${notice}
+      <div class="r-content" id="r-body">${body}</div>`;
+
+    if (needsTranslation) await doTranslate(a, readerCurrentLang);
+  }
+
+  // ── GEMINI TRANSLATION ──
+  async function doTranslate(a, lang) {
+    const langDesc = lang === 'mk'
+      ? 'Macedonian using Cyrillic script'
+      : 'Flyingo Bisdomic — a constructed language based on English with simplified phonetics (e.g. "ei" for "ay", "un" for "a/an", "mi" for "I"). Keep it readable but phonetically simplified.';
+
+    const prompt = `Translate this article to ${langDesc}. Reply ONLY with a raw JSON object (no markdown, no backticks) with exactly three keys: "title", "excerpt", "body". Preserve all HTML tags in the body field.
+
+Title: ${a.title}
+Excerpt: ${a.excerpt || ''}
+Body (HTML): ${a.body}`;
+
+    try {
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${AIzaSyDmTIy4nxu-Gdr22sm4VzSVWdldhqcojzQ}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { temperature: 0.3, responseMimeType: "application/json" }
+          })
+        }
+      );
+      const data = await res.json();
+      const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      const parsed = JSON.parse(raw.replace(/```json|```/g, '').trim());
+
+      transCache[`${a.id}_${lang}`] = parsed;
+      try { localStorage.setItem('nmg_trans', JSON.stringify(transCache)); } catch(e) {}
+
+      const titleEl = document.getElementById('r-title');
+      const bodyEl  = document.getElementById('r-body');
+      const noticeEl = document.getElementById('trans-notice');
+      if (titleEl) titleEl.textContent = parsed.title;
+      if (bodyEl)  bodyEl.innerHTML = parsed.body;
+      if (noticeEl) noticeEl.remove();
+    } catch(e) {
+      const msg = document.getElementById('trans-msg');
+      const spinner = document.querySelector('.spinner');
+      if (spinner) spinner.remove();
+      if (msg) msg.textContent = 'Translation failed — showing original.';
+      console.error('Gemini translation error:', e);
+    }
+  }
+  </script>
+</body>
+</html>
