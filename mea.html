@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ministry of Infrastructure & Public Works | Nomashae</title>
+  <title>Ministry of External Affairs | Nomashae</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link rel="stylesheet" href="phonescreenengine.css">
   <style>
     :root {
       --accent: #4A7C59;
@@ -137,11 +136,7 @@
     .fade.in { opacity: 1; transform: none; }
 
     /* RESP GRID */
-    .resp-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1rem;
-    }
+    .resp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1rem; }
     .resp-card {
       background: var(--card); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 1.8rem;
@@ -165,13 +160,78 @@
     .resp-title { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.4rem; transition: color var(--t); }
     .resp-desc { font-size: 0.82rem; font-weight: 300; color: var(--ink2); line-height: 1.7; transition: color var(--t); }
 
-    /* PRIORITY LIST (same as defence) */
+    /* DIPLOMACY PRINCIPLES */
+    .philosophy-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2.5rem;
+      box-shadow: var(--shadow); max-width: 680px; margin: 0 auto;
+      text-align: center; transition: background var(--t), border-color var(--t);
+    }
+    .philosophy-quote {
+      font-size: 1.1rem; font-weight: 300; font-style: italic;
+      color: var(--ink); line-height: 1.8; margin-bottom: 1rem;
+      transition: color var(--t);
+    }
+    .philosophy-quote strong { font-weight: 600; color: var(--accent); font-style: normal; transition: color var(--t); }
+    .philosophy-attr { font-size: 0.72rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--ink2); transition: color var(--t); }
+
+    /* STANCE CARDS — green/red split */
+    .stance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .stance-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t);
+    }
+    .stance-head {
+      padding: 1rem 1.4rem; display: flex; align-items: center; gap: 0.7rem;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    }
+    .stance-head.will { background: rgba(40,167,69,0.08); color: #28a745; border-bottom: 1px solid rgba(40,167,69,0.15); }
+    .stance-head.wont { background: rgba(196,98,45,0.08); color: #b84a22; border-bottom: 1px solid rgba(196,98,45,0.15); }
+    .stance-list { padding: 1rem 1.4rem; display: flex; flex-direction: column; gap: 0.7rem; }
+    .stance-item {
+      display: flex; gap: 0.7rem; align-items: flex-start;
+      font-size: 0.83rem; font-weight: 300; color: var(--ink2); line-height: 1.6;
+      transition: color var(--t);
+    }
+    .stance-item i { font-size: 0.75rem; margin-top: 0.3rem; flex-shrink: 0; }
+    .stance-item.yes i { color: #28a745; }
+    .stance-item.no  i { color: #b84a22; }
+
+    /* RELATIONS TABLE */
+    .relations-list { display: flex; flex-direction: column; gap: 0.8rem; }
+    .relation-item {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.2rem 1.4rem;
+      display: flex; align-items: center; gap: 1.2rem;
+      box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t), transform 0.2s;
+    }
+    .relation-item:hover { transform: translateX(4px); }
+    .relation-flag {
+      width: 40px; height: 40px; border-radius: 8px; flex-shrink: 0;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      transition: background var(--t);
+    }
+    .relation-info { flex: 1; }
+    .relation-name { font-size: 0.92rem; font-weight: 600; color: var(--ink); margin-bottom: 0.1rem; transition: color var(--t); }
+    .relation-desc { font-size: 0.78rem; font-weight: 300; color: var(--ink2); transition: color var(--t); }
+    .rel-badge {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; padding: 0.25rem 0.65rem; border-radius: 20px; flex-shrink: 0;
+    }
+    .rel-open    { background: rgba(40,167,69,0.1);  color: #28a745; border: 1px solid rgba(40,167,69,0.25); }
+    .rel-neutral { background: rgba(91,155,191,0.1); color: #3a7aaa; border: 1px solid rgba(91,155,191,0.25); }
+    .rel-watch   { background: rgba(212,160,23,0.1); color: #b8860b; border: 1px solid rgba(212,160,23,0.25); }
+
+    /* PRIORITY LIST */
     .priority-list { display: flex; flex-direction: column; gap: 0.6rem; max-width: 680px; margin: 0 auto; }
     .priority-item {
       display: flex; align-items: flex-start; gap: 1rem;
       background: var(--card); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1.1rem 1.3rem;
-      box-shadow: var(--shadow);
+      border-radius: 10px; padding: 1.1rem 1.3rem; box-shadow: var(--shadow);
       transition: background var(--t), border-color var(--t), transform 0.2s;
     }
     .priority-item:hover { transform: translateX(4px); }
@@ -191,8 +251,7 @@
     .service-item {
       display: flex; gap: 1rem; align-items: flex-start;
       background: var(--card); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1.2rem 1.4rem;
-      box-shadow: var(--shadow);
+      border-radius: 10px; padding: 1.2rem 1.4rem; box-shadow: var(--shadow);
       transition: background var(--t), border-color var(--t), transform 0.2s;
     }
     .service-item:hover { transform: translateX(4px); }
@@ -238,12 +297,14 @@
       color: var(--ink2); transition: border-color var(--t), color var(--t);
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 640px) {
       nav { padding: 0 1rem; }
       .section { padding: 3rem 1.2rem; }
       .minister-card { flex-direction: column; text-align: center; }
+      .stance-grid { grid-template-columns: 1fr; }
     }
   </style>
+  <link rel="stylesheet" href="./mobile.css"/>
 </head>
 <body data-theme="light" data-element="earth">
 
@@ -263,105 +324,211 @@
   <!-- HERO -->
   <div class="hero">
     <span class="hero-ministry">Republic of Nomashae</span>
-    <div class="hero-icon"><i class="fa-solid fa-helmet-safety"></i></div>
-    <h1 class="hero-title">Ministry of Infrastructure<br>& Public Works</h1>
-    <p class="hero-sub">Building the foundations of Nomashae — roads, structures, and public spaces that serve every citizen, in every region, for generations to come.</p>
+    <div class="hero-icon"><i class="fa-solid fa-earth-europe"></i></div>
+    <h1 class="hero-title">Ministry of External Affairs</h1>
+    <p class="hero-sub">Representing Nomashae to the outside world — building relationships, negotiating agreements, and ensuring the Republic is known, respected, and heard beyond its borders.</p>
     <span class="hero-badge"><i class="fa-solid fa-circle-dot"></i> Active</span>
   </div>
 
-  <!-- RESPONSIBILITIES -->
+  <!-- PHILOSOPHY -->
   <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Diplomatic Doctrine</span>
+        <h2 class="sec-title">How Nomashae Engages the World</h2>
+        <p class="sec-sub">Guided by the Water Tribe spirit — adaptable, open, and always seeking common ground</p>
+      </div>
+      <div class="philosophy-card">
+        <p class="philosophy-quote">
+          "Nomashae does not seek dominance over others.<br>
+          It seeks <strong>understanding, respect, and mutual benefit</strong> —<br>
+          because a world in balance is a world where every nation thrives."
+        </p>
+        <span class="philosophy-attr">— Ministry of External Affairs</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESPONSIBILITIES -->
+  <div class="section">
     <div class="section-inner fade">
       <div class="sec-header">
         <span class="sec-label">What We Do</span>
         <h2 class="sec-title">Responsibilities</h2>
-        <p class="sec-sub">The pillars of Nomashae's physical foundation</p>
+        <p class="sec-sub">How the Ministry represents and protects Nomashae on the world stage</p>
       </div>
       <div class="resp-grid">
         <div class="resp-card">
-          <div class="resp-icon"><i class="fa-solid fa-road"></i></div>
-          <div class="resp-title">Roads & Pathways</div>
-          <div class="resp-desc">Planning, constructing, and maintaining all roads, bridges, and transit routes across Nomashae's regions. Connecting every corner of the Republic.</div>
+          <div class="resp-icon"><i class="fa-solid fa-handshake"></i></div>
+          <div class="resp-title">Diplomatic Relations</div>
+          <div class="resp-desc">Establishing, maintaining, and developing Nomashae's relationships with other nations, micronations, communities, and organisations. Every relationship begins with respect.</div>
         </div>
         <div class="resp-card">
-          <div class="resp-icon"><i class="fa-solid fa-building"></i></div>
-          <div class="resp-title">Public Buildings</div>
-          <div class="resp-desc">Overseeing the design, construction, and upkeep of all government buildings, civic structures, and public facilities throughout Nomashae.</div>
+          <div class="resp-icon"><i class="fa-solid fa-file-signature"></i></div>
+          <div class="resp-title">Treaties & Agreements</div>
+          <div class="resp-desc">Negotiating and ratifying formal agreements with outside parties — from trade deals and mutual recognition treaties to cooperation accords and peace agreements.</div>
         </div>
         <div class="resp-card">
-          <div class="resp-icon"><i class="fa-solid fa-bolt"></i></div>
-          <div class="resp-title">Utilities & Services</div>
-          <div class="resp-desc">Managing the Republic's essential utilities — power, water supply, and sanitation — ensuring every region has access to reliable public services.</div>
+          <div class="resp-icon"><i class="fa-solid fa-bullhorn"></i></div>
+          <div class="resp-title">International Representation</div>
+          <div class="resp-desc">Speaking on behalf of Nomashae in external forums, communities, and events. The Ministry ensures the Republic's voice is heard clearly, consistently, and with dignity.</div>
         </div>
         <div class="resp-card">
-          <div class="resp-icon"><i class="fa-solid fa-tree"></i></div>
-          <div class="resp-title">Public Spaces</div>
-          <div class="resp-desc">Developing and maintaining parks, plazas, and communal areas in the spirit of Nomashae's elemental values. Spaces where citizens gather, rest, and connect.</div>
+          <div class="resp-icon"><i class="fa-solid fa-binoculars"></i></div>
+          <div class="resp-title">External Intelligence</div>
+          <div class="resp-desc">Monitoring geopolitical developments relevant to Nomashae's interests. Working alongside the NIaI to keep the government informed of external threats, opportunities, and shifts in the wider world.</div>
         </div>
         <div class="resp-card">
-          <div class="resp-icon"><i class="fa-solid fa-file-contract"></i></div>
-          <div class="resp-title">Tenders & Contracts</div>
-          <div class="resp-desc">Issuing, reviewing, and awarding public construction tenders. All contracts are awarded transparently and in the best interest of the Republic.</div>
+          <div class="resp-icon"><i class="fa-solid fa-person-walking-luggage"></i></div>
+          <div class="resp-title">Citizen Representation Abroad</div>
+          <div class="resp-desc">Supporting Nomashalian citizens operating or engaging outside the Republic's borders. Citizens travelling or conducting affairs externally may contact the Ministry for guidance.</div>
         </div>
         <div class="resp-card">
-          <div class="resp-icon"><i class="fa-solid fa-hammer"></i></div>
-          <div class="resp-title">Maintenance & Repair</div>
-          <div class="resp-desc">Ensuring all existing infrastructure remains safe, functional, and up to standard. Regular inspections and repairs keep Nomashae running smoothly.</div>
+          <div class="resp-icon"><i class="fa-solid fa-dove"></i></div>
+          <div class="resp-title">Peace & Mediation</div>
+          <div class="resp-desc">Where conflicts affect Nomashae or its allies, the Ministry leads mediation efforts. In the tradition of Nomashae's founding principles — diplomacy before all else.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- PRIORITY OF ACTION -->
+  <!-- DIPLOMATIC STANCE -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Our Position</span>
+        <h2 class="sec-title">Diplomatic Stance</h2>
+        <p class="sec-sub">What Nomashae will and will not do in its external relations</p>
+      </div>
+      <div class="stance-grid">
+        <div class="stance-card">
+          <div class="stance-head will"><i class="fa-solid fa-check"></i> Nomashae Will</div>
+          <div class="stance-list">
+            <div class="stance-item yes"><i class="fa-solid fa-check"></i> Engage any nation or community in good-faith dialogue.</div>
+            <div class="stance-item yes"><i class="fa-solid fa-check"></i> Pursue mutual recognition with other micronations.</div>
+            <div class="stance-item yes"><i class="fa-solid fa-check"></i> Honour all treaties and agreements it signs in full.</div>
+            <div class="stance-item yes"><i class="fa-solid fa-check"></i> Offer mediation where conflicts arise near its interests.</div>
+            <div class="stance-item yes"><i class="fa-solid fa-check"></i> Represent its citizens' interests abroad with full commitment.</div>
+            <div class="stance-item yes"><i class="fa-solid fa-check"></i> Share its culture, language, and values openly with the world.</div>
+          </div>
+        </div>
+        <div class="stance-card">
+          <div class="stance-head wont"><i class="fa-solid fa-xmark"></i> Nomashae Will Not</div>
+          <div class="stance-list">
+            <div class="stance-item no"><i class="fa-solid fa-xmark"></i> Enter any alliance that compromises its sovereignty or values.</div>
+            <div class="stance-item no"><i class="fa-solid fa-xmark"></i> Engage in hostile diplomacy or political aggression.</div>
+            <div class="stance-item no"><i class="fa-solid fa-xmark"></i> Sign agreements that conflict with its Constitution.</div>
+            <div class="stance-item no"><i class="fa-solid fa-xmark"></i> Recognise nations whose values contradict Nomashae's core principles.</div>
+            <div class="stance-item no"><i class="fa-solid fa-xmark"></i> Allow external pressure to override internal democratic decisions.</div>
+            <div class="stance-item no"><i class="fa-solid fa-xmark"></i> Take sides in external conflicts that do not threaten the Republic.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW DIPLOMACY WORKS -->
   <div class="section">
     <div class="section-inner fade">
       <div class="sec-header">
-        <span class="sec-label">How We Build</span>
-        <h2 class="sec-title">Development Priorities</h2>
-        <p class="sec-sub">The order in which infrastructure projects are planned and executed</p>
+        <span class="sec-label">The Process</span>
+        <h2 class="sec-title">How Nomashae Forms Relations</h2>
+        <p class="sec-sub">The steps from first contact to a formal relationship with another nation or party</p>
       </div>
       <div class="priority-list">
         <div class="priority-item">
           <div class="priority-num">1</div>
           <div class="priority-text">
-            Capital Infrastructure
-            <span>Uni Citi and the government quarter are built first — establishing the seat of the Republic before expanding outward.</span>
+            First Contact
+            <span>An outside party or Nomashae itself initiates contact. The Ministry of External Affairs receives and reviews the outreach, assessing the nature and intent of the relationship.</span>
           </div>
         </div>
         <div class="priority-item">
           <div class="priority-num">2</div>
           <div class="priority-text">
-            Regional Connectivity
-            <span>Roads and transit links connecting all seven regions — so no citizen is isolated from the rest of Nomashae.</span>
+            Diplomatic Review
+            <span>The Ministry reviews the outside party — their values, governance, and interests — to determine whether a relationship is in Nomashae's best interest.</span>
           </div>
         </div>
         <div class="priority-item">
           <div class="priority-num">3</div>
           <div class="priority-text">
-            Essential Utilities
-            <span>Power, water, and sanitation infrastructure in every inhabited region before non-essential projects proceed.</span>
+            Dialogue & Negotiation
+            <span>If approved, both parties open dialogue. Terms of any agreement, recognition, or cooperation are negotiated openly and in good faith.</span>
           </div>
         </div>
         <div class="priority-item">
           <div class="priority-num">4</div>
           <div class="priority-text">
-            Public & Cultural Spaces
-            <span>Parks, plazas, and communal buildings that bring citizens together and reflect Nomashae's elemental identity.</span>
+            Parliamentary Approval
+            <span>Any formal treaty or agreement must be approved by Parliament before it is ratified. No binding external commitment is made without the consent of Nomashae's citizens.</span>
           </div>
         </div>
         <div class="priority-item">
           <div class="priority-num">5</div>
           <div class="priority-text">
-            Regional Development Projects
-            <span>Citizen-proposed works and regional improvements, reviewed and funded as resources allow.</span>
+            Presidential Ratification
+            <span>The President signs and ratifies the agreement on behalf of the Republic. The treaty is then documented in the national archive and takes effect immediately.</span>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- CITIZEN SERVICES -->
+  <!-- EXTERNAL RELATIONS -->
   <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Beyond Our Borders</span>
+        <h2 class="sec-title">External Relations</h2>
+        <p class="sec-sub">Nomashae's current standing with external parties — updated as relations develop</p>
+      </div>
+      <div class="relations-list">
+
+        <div class="relation-item">
+          <div class="relation-flag"><i class="fa-solid fa-earth-america"></i></div>
+          <div class="relation-info">
+            <div class="relation-name">Other Micronations</div>
+            <div class="relation-desc">Nomashae is open to mutual recognition and cooperation agreements with all micronations that share compatible values.</div>
+          </div>
+          <span class="rel-badge rel-open">Open</span>
+        </div>
+
+        <div class="relation-item">
+          <div class="relation-flag"><i class="fa-solid fa-gamepad"></i></div>
+          <div class="relation-info">
+            <div class="relation-name">Minecraft Communities</div>
+            <div class="relation-desc">As a Minecraft-based republic, Nomashae actively maintains relations with allied servers and communities within its digital territory.</div>
+          </div>
+          <span class="rel-badge rel-open">Active</span>
+        </div>
+
+        <div class="relation-item">
+          <div class="relation-flag"><i class="fa-solid fa-globe"></i></div>
+          <div class="relation-info">
+            <div class="relation-name">Online Communities & Platforms</div>
+            <div class="relation-desc">Nomashae engages openly with online communities — Discord servers, creative platforms, and content networks — as a recognised cultural presence.</div>
+          </div>
+          <span class="rel-badge rel-neutral">Neutral</span>
+        </div>
+
+        <div class="relation-item">
+          <div class="relation-flag"><i class="fa-solid fa-building-columns"></i></div>
+          <div class="relation-info">
+            <div class="relation-name">Recognised Nation-States</div>
+            <div class="relation-desc">Nomashae does not currently hold formal relations with recognised nation-states, though it respects their sovereignty and monitors relevant developments.</div>
+          </div>
+          <span class="rel-badge rel-watch">Monitored</span>
+        </div>
+
+        <!-- ADD MORE RELATIONS BELOW -->
+
+      </div>
+    </div>
+  </div>
+
+  <!-- CITIZEN SERVICES -->
+  <div class="section">
     <div class="section-inner fade">
       <div class="sec-header">
         <span class="sec-label">How We Help</span>
@@ -370,31 +537,31 @@
       </div>
       <div class="services-list">
         <div class="service-item">
-          <div class="service-icon"><i class="fa-solid fa-file-pen"></i></div>
+          <div class="service-icon"><i class="fa-solid fa-handshake"></i></div>
           <div class="service-info">
-            <div class="service-name">Apply for a Building Tender</div>
-            <div class="service-desc">Citizens may apply to take on public works contracts. All applications are reviewed by the Ministry and awarded based on capability and proposal quality.</div>
+            <div class="service-name">Request Diplomatic Contact</div>
+            <div class="service-desc">Know of a community, micronation, or party that Nomashae should reach out to? Citizens can submit diplomatic contact requests to the Ministry for review.</div>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon"><i class="fa-solid fa-person-walking-luggage"></i></div>
+          <div class="service-info">
+            <div class="service-name">External Representation Support</div>
+            <div class="service-desc">Citizens representing Nomashae in external spaces — online or otherwise — can request official backing or credentials from the Ministry.</div>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon"><i class="fa-solid fa-file-signature"></i></div>
+          <div class="service-info">
+            <div class="service-name">Treaty & Agreement Enquiries</div>
+            <div class="service-desc">Want to know the status of a treaty or what agreements Nomashae has in place? All ratified agreements are publicly documented and accessible on request.</div>
           </div>
         </div>
         <div class="service-item">
           <div class="service-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
           <div class="service-info">
-            <div class="service-name">Report Infrastructure Issues</div>
-            <div class="service-desc">Found a broken road, damaged structure, or failing public utility? Report it to the Ministry and it will be logged, prioritised, and addressed.</div>
-          </div>
-        </div>
-        <div class="service-item">
-          <div class="service-icon"><i class="fa-solid fa-lightbulb"></i></div>
-          <div class="service-info">
-            <div class="service-name">Propose a Public Works Project</div>
-            <div class="service-desc">Citizens can submit proposals for new infrastructure projects in their region. All proposals are reviewed and considered for the national development plan.</div>
-          </div>
-        </div>
-        <div class="service-item">
-          <div class="service-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
-          <div class="service-info">
-            <div class="service-name">Project Status Enquiries</div>
-            <div class="service-desc">Want to know the status of an active or planned project in your region? Contact the Ministry for a full update on any ongoing works.</div>
+            <div class="service-name">Report External Concerns</div>
+            <div class="service-desc">If a citizen encounters a situation involving Nomashae's external interests — hostile contact, impersonation, or diplomatic incidents — report it to the Ministry immediately.</div>
           </div>
         </div>
       </div>
@@ -402,24 +569,24 @@
   </div>
 
   <!-- MINISTER -->
-  <div class="section">
+  <div class="section alt">
     <div class="section-inner fade">
       <div class="sec-header">
         <span class="sec-label">Leadership</span>
-        <h2 class="sec-title">Minister of Infrastructure & Public Works</h2>
+        <h2 class="sec-title">Minister of External Affairs</h2>
       </div>
       <div class="minister-card">
         <div class="minister-avatar"><i class="fa-solid fa-user"></i></div>
         <div>
-          <span class="minister-role">Minister of Infrastructure & Public Works</span>
-          <div class="minister-name">Eftimij Yipified Novakovski</div>
-          <div class="minister-note">Also serving as Prime Minister of the Republic of Nomashae</div>
+          <span class="minister-role">Minister of External Affairs</span>
+          <div class="minister-name">Krste AppaRider Dimov</div>
+          <div class="minister-note">Also serving as President of the Republic of Nomashae</div>
         </div>
       </div>
     </div>
   </div>
 
-  <footer><p>© 2026 Nomashae · Ministry of Infrastructure & Public Works · Powered by the Elements</p></footer>
+  <footer><p>© 2026 Nomashae · Ministry of External Affairs · Powered by the Elements</p></footer>
 
   <script>
     function getElement() {

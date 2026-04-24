@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ministry of Internal Affairs | Nomashae</title>
+  <title>Ministry of Education & Knowledge | Nomashae</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="stylesheet" href="phonescreenengine.css">
@@ -136,12 +136,8 @@
     .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .fade.in { opacity: 1; transform: none; }
 
-    /* RESPONSIBILITY GRID */
-    .resp-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1rem;
-    }
+    /* RESP GRID */
+    .resp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1rem; }
     .resp-card {
       background: var(--card); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 1.8rem;
@@ -165,58 +161,59 @@
     .resp-title { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.4rem; transition: color var(--t); }
     .resp-desc { font-size: 0.82rem; font-weight: 300; color: var(--ink2); line-height: 1.7; transition: color var(--t); }
 
-    /* REGIONS */
-    .regions-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1rem;
-    }
-    .region-card {
+    /* KNOWLEDGE PILLARS — element coloured */
+    .pillars-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1rem; }
+    .pillar-card {
       background: var(--card); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 1.8rem;
       box-shadow: var(--shadow); position: relative; overflow: hidden;
       transition: background var(--t), border-color var(--t), transform 0.25s, box-shadow 0.25s;
     }
-    .region-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
-    .region-card::after {
+    .pillar-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+    .pillar-card::after {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: var(--region-color, var(--accent));
-      transform: scaleX(0); transform-origin: left;
+      background: var(--pc, var(--accent)); transform: scaleX(0); transform-origin: left;
       transition: transform 0.3s ease;
     }
-    .region-card:hover::after { transform: scaleX(1); }
-
-    /* region colour tokens */
-    .region-water-n { --region-color: #3A8F8F; }
-    .region-water-s { --region-color: #2a6e8e; }
-    .region-air-e   { --region-color: #7bafd8; }
-    .region-air-w   { --region-color: #5B9BBF; }
-    .region-earth   { --region-color: #4A7C59; }
-    .region-fire    { --region-color: #C4622D; }
-    .region-capital { --region-color: #9B7FBF; }
-
-    .region-icon {
+    .pillar-card:hover::after { transform: scaleX(1); }
+    .pc-air   { --pc: #5B9BBF; }
+    .pc-water { --pc: #3A8F8F; }
+    .pc-earth { --pc: #4A7C59; }
+    .pc-fire  { --pc: #C4622D; }
+    .pillar-icon {
       width: 40px; height: 40px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1rem;
-      background: color-mix(in srgb, var(--region-color, var(--accent)) 12%, transparent);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;
+      background: color-mix(in srgb, var(--pc, var(--accent)) 12%, transparent);
     }
-    .region-icon i { font-size: 1rem; color: var(--region-color, var(--accent)); }
-    .region-element {
-      font-size: 0.58rem; font-weight: 700; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--region-color, var(--accent));
-      display: block; margin-bottom: 0.3rem;
+    .pillar-icon i { font-size: 1rem; color: var(--pc, var(--accent)); }
+    .pillar-element {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--pc, var(--accent)); display: block; margin-bottom: 0.3rem;
     }
-    .region-name { font-size: 0.98rem; font-weight: 700; color: var(--ink); margin-bottom: 0.4rem; transition: color var(--t); }
-    .region-desc { font-size: 0.80rem; font-weight: 300; color: var(--ink2); line-height: 1.7; transition: color var(--t); }
+    .pillar-name { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.4rem; transition: color var(--t); }
+    .pillar-desc { font-size: 0.82rem; font-weight: 300; color: var(--ink2); line-height: 1.7; transition: color var(--t); }
 
-    /* CITIZEN SERVICES */
+    /* PHILOSOPHY QUOTE */
+    .philosophy-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2.5rem;
+      box-shadow: var(--shadow); max-width: 680px; margin: 0 auto;
+      text-align: center; transition: background var(--t), border-color var(--t);
+    }
+    .philosophy-quote {
+      font-size: 1.1rem; font-weight: 300; font-style: italic;
+      color: var(--ink); line-height: 1.8; margin-bottom: 1rem;
+      transition: color var(--t);
+    }
+    .philosophy-quote strong { font-weight: 600; color: var(--accent); font-style: normal; transition: color var(--t); }
+    .philosophy-attr { font-size: 0.72rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--ink2); transition: color var(--t); }
+
+    /* SERVICES LIST */
     .services-list { display: flex; flex-direction: column; gap: 0.8rem; max-width: 680px; margin: 0 auto; }
     .service-item {
       display: flex; gap: 1rem; align-items: flex-start;
       background: var(--card); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1.2rem 1.4rem;
-      box-shadow: var(--shadow);
+      border-radius: 10px; padding: 1.2rem 1.4rem; box-shadow: var(--shadow);
       transition: background var(--t), border-color var(--t), transform 0.2s;
     }
     .service-item:hover { transform: translateX(4px); }
@@ -230,6 +227,26 @@
     .service-info { flex: 1; }
     .service-name { font-size: 0.92rem; font-weight: 600; color: var(--ink); margin-bottom: 0.2rem; transition: color var(--t); }
     .service-desc { font-size: 0.80rem; font-weight: 300; color: var(--ink2); line-height: 1.6; transition: color var(--t); }
+
+    /* PRIORITY LIST */
+    .priority-list { display: flex; flex-direction: column; gap: 0.6rem; max-width: 680px; margin: 0 auto; }
+    .priority-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.1rem 1.3rem; box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t), transform 0.2s;
+    }
+    .priority-item:hover { transform: translateX(4px); }
+    .priority-num {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border: 1.5px solid color-mix(in srgb, var(--accent) 30%, transparent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 700; color: var(--accent);
+      transition: all var(--t);
+    }
+    .priority-text { font-size: 0.88rem; font-weight: 400; color: var(--ink); transition: color var(--t); }
+    .priority-text span { font-size: 0.75rem; color: var(--ink2); display: block; font-weight: 300; margin-top: 0.15rem; transition: color var(--t); }
 
     /* MINISTER */
     .minister-card {
@@ -262,27 +279,6 @@
       color: var(--ink2); transition: border-color var(--t), color var(--t);
     }
 
-    .docs {
-      display: block;
-      width: fit-content;
-      
-      text-decoration: none;
-      background: var(--accent);
-      border: none;
-      color: #fff;
-      padding: 0.85rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      transition: opacity 0.2s;
-
-      margin: 0 auto;
-    }
-
     @media (max-width: 600px) {
       nav { padding: 0 1rem; }
       .section { padding: 3rem 1.2rem; }
@@ -308,99 +304,160 @@
   <!-- HERO -->
   <div class="hero">
     <span class="hero-ministry">Republic of Nomashae</span>
-    <div class="hero-icon"><i class="fa-solid fa-landmark"></i></div>
-    <h1 class="hero-title">Ministry of Internal Affairs</h1>
-    <p class="hero-sub">Administering Nomashae's regions, registering its citizens, and ensuring every voice is heard — the backbone of daily governance.</p>
+    <div class="hero-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+    <h1 class="hero-title">Ministry of Education<br>& Knowledge</h1>
+    <p class="hero-sub">Ensuring every citizen of Nomashae has access to learning, wisdom, and the tools to grow — because a Republic is only as strong as the knowledge of its people.</p>
     <span class="hero-badge"><i class="fa-solid fa-circle-dot"></i> Active</span>
   </div>
 
-  <!-- RESPONSIBILITIES -->
+  <!-- PHILOSOPHY -->
   <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Core Belief</span>
+        <h2 class="sec-title">Education Philosophy</h2>
+        <p class="sec-sub">Rooted in the wisdom of the Air Nomads — knowledge is not a privilege, it is a right</p>
+      </div>
+      <div class="philosophy-card">
+        <p class="philosophy-quote">
+          "Knowledge is the wind — it cannot be owned, only shared.<br>
+          <strong>Every citizen of Nomashae deserves to learn, to grow, and to contribute</strong><br>
+          their wisdom back to the Republic."
+        </p>
+        <span class="philosophy-attr">— Ministry of Education & Knowledge</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESPONSIBILITIES -->
+  <div class="section">
     <div class="section-inner fade">
       <div class="sec-header">
         <span class="sec-label">What We Do</span>
         <h2 class="sec-title">Responsibilities</h2>
-        <p class="sec-sub">The three pillars of internal governance</p>
+        <p class="sec-sub">The pillars of education and knowledge in Nomashae</p>
       </div>
       <div class="resp-grid">
         <div class="resp-card">
-          <div class="resp-icon"><i class="fa-solid fa-id-card"></i></div>
-          <div class="resp-title">Citizen Registration & Records</div>
-          <div class="resp-desc">Maintains the official register of all Nomashae citizens — tracking names, aliases, roles, and status. Every citizen of the Republic is recorded and recognised here.</div>
+          <div class="resp-icon"><i class="fa-solid fa-book-open"></i></div>
+          <div class="resp-title">Curriculum & Learning</div>
+          <div class="resp-desc">Developing and maintaining Nomashae's educational curriculum — covering science, technology, history, language, arts, and elemental philosophy. Learning that is broad, balanced, and meaningful.</div>
         </div>
         <div class="resp-card">
-          <div class="resp-icon"><i class="fa-solid fa-map-location-dot"></i></div>
-          <div class="resp-title">Regional Administration</div>
-          <div class="resp-desc">Oversees the six ATLA-inspired regions of Nomashae — ensuring each territory is managed, represented, and developed in line with the Republic's values.</div>
+          <div class="resp-icon"><i class="fa-solid fa-code"></i></div>
+          <div class="resp-title">Technology & Digital Skills</div>
+          <div class="resp-desc">Promoting coding, programming, and digital literacy across Nomashae. The Republic values technical knowledge — from Python and web development to animation and creative tools.</div>
         </div>
         <div class="resp-card">
-          <div class="resp-icon"><i class="fa-solid fa-comments"></i></div>
-          <div class="resp-title">Complaints & Citizen Services</div>
-          <div class="resp-desc">The first point of contact for citizens with concerns, suggestions, or disputes. Every complaint is heard, recorded, and addressed through proper channels.</div>
+          <div class="resp-icon"><i class="fa-solid fa-flask"></i></div>
+          <div class="resp-title">Science & Research</div>
+          <div class="resp-desc">Supporting scientific inquiry and research across all fields. The Ministry works alongside NOSA and other agencies to ensure Nomashae's citizens are at the frontier of knowledge.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-book"></i></div>
+          <div class="resp-title">National Library</div>
+          <div class="resp-desc">Building and maintaining Nomashae's national library — a publicly accessible archive of all educational resources, research papers, guides, and knowledge produced within the Republic.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+          <div class="resp-title">Citizen Education Programmes</div>
+          <div class="resp-desc">Running programmes that help citizens develop new skills, learn about governance, and contribute meaningfully to Nomashae. Education does not stop after school — it is lifelong.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-earth-americas"></i></div>
+          <div class="resp-title">Elemental Knowledge</div>
+          <div class="resp-desc">Teaching the philosophical traditions of all four elements — Air, Water, Earth, and Fire — as a framework for balanced thinking, decision making, and understanding the world.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- REGIONS -->
+  <!-- FOUR FIELDS OF KNOWLEDGE -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Fields of Study</span>
+        <h2 class="sec-title">The Four Fields of Knowledge</h2>
+        <p class="sec-sub">Nomashae's educational framework is organised around the four elements — each representing a domain of learning</p>
+      </div>
+      <div class="pillars-grid">
+
+        <div class="pillar-card pc-air">
+          <div class="pillar-icon"><i class="fa-solid fa-wind"></i></div>
+          <span class="pillar-element">Air · Philosophy & Wisdom</span>
+          <div class="pillar-name">Philosophy, Arts & Language</div>
+          <div class="pillar-desc">The study of ideas, creative expression, and communication. Inspired by the Air Nomad tradition of wisdom and freedom of thought — critical thinking, literature, linguistics, and Flyingo Bisdomic.</div>
+        </div>
+
+        <div class="pillar-card pc-water">
+          <div class="pillar-icon"><i class="fa-solid fa-water"></i></div>
+          <span class="pillar-element">Water · Adaptability & Flow</span>
+          <div class="pillar-name">Social Sciences & Governance</div>
+          <div class="pillar-desc">Understanding people, communities, and systems. The Water field covers history, politics, law, economics, and the study of how societies adapt and thrive — essential knowledge for every Nomashae citizen.</div>
+        </div>
+
+        <div class="pillar-card pc-earth">
+          <div class="pillar-icon"><i class="fa-solid fa-mountain"></i></div>
+          <span class="pillar-element">Earth · Stability & Endurance</span>
+          <div class="pillar-name">Engineering & Infrastructure</div>
+          <div class="pillar-desc">The practical knowledge of building and sustaining. The Earth field encompasses engineering, architecture, mathematics, and the physical sciences — the foundation on which Nomashae is constructed.</div>
+        </div>
+
+        <div class="pillar-card pc-fire">
+          <div class="pillar-icon"><i class="fa-solid fa-fire"></i></div>
+          <span class="pillar-element">Fire · Energy & Progress</span>
+          <div class="pillar-name">Technology & Innovation</div>
+          <div class="pillar-desc">The drive to build, invent, and push forward. The Fire field covers coding, digital creation, space science, AI, and all emerging technologies — the engine of Nomashae's future.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- LEARNING PRIORITIES -->
   <div class="section">
     <div class="section-inner fade">
       <div class="sec-header">
-        <span class="sec-label">Territory</span>
-        <h2 class="sec-title">Regions of Nomashae</h2>
-        <p class="sec-sub">Six regions inspired by the world of Avatar: The Last Airbender</p>
+        <span class="sec-label">Focus Areas</span>
+        <h2 class="sec-title">Current Learning Priorities</h2>
+        <p class="sec-sub">The areas of knowledge the Ministry is actively promoting across the Republic right now</p>
       </div>
-      <div class="regions-grid">
-
-        <div class="region-card region-capital">
-          <div class="region-icon"><i class="fa-solid fa-city"></i></div>
-          <span class="region-element">Capital · All Elements</span>
-          <div class="region-name">Uni Citi</div>
-          <div class="region-desc">The United City — capital of Nomashae and seat of the government. Where all four elements converge and all citizens are represented equally.</div>
+      <div class="priority-list">
+        <div class="priority-item">
+          <div class="priority-num">1</div>
+          <div class="priority-text">
+            Flyingo Bisdomic Literacy
+            <span>Every citizen is encouraged to learn and use the national language. Resources, guides, and programmes are available through the Ministry and the Ministry of Culture & Heritage.</span>
+          </div>
         </div>
-
-        <div class="region-card region-water-n">
-          <div class="region-icon"><i class="fa-solid fa-snowflake"></i></div>
-          <span class="region-element">Water · Northern</span>
-          <div class="region-name">Northern Water Tribe</div>
-          <div class="region-desc">Nomashae's northern territory, inspired by the grand Northern Water Tribe. Known for its resilience, adaptability, and the strength of its waterways.</div>
+        <div class="priority-item">
+          <div class="priority-num">2</div>
+          <div class="priority-text">
+            Coding & Digital Creation
+            <span>From Python to web development, animation to game design — the Ministry promotes technical skills as a core part of every citizen's education in the modern Republic.</span>
+          </div>
         </div>
-
-        <div class="region-card region-water-s">
-          <div class="region-icon"><i class="fa-solid fa-water"></i></div>
-          <span class="region-element">Water · Southern</span>
-          <div class="region-name">Southern Water Tribe</div>
-          <div class="region-desc">The southern reaches of Nomashae, reflecting the close-knit spirit of the Southern Water Tribe. Community-driven and deeply connected to the land.</div>
+        <div class="priority-item">
+          <div class="priority-num">3</div>
+          <div class="priority-text">
+            Civic & Constitutional Knowledge
+            <span>All citizens should understand how Nomashae's government works, their rights and duties, and how to participate meaningfully in the Republic's democracy.</span>
+          </div>
         </div>
-
-        <div class="region-card region-air-e">
-          <div class="region-icon"><i class="fa-solid fa-wind"></i></div>
-          <span class="region-element">Air · Eastern</span>
-          <div class="region-name">Eastern Air Temple</div>
-          <div class="region-desc">High and open, the Eastern Air Temple region embodies freedom and elevation. A place of reflection, peace, and the nomadic spirit of the Air Nomads.</div>
+        <div class="priority-item">
+          <div class="priority-num">4</div>
+          <div class="priority-text">
+            Science & Space Awareness
+            <span>In partnership with NOSA, the Ministry promotes awareness of space science, orbital research, and the Republic's broader ambitions beyond the atmosphere.</span>
+          </div>
         </div>
-
-        <div class="region-card region-air-w">
-          <div class="region-icon"><i class="fa-solid fa-feather"></i></div>
-          <span class="region-element">Air · Western</span>
-          <div class="region-name">Western Air Temple</div>
-          <div class="region-desc">The western counterpart to the Eastern Air Temple. Known for its unique inverted architecture and its culture of harmony and open skies.</div>
+        <div class="priority-item">
+          <div class="priority-num">5</div>
+          <div class="priority-text">
+            Elemental Philosophy
+            <span>The values of Air, Water, Earth, and Fire — balance, wisdom, strength, and freedom — are woven into all educational programmes as a framework for good thinking and good citizenship.</span>
+          </div>
         </div>
-
-        <div class="region-card region-earth">
-          <div class="region-icon"><i class="fa-solid fa-mountain"></i></div>
-          <span class="region-element">Earth · Central</span>
-          <div class="region-name">Earth Kingdom</div>
-          <div class="region-desc">The vast and enduring heartland of Nomashae. The Earth Kingdom region is home to the Republic's most stable and established settlements.</div>
-        </div>
-
-        <div class="region-card region-fire">
-          <div class="region-icon"><i class="fa-solid fa-fire"></i></div>
-          <span class="region-element">Fire · Southern</span>
-          <div class="region-name">Fire Nation</div>
-          <div class="region-desc">Nomashae's Fire Nation region — fierce, industrious, and driven. Once a symbol of conflict in ATLA's world, here it represents passion, ambition, and renewal.</div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -415,61 +472,41 @@
       </div>
       <div class="services-list">
         <div class="service-item">
-          <div class="service-icon"><i class="fa-solid fa-user-plus"></i></div>
+          <div class="service-icon"><i class="fa-solid fa-book-open"></i></div>
           <div class="service-info">
-            <div class="service-name">Citizen Registration</div>
-            <div class="service-desc">New to Nomashae? Contact the Ministry of Internal Affairs to be officially registered as a citizen of the Republic.</div>
+            <div class="service-name">Access Educational Resources</div>
+            <div class="service-desc">Citizens can request access to the national library, educational guides, or learning materials produced and curated by the Ministry of Education & Knowledge.</div>
           </div>
         </div>
         <div class="service-item">
-          <div class="service-icon"><i class="fa-solid fa-map-pin"></i></div>
+          <div class="service-icon"><i class="fa-solid fa-pen-nib"></i></div>
           <div class="service-info">
-            <div class="service-name">Region Assignment</div>
-            <div class="service-desc">Citizens can request assignment to a specific region of Nomashae. The ministry will process and record your regional affiliation.</div>
+            <div class="service-name">Submit Research or Knowledge</div>
+            <div class="service-desc">Citizens who have produced educational content, research, or guides may submit it to the Ministry for inclusion in the national library and public knowledge base.</div>
           </div>
         </div>
         <div class="service-item">
-          <div class="service-icon"><i class="fa-solid fa-flag"></i></div>
+          <div class="service-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
           <div class="service-info">
-            <div class="service-name">Complaints & Disputes</div>
-            <div class="service-desc">Have a concern about governance, another citizen, or a regional issue? Submit a formal complaint and the ministry will investigate and respond.</div>
+            <div class="service-name">Propose an Education Programme</div>
+            <div class="service-desc">Have an idea for a learning programme, workshop, or educational initiative? Submit a proposal and the Ministry will review it for inclusion in the national curriculum.</div>
           </div>
         </div>
         <div class="service-item">
-          <div class="service-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+          <div class="service-icon"><i class="fa-solid fa-language"></i></div>
           <div class="service-info">
-            <div class="service-name">Record Updates</div>
-            <div class="service-desc">Changed your alias, role, or region? Contact the ministry to update your official citizen record in the Republic's registry.</div>
+            <div class="service-name">Flyingo Bisdomic Learning Support</div>
+            <div class="service-desc">Citizens learning Flyingo Bisdomic can request resources, guides, and support from the Ministry. Language learning is a civic priority and resources are available to all.</div>
           </div>
         </div>
         <div class="service-item">
-          <div class="service-icon"><i class="fa-solid fa-circle-info"></i></div>
+          <div class="service-icon"><i class="fa-solid fa-circle-question"></i></div>
           <div class="service-info">
-            <div class="service-name">General Enquiries</div>
-            <div class="service-desc">Questions about Nomashae's structure, regions, or governance? The Ministry of Internal Affairs is your first point of contact.</div>
+            <div class="service-name">General Knowledge Enquiries</div>
+            <div class="service-desc">Questions about Nomashae's educational programmes, available resources, or how to get involved in the Republic's knowledge community? Contact the Ministry directly.</div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-inner fade">
-      <div class="sec-header">
-        <span class="sec-label">Archive</span>
-        <h2 class="sec-title">Publicly Avaiable Documents</h2>
-      </div>
-      <a href="./documents.html" class="docs">View Documents</a>
-    </div>
-  </div>
-
-  <div class="section alt">
-    <div class="section-inner fade">
-      <div class="sec-header">
-        <span class="sec-label">citizenship</span>
-        <h2 class="sec-title">Become a Citizen</h2>
-      </div>
-      <a href="./citizenship.html" class="docs">get a citizenship</a>
     </div>
   </div>
 
@@ -478,12 +515,12 @@
     <div class="section-inner fade">
       <div class="sec-header">
         <span class="sec-label">Leadership</span>
-        <h2 class="sec-title">Minister of Internal Affairs</h2>
+        <h2 class="sec-title">Minister of Education & Knowledge</h2>
       </div>
       <div class="minister-card">
         <div class="minister-avatar"><i class="fa-solid fa-user"></i></div>
         <div>
-          <span class="minister-role">Minister of Internal Affairs</span>
+          <span class="minister-role">Minister of Education & Knowledge</span>
           <div class="minister-name">Eftimij Yipified Novakovski</div>
           <div class="minister-note">Also serving as Prime Minister of the Republic of Nomashae</div>
         </div>
@@ -491,7 +528,7 @@
     </div>
   </div>
 
-  <footer><p>© 2026 Nomashae · Ministry of Internal Affairs · Powered by the Elements</p></footer>
+  <footer><p>© 2026 Nomashae · Ministry of Education & Knowledge · Powered by the Elements</p></footer>
 
   <script>
     function getElement() {

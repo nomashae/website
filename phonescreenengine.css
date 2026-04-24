@@ -1,0 +1,345 @@
+/*
+  mobile.css — Nomashae Universal Mobile Stylesheet
+  Drop this in your project root and link it in every HTML file
+  AFTER your existing <style> block, like so:
+    <link rel="stylesheet" href="./mobile.css"/>
+  It overrides and extends all existing styles for phones.
+  Tested breakpoints: 480px (small phones), 640px (large phones), 768px (tablets)
+*/
+
+/* ─────────────────────────────────────────
+   BASE RESETS
+───────────────────────────────────────── */
+*, *::before, *::after {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  word-break: break-word;
+}
+
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ─────────────────────────────────────────
+   TABLET (≤ 768px)
+───────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* NAV */
+  nav {
+    padding: 0 1rem !important;
+    height: 56px !important;
+  }
+  .nav-brand {
+    font-size: 0.78rem !important;
+    letter-spacing: 2px !important;
+  }
+  .nav-links { display: none !important; }
+  .nav-anchor { display: none !important; }
+  .nav-btn {
+    padding: 0.28rem 0.6rem !important;
+    font-size: 0.62rem !important;
+  }
+  .back-link {
+    font-size: 0.68rem !important;
+  }
+
+  /* HERO */
+  .hero { padding: 3.5rem 1.2rem 3rem !important; }
+  .hero-title { font-size: clamp(1.6rem, 7vw, 2.8rem) !important; letter-spacing: 1px !important; }
+  .hero-sub { font-size: 0.84rem !important; }
+  .hero-logo { width: 160px !important; }
+  .hero-chips { gap: 0.4rem !important; }
+  .chip { font-size: 0.6rem !important; padding: 0.28rem 0.7rem !important; }
+
+  /* SECTIONS */
+  .section { padding: 3rem 1.2rem !important; }
+
+  /* GRIDS → single column */
+  .resp-grid,
+  .arts-grid,
+  .pillars-grid,
+  .branches-grid,
+  .tenders-grid,
+  .threats-grid,
+  .personnel-grid,
+  .election-grid,
+  .parl-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* STATS ROW → 2 col */
+  .stats-row,
+  .stat-row,
+  .facts-row {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.8rem !important;
+  }
+
+  /* EXECUTIVE / LEADERS GRID → 1 col */
+  .exec-grid,
+  .leaders-grid,
+  .contact-layout {
+    grid-template-columns: 1fr !important;
+    gap: 1.2rem !important;
+  }
+
+  /* STANCE GRID → 1 col */
+  .stance-grid { grid-template-columns: 1fr !important; gap: 1rem !important; }
+
+  /* STRUCTURE DIAGRAM */
+  .struct-tier { flex-direction: column !important; align-items: center !important; }
+  .struct-card { max-width: 100% !important; width: 100% !important; }
+  .struct-hline { width: 2px !important; height: 2rem !important; margin: 0 auto !important; }
+
+  /* MINISTER CARD */
+  .minister-card {
+    flex-direction: column !important;
+    text-align: center !important;
+    padding: 1.4rem !important;
+  }
+  .minister-avatar { margin: 0 auto !important; }
+
+  /* CASE META */
+  .case-meta-row,
+  .project-meta,
+  .mission-meta {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* REGION GRID in citizenship form */
+  .region-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* LANGUAGE SIDE-BY-SIDE → stack */
+  .lang-block + .lang-block { margin-top: 1rem; }
+
+  /* CURRENCY CARDS → 1 col */
+  .currency-card { max-width: 100% !important; }
+
+  /* NOSA leaders */
+  .leaders-grid { grid-template-columns: 1fr !important; }
+
+  /* GOVERNMENT structure */
+  .exec-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ─────────────────────────────────────────
+   PHONE (≤ 480px)
+───────────────────────────────────────── */
+@media (max-width: 480px) {
+
+  /* NAV — tighten further */
+  nav { height: 52px !important; }
+  .nav-right { gap: 0.3rem !important; }
+  .nav-btn {
+    padding: 0.22rem 0.5rem !important;
+    font-size: 0.58rem !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  /* HERO */
+  .hero { padding: 2.8rem 1rem 2.4rem !important; }
+  .hero-icon { width: 56px !important; height: 56px !important; border-radius: 14px !important; }
+  .hero-icon i { font-size: 1.4rem !important; }
+  .hero-logo { width: 130px !important; }
+  .hero-title { font-size: clamp(1.4rem, 8vw, 2rem) !important; }
+  .hero-sub { font-size: 0.80rem !important; }
+  .hero-chips { justify-content: center !important; }
+  .chip { font-size: 0.56rem !important; padding: 0.24rem 0.55rem !important; }
+
+  /* HERO BADGE */
+  .hero-badge { font-size: 0.6rem !important; padding: 0.3rem 0.7rem !important; }
+
+  /* SECTIONS */
+  .section { padding: 2.5rem 1rem !important; }
+  .section-inner { padding: 0 !important; }
+
+  /* SEC HEADERS */
+  .sec-title { font-size: 1.2rem !important; }
+  .sec-label { font-size: 0.58rem !important; letter-spacing: 3px !important; }
+  .sec-sub { font-size: 0.78rem !important; }
+
+  /* CARDS */
+  .resp-card,
+  .region-card,
+  .branch-card,
+  .pillar-card,
+  .art-card,
+  .parl-card,
+  .election-card,
+  .agent-card,
+  .tender-card,
+  .threat-card,
+  .mission-card,
+  .project-card,
+  .leader-card {
+    padding: 1.3rem !important;
+    border-radius: 10px !important;
+  }
+  .resp-title, .art-name, .pillar-name, .branch-name { font-size: 0.9rem !important; }
+  .resp-desc, .art-desc, .pillar-desc, .branch-desc { font-size: 0.78rem !important; }
+
+  /* STATS → 1 col on very small phones */
+  .stats-row,
+  .stat-row,
+  .facts-row {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .stat-num, .fact-num { font-size: 1.7rem !important; }
+
+  /* PRIORITY ITEMS */
+  .priority-item, .service-item, .roe-item, .principle-item, .stance-item {
+    padding: 0.9rem 1rem !important;
+    border-radius: 8px !important;
+  }
+  .priority-text, .service-name, .principle-title { font-size: 0.84rem !important; }
+  .priority-text span, .service-desc, .principle-desc { font-size: 0.74rem !important; }
+
+  /* CASE CARDS */
+  .case-head { padding: 1rem 1.1rem !important; flex-wrap: wrap !important; gap: 0.6rem !important; }
+  .case-id { font-size: 0.52rem !important; }
+  .case-name { font-size: 0.86rem !important; }
+  .case-body { padding: 1rem 1.1rem !important; }
+  .case-meta-row { grid-template-columns: 1fr !important; gap: 0.6rem !important; }
+
+  /* MISSION & PROJECT CARDS */
+  .mission-top, .project-top { flex-wrap: wrap !important; gap: 0.6rem !important; }
+  .mission-meta, .project-meta { grid-template-columns: 1fr !important; gap: 0.5rem !important; }
+
+  /* MINISTER */
+  .minister-card { padding: 1.2rem !important; gap: 1rem !important; }
+  .minister-name { font-size: 0.95rem !important; }
+  .minister-note { font-size: 0.72rem !important; }
+
+  /* AGENT / TENDER CARDS */
+  .agent-top, .tender-top, .leader-top { padding: 1rem 1.2rem !important; gap: 0.8rem !important; }
+  .agent-name, .tender-name, .leader-name { font-size: 0.9rem !important; }
+  .agent-rows, .tender-rows, .leader-rows { padding: 0.6rem 1.2rem 1rem !important; }
+
+  /* FORM CARD (citizenship) */
+  .form-card { padding: 1.2rem !important; border-radius: 10px !important; }
+  .region-grid { grid-template-columns: 1fr !important; }
+  .region-label { padding: 0.6rem 0.8rem !important; }
+  .region-text { font-size: 0.78rem !important; }
+  .submit-btn { font-size: 0.74rem !important; padding: 0.85rem !important; }
+
+  /* NAV (NOSA page) */
+  .nav-brand { font-size: 0.72rem !important; }
+
+  /* NOSA page */
+  .hero-title.nosa { font-size: 2.5rem !important; }
+  .hero-full { font-size: 0.62rem !important; letter-spacing: 2px !important; }
+
+  /* CHANNELS in contact section */
+  .channel { padding: 0.8rem 1rem !important; }
+  .ch-value { font-size: 0.8rem !important; }
+
+  /* REPORT FORM */
+  .report-box { padding: 1.2rem !important; }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    font-size: 0.84rem !important;
+    padding: 0.6rem 0.9rem !important;
+  }
+
+  /* CURRENCY CARDS */
+  .currency-symbol { font-size: 3rem !important; }
+  .currency-name { font-size: 1rem !important; }
+  .currency-denominations { gap: 0.35rem !important; }
+  .denom { font-size: 0.62rem !important; padding: 0.2rem 0.55rem !important; }
+
+  /* GOVERNMENT PAGE structure */
+  .hero-eyebrow { font-size: 0.58rem !important; }
+  .exec-top { flex-wrap: wrap !important; }
+  .exec-avatar { margin: 0 auto !important; }
+
+  /* LAW STEPS */
+  .law-step { gap: 1rem !important; }
+  .step-num { width: 34px !important; height: 34px !important; font-size: 0.72rem !important; }
+  .step-title { font-size: 0.88rem !important; }
+  .step-desc { font-size: 0.78rem !important; }
+
+  /* PHILOSOPHY CARD */
+  .philosophy-card { padding: 1.5rem !important; }
+  .philosophy-quote { font-size: 0.95rem !important; }
+
+  /* RELATIONS LIST */
+  .relation-item { flex-wrap: wrap !important; gap: 0.8rem !important; }
+  .relation-flag { display: none !important; }
+
+  /* NIAI SECTIONS */
+  .page-wrap { padding: 2rem 1rem !important; }
+
+  /* FOOTER */
+  footer {
+    font-size: 0.58rem !important;
+    letter-spacing: 2px !important;
+    padding: 1.8rem 1rem !important;
+  }
+
+  /* NOTICE BOX */
+  .notice { padding: 1rem !important; gap: 0.7rem !important; }
+  .notice p { font-size: 0.76rem !important; }
+
+  /* DISCLAIMER (NASA section) */
+  .nasa-disclaimer { padding: 0.8rem 1rem !important; }
+  .nasa-inner { padding: 1.2rem !important; }
+  .nasa-link { font-size: 0.7rem !important; }
+}
+
+/* ─────────────────────────────────────────
+   TOUCH IMPROVEMENTS (all phones)
+───────────────────────────────────────── */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger tap targets */
+  .nav-btn { min-height: 36px; min-width: 36px; }
+  .case-head { min-height: 56px; }
+  .service-item, .priority-item, .principle-item { cursor: default; }
+
+  /* Remove hover transforms that feel weird on touch */
+  .resp-card:hover,
+  .region-card:hover,
+  .threat-card:hover,
+  .agent-card:hover,
+  .tender-card:hover,
+  .mission-card:hover,
+  .project-card:hover,
+  .leader-card:hover,
+  .election-card:hover,
+  .parl-card:hover {
+    transform: none !important;
+    box-shadow: var(--shadow) !important;
+  }
+  .service-item:hover,
+  .priority-item:hover,
+  .principle-item:hover,
+  .relation-item:hover,
+  .channel:hover {
+    transform: none !important;
+  }
+}
+
+/* ─────────────────────────────────────────
+   STREAM EMBED (NOSA page)
+───────────────────────────────────────── */
+@media (max-width: 640px) {
+  .stream-wrap { border-radius: 6px !important; }
+}
+
+/* ─────────────────────────────────────────
+   LANDSCAPE PHONE (short + wide)
+───────────────────────────────────────── */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero { padding: 2rem 1.5rem !important; }
+  .hero-logo { width: 80px !important; margin-bottom: 0.8rem !important; }
+  .hero-icon { width: 48px !important; height: 48px !important; margin-bottom: 0.8rem !important; }
+  .hero-title { font-size: 1.6rem !important; }
+}

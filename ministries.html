@@ -6,6 +6,7 @@
   <title>Ministries | Nomashae</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="phonescreenengine.css">
   <style>
     :root {
       --accent: #4A7C59;
@@ -94,6 +95,7 @@
     .stats-bar {
       display: flex; justify-content: center; gap: 0;
       border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
       transition: border-color var(--t);
     }
     .stat {
@@ -111,6 +113,18 @@
       font-size: 0.62rem; font-weight: 600; letter-spacing: 3px;
       text-transform: uppercase; color: var(--ink2);
       transition: color var(--t);
+    }
+
+    @media (max-width: 600px) {
+      .stats-bar { border-bottom: none; }
+      .stat {
+        flex: 1 1 45%;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 1.2rem 1rem;
+      }
+      .stat-num { font-size: 1.5rem; }
+      .stat-label { font-size: 0.55rem; letter-spacing: 2px; }
     }
 
     /* SECTION */
@@ -274,11 +288,11 @@
   <!-- STATS BAR -->
   <div class="stats-bar">
     <div class="stat">
-      <span class="stat-num">9</span>
+      <span class="stat-num">12</span>
       <span class="stat-label" data-i18n="sactive">Active</span>
     </div>
     <div class="stat">
-      <span class="stat-num">3</span>
+      <span class="stat-num">0</span>
       <span class="stat-label" data-i18n="sdev">In Development</span>
     </div>
     <div class="stat">
@@ -377,6 +391,30 @@
         <div class="ministry-desc">Preserves and promotes the unique culture of Nomashae — its ATLA-inspired traditions, national holidays, anthem, coat of arms, and flag. Works alongside the Prime Minister to develop new cultural initiatives.</div>
         <span class="ministry-status status-active">Active</span>
       </a>
+      <a href="./mknowlage.html" class="ministry-card">
+        <div class="ministry-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="ministry-name">Ministry of Education &amp; Knowledge
+          <i class="fa-solid fa-arrow-right arrow"></i>
+        </div>
+        <div class="ministry-desc">Responsible for the documentation and teaching of Flyingo Bisdomic, Nomashae's history,and the principles of balance and harmony. Maintains official guides, records, and knowledge resources for allcitizens.</div>
+        <span class="ministry-status status-active">Active</span>
+      </a>
+      <a href="./mtourism.html" class="ministry-card">
+        <div class="ministry-icon"><i class="fa-solid fa-map"></i></div>
+        <div class="ministry-name">Ministry of Tourism
+          <i class="fa-solid fa-arrow-right arrow"></i>
+        </div>
+        <div class="ministry-desc">Promotes Nomashae to the outside world, manages relations with visiting citizens and tourists, and oversees the beauty and accessibility of Nomashae's cities and regions in the Minecraft world.</div>
+        <span class="ministry-status status-active">Active</span>
+      </a>
+      <a href="./mea.html" class="ministry-card">
+        <div class="ministry-icon"><i class="fa-solid fa-earth-europe"></i></div>
+        <div class="ministry-name">Ministry of External Affairs
+          <i class="fa-solid fa-arrow-right arrow"></i>
+        </div>
+        <div class="ministry-desc">Handles all diplomatic relations with other micronations. Nomashae recognises all micronations and this ministry works to build alliances, open dialogue, and foster collaboration across the micronational community.</div>
+        <span class="ministry-status status-active">Active</span>
+      </a>
     </div>
   </div>
 
@@ -388,7 +426,15 @@
         <h2 class="sec-title">Ministries in Development</h2>
         <p class="sec-sub">Being built and structured — not yet operational</p>
       </div>
+      <div class="sec-header">
+        <span class="sec-label">All Done</span>
+        <h2 class="sec-title">Everything Here is Done</h2>
+        <p class="sec-sub">We have finished what we had in plan for now</p>
+      </div>
       <div class="ministry-grid">
+
+      
+
         <!-- <div class="ministry-card">
           <div class="ministry-icon"><i class="fa-solid fa-shield-halved"></i></div>
           <div class="ministry-name">Ministry of Defence</div>
@@ -409,26 +455,26 @@
           <span class="ministry-status status-soon">Coming Soon</span>
         </div> -->
 
-        <div class="ministry-card">
+        <!-- <div class="ministry-card">
           <div class="ministry-icon"><i class="fa-solid fa-book-open"></i></div>
           <div class="ministry-name">Ministry of Education &amp; Knowledge</div>
           <div class="ministry-desc">Responsible for the documentation and teaching of Flyingo Bisdomic, Nomashae's history, and the principles of balance and harmony. Maintains official guides, records, and knowledge resources for all citizens.</div>
           <span class="ministry-status status-dev">In Development</span>
-        </div>
+        </div> -->
 
-        <div class="ministry-card">
+        <!-- <div class="ministry-card">
           <div class="ministry-icon"><i class="fa-solid fa-map"></i></div>
           <div class="ministry-name">Ministry of Tourism</div>
           <div class="ministry-desc">Promotes Nomashae to the outside world, manages relations with visiting citizens and tourists, and oversees the beauty and accessibility of Nomashae's cities and regions in the Minecraft world.</div>
           <span class="ministry-status status-dev">In Development</span>
-        </div>
+        </div> -->
 
-        <div class="ministry-card">
+        <!-- <div class="ministry-card">
           <div class="ministry-icon"><i class="fa-solid fa-earth-europe"></i></div>
           <div class="ministry-name">Ministry of External Affairs</div>
           <div class="ministry-desc">Handles all diplomatic relations with other micronations. Nomashae recognises all micronations and this ministry works to build alliances, open dialogue, and foster collaboration across the micronational community.</div>
           <span class="ministry-status status-dev">In Development</span>
-        </div>
+        </div> -->
         
       </div>
     </div>

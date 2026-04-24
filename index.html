@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <title>Nomashae</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="phonescreenengine.css">
   
   
   <style>
@@ -115,6 +116,39 @@
     .nav-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
     .nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
+    /* HAMBURGER */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: transparent; border: none; cursor: pointer;
+      padding: 4px; z-index: 200;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--ink); border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* MOBILE DRAWER */
+    .mobile-nav-drawer {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--bg); z-index: 150; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1.2rem;
+      transition: background var(--t);
+    }
+    .mobile-nav-drawer.open { display: flex; }
+    .mobile-nav-drawer .nav-btn {
+      font-size: 1rem !important; padding: 0.8rem 2.5rem !important;
+      width: 240px; text-align: center; letter-spacing: 2px;
+    }
+    .mobile-nav-drawer .drawer-close {
+      position: absolute; top: 1.2rem; right: 1.2rem;
+      background: transparent; border: none; cursor: pointer;
+      font-size: 1.4rem; color: var(--ink2);
+    }
+
     /* HERO */
     .hero {
       min-height: calc(100vh - 64px);
@@ -130,8 +164,9 @@
       pointer-events: none; transition: background var(--t);
     }
     .hero-flag {
-      width: 648px;
-      height: 432px;
+      width: min(648px, 90vw);
+      height: auto;
+      aspect-ratio: 648 / 432;
       box-shadow: var(--shadow), 0 0 0 1px var(--border);
       margin-bottom: 2.5rem; position: relative; z-index: 1;
       transition: transform 0.4s, box-shadow 0.4s;
@@ -261,11 +296,18 @@
       margin-top: 30px;
     }
 
-    @media (max-width: 600px) {
-      nav { padding: 0 1rem; }
+    @media (max-width: 680px) {
+      nav { padding: 0 1rem !important; }
       .el-badge { display: none; }
-      .gov-grid { grid-template-columns: 1fr 1fr; }
-      .section { padding: 3.5rem 1.2rem; }
+      .nav-links-desktop { display: none !important; }
+      .hamburger { display: flex !important; }
+      .hero { padding: 2.5rem 1rem 3rem; min-height: unset; }
+      .hero-motto { font-size: 0.65rem; letter-spacing: 2px; }
+      .hero-btns { flex-direction: column; align-items: center; gap: 0.5rem; }
+      .hero-btns .btn { width: 200px; text-align: center; }
+      .gov-grid { grid-template-columns: 1fr 1fr !important; }
+      .section { padding: 3rem 1.2rem; }
+      .announce span { font-size: 0.95rem; }
     }
   </style>
 
@@ -299,7 +341,7 @@
       <a href="#" class="nav-brand" data-i18n="brand">Nomashae</a>
       <span class="el-badge" id="el-badge">Earth</span>
     </div>
-    <div class="nav-right">
+    <div class="nav-right nav-links-desktop">
       <a href="./executive_orders.html" class="nav-btn" data-i18n="nav-decrees">Decrees</a>
       <a href="./culture.html" class="nav-btn" data-i18n="nav-culture">Culture</a>
       <a href="./citizenship.html" class="nav-btn" data-i18n="nav-citizenship">Become a citizen</a>
@@ -307,10 +349,24 @@
       <button class="nav-btn" id="dark-btn">Dark</button>
       <button class="nav-btn" id="lang-btn">EN</button>
     </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
+  <!-- MOBILE DRAWER -->
+  <div class="mobile-nav-drawer" id="mobile-drawer">
+    <button class="drawer-close" id="drawer-close"><i class="fa-solid fa-xmark"></i></button>
+    <a href="./executive_orders.html" class="nav-btn" data-i18n="nav-decrees">Decrees</a>
+    <a href="./culture.html" class="nav-btn" data-i18n="nav-culture">Culture</a>
+    <a href="./citizenship.html" class="nav-btn" data-i18n="nav-citizenship">Become a Citizen</a>
+    <a href="./ministries.html" class="nav-btn" data-i18n="nav-ministries">Ministries</a>
+    <button class="nav-btn" id="dark-btn-mobile">Dark</button>
+    <button class="nav-btn" id="lang-btn-mobile">EN</button>
+  </div>
+
   <div class="announce">
-    <span>Nomashae is celebrating 2 holidays: Avatar Day Festival (March 20 - June 20) and Easter (April 10 - April 13). The President and Prime Minister are wishing you happy holidays! &nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <span>Nomashae is celebrating Avatar Day Festival (March 20 - June 20). The President and Prime Minister are wishing you happy holiday! &nbsp;&nbsp;&nbsp;&nbsp;</span>
   </div>
 
   <header class="hero">
@@ -512,6 +568,44 @@
       topBtn.classList.remove('visible');
     }
   });
+  </script>
+
+  <script>
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const drawer = document.getElementById('mobile-drawer');
+  const drawerClose = document.getElementById('drawer-close');
+
+  function openDrawer() {
+    drawer.classList.add('open');
+    hamburger.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', () => drawer.classList.contains('open') ? closeDrawer() : openDrawer());
+  drawerClose.addEventListener('click', closeDrawer);
+  drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
+
+  // Sync dark mode button in drawer
+  const darkBtnMobile = document.getElementById('dark-btn-mobile');
+  if (darkBtnMobile) {
+    darkBtnMobile.addEventListener('click', () => {
+      document.getElementById('dark-btn').click();
+      darkBtnMobile.textContent = isDark ? 'Light' : 'Dark';
+    });
+  }
+  const langBtnMobile = document.getElementById('lang-btn-mobile');
+  if (langBtnMobile) {
+    langBtnMobile.addEventListener('click', () => {
+      document.getElementById('lang-btn').click();
+      langBtnMobile.textContent = document.getElementById('lang-btn').textContent;
+    });
+  }
   </script>
 </body>
 </html>

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ministry of Tourism | Nomashae</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="./phonescreenengine.css"/>
+  <style>
+    :root {
+      --accent: #4A7C59;
+      --bg: #f7f7f5; --bg2: #efefec; --card: #ffffff;
+      --ink: #1a1a1a; --ink2: #555550;
+      --border: rgba(0,0,0,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.07);
+      --radius: 14px; --t: 0.3s ease;
+    }
+    [data-theme="dark"] {
+      --bg: #141414; --bg2: #1e1e1e; --card: #242424;
+      --ink: #f0f0ee; --ink2: #999992;
+      --border: rgba(255,255,255,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    [data-element="air"]   { --accent: #5B9BBF; }
+    [data-element="water"] { --accent: #3A8F8F; }
+    [data-element="fire"]  { --accent: #C4622D; }
+    [data-element="earth"] { --accent: #4A7C59; }
+    [data-theme="dark"][data-element="air"]   { --accent: #7bb8d8; }
+    [data-theme="dark"][data-element="water"] { --accent: #5abfbf; }
+    [data-theme="dark"][data-element="fire"]  { --accent: #e07a4a; }
+    [data-theme="dark"][data-element="earth"] { --accent: #6aad82; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg); color: var(--ink);
+      line-height: 1.7; transition: background var(--t), color var(--t);
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2.5rem; height: 64px;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      transition: background var(--t), border-color var(--t);
+    }
+    .nav-left { display: flex; align-items: center; gap: 0.75rem; }
+    .back-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      text-decoration: none; color: var(--ink2);
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .nav-brand {
+      font-size: 1rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); text-decoration: none;
+      transition: color var(--t);
+    }
+    .nav-right { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: transparent; border: 1.5px solid var(--border);
+      color: var(--ink2); padding: 0.35rem 0.9rem; border-radius: 8px;
+      cursor: pointer; font-family: 'Outfit', sans-serif;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: all 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .nav-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 2rem 4rem; text-align: center;
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      transition: background var(--t), border-color var(--t);
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%);
+      pointer-events: none; transition: background var(--t);
+    }
+    .hero-ministry {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .hero-icon {
+      width: 72px; height: 72px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border-radius: 18px; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      transition: background var(--t), border-color var(--t);
+    }
+    .hero-icon i { font-size: 1.8rem; color: var(--accent); transition: color var(--t); }
+    .hero-title {
+      font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 2px; margin-bottom: 0.5rem;
+      transition: color var(--t);
+    }
+    .hero-sub {
+      font-size: 0.9rem; color: var(--ink2); font-weight: 300;
+      max-width: 560px; margin: 0 auto 1.5rem;
+      transition: color var(--t);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      color: var(--accent); padding: 0.4rem 1rem; border-radius: 20px;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; transition: all var(--t);
+    }
+
+    /* SECTIONS */
+    .section { padding: 4.5rem 2rem; border-top: 1px solid var(--border); transition: border-color var(--t); }
+    .section.alt { background: var(--bg2); transition: background var(--t), border-color var(--t); }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+    .sec-header { text-align: center; margin-bottom: 2.5rem; }
+    .sec-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .sec-title {
+      font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 1px; margin-bottom: 0.3rem;
+      transition: color var(--t);
+    }
+    .sec-sub { font-size: 0.85rem; color: var(--ink2); font-weight: 300; transition: color var(--t); }
+
+    .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade.in { opacity: 1; transform: none; }
+
+    /* RESP GRID */
+    .resp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1rem; }
+    .resp-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.8rem;
+      box-shadow: var(--shadow); position: relative; overflow: hidden;
+      transition: background var(--t), border-color var(--t), transform 0.25s, box-shadow 0.25s;
+    }
+    .resp-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--accent); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s ease, background var(--t);
+    }
+    .resp-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+    .resp-card:hover::after { transform: scaleX(1); }
+    .resp-icon {
+      width: 40px; height: 40px;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem; transition: background var(--t);
+    }
+    .resp-icon i { font-size: 1rem; color: var(--accent); transition: color var(--t); }
+    .resp-title { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.4rem; transition: color var(--t); }
+    .resp-desc { font-size: 0.82rem; font-weight: 300; color: var(--ink2); line-height: 1.7; transition: color var(--t); }
+
+    /* DESTINATION CARDS — element coloured */
+    .dest-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1rem; }
+    .dest-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t), transform 0.25s, box-shadow 0.25s;
+    }
+    .dest-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+    .dest-banner {
+      height: 6px;
+      background: var(--dc, var(--accent));
+      transition: background var(--t);
+    }
+    .dest-inner { padding: 1.6rem; }
+    .dest-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.8rem; }
+    .dest-icon {
+      width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: color-mix(in srgb, var(--dc, var(--accent)) 12%, transparent);
+    }
+    .dest-icon i { font-size: 1.1rem; color: var(--dc, var(--accent)); }
+    .dest-element {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--dc, var(--accent));
+    }
+    .dest-name { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 0.4rem; transition: color var(--t); }
+    .dest-desc { font-size: 0.82rem; font-weight: 300; color: var(--ink2); line-height: 1.75; margin-bottom: 1rem; transition: color var(--t); }
+    .dest-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .dest-tag {
+      font-size: 0.6rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      background: color-mix(in srgb, var(--dc, var(--accent)) 8%, transparent);
+      border: 1px solid color-mix(in srgb, var(--dc, var(--accent)) 18%, transparent);
+      color: var(--dc, var(--accent)); padding: 0.2rem 0.55rem; border-radius: 6px;
+      transition: all var(--t);
+    }
+    .dc-air   { --dc: #5B9BBF; }
+    .dc-water { --dc: #3A8F8F; }
+    .dc-earth { --dc: #4A7C59; }
+    .dc-fire  { --dc: #C4622D; }
+    .dc-all   { --dc: #9B7FBF; }
+
+    /* VISITOR GUIDE STEPS */
+    .guide-steps { display: flex; flex-direction: column; gap: 0; max-width: 680px; margin: 0 auto; }
+    .guide-step {
+      display: flex; gap: 1.4rem; align-items: flex-start;
+      padding-bottom: 2rem; position: relative;
+    }
+    .guide-step:last-child { padding-bottom: 0; }
+    .guide-step::before {
+      content: ''; position: absolute; left: 19px; top: 40px; bottom: 0; width: 2px;
+      background: var(--border); transition: background var(--t);
+    }
+    .guide-step:last-child::before { display: none; }
+    .step-num {
+      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border: 2px solid color-mix(in srgb, var(--accent) 30%, transparent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; color: var(--accent);
+      position: relative; z-index: 1;
+      transition: all var(--t);
+    }
+    .step-body { flex: 1; padding-top: 0.4rem; }
+    .step-title { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.3rem; transition: color var(--t); }
+    .step-desc { font-size: 0.83rem; font-weight: 300; color: var(--ink2); line-height: 1.75; transition: color var(--t); }
+
+    /* SERVICES */
+    .services-list { display: flex; flex-direction: column; gap: 0.8rem; max-width: 680px; margin: 0 auto; }
+    .service-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.2rem 1.4rem; box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t), transform 0.2s;
+    }
+    .service-item:hover { transform: translateX(4px); }
+    .service-icon {
+      width: 36px; height: 36px; flex-shrink: 0; border-radius: 8px;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      display: flex; align-items: center; justify-content: center;
+      transition: background var(--t);
+    }
+    .service-icon i { font-size: 0.9rem; color: var(--accent); transition: color var(--t); }
+    .service-info { flex: 1; }
+    .service-name { font-size: 0.92rem; font-weight: 600; color: var(--ink); margin-bottom: 0.2rem; transition: color var(--t); }
+    .service-desc { font-size: 0.80rem; font-weight: 300; color: var(--ink2); line-height: 1.6; transition: color var(--t); }
+
+    /* MINISTER */
+    .minister-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem;
+      display: flex; align-items: center; gap: 1.5rem;
+      box-shadow: var(--shadow); max-width: 480px; margin: 0 auto;
+      transition: background var(--t), border-color var(--t);
+    }
+    .minister-avatar {
+      width: 60px; height: 60px; flex-shrink: 0;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      border: 2px solid color-mix(in srgb, var(--accent) 30%, transparent);
+      transition: background var(--t), border-color var(--t);
+    }
+    .minister-avatar i { font-size: 1.4rem; color: var(--accent); transition: color var(--t); }
+    .minister-role {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.3rem; transition: color var(--t);
+    }
+    .minister-name { font-size: 1.05rem; font-weight: 700; color: var(--ink); transition: color var(--t); }
+    .minister-note { font-size: 0.78rem; color: var(--ink2); font-weight: 300; margin-top: 0.2rem; transition: color var(--t); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); text-align: center; padding: 2.5rem 1rem;
+      font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--ink2); transition: border-color var(--t), color var(--t);
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 1rem; }
+      .section { padding: 3rem 1.2rem; }
+      .minister-card { flex-direction: column; text-align: center; }
+      .dest-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body data-theme="light" data-element="earth">
+
+  <nav>
+    <div class="nav-left">
+      <a href="./ministries.html" class="back-link">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Ministries
+      </a>
+      <a href="./index.html" class="nav-brand">Nomashae</a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn" id="dark-btn">Dark</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-ministry">Republic of Nomashae</span>
+    <div class="hero-icon"><i class="fa-solid fa-map"></i></div>
+    <h1 class="hero-title">Ministry of Tourism</h1>
+    <p class="hero-sub">Welcoming visitors to the Republic of Nomashae — sharing its regions, its culture, and its elemental spirit with the world beyond its borders.</p>
+    <span class="hero-badge"><i class="fa-solid fa-circle-dot"></i> Active</span>
+  </div>
+
+  <!-- RESPONSIBILITIES -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">What We Do</span>
+        <h2 class="sec-title">Responsibilities</h2>
+        <p class="sec-sub">How the Ministry promotes and manages tourism across the Republic</p>
+      </div>
+      <div class="resp-grid">
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-earth-americas"></i></div>
+          <div class="resp-title">Destination Promotion</div>
+          <div class="resp-desc">Showcasing Nomashae's seven regions to the outside world — their landscapes, culture, and unique elemental character. Every region has a story worth telling.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-person-hiking"></i></div>
+          <div class="resp-title">Visitor Experience</div>
+          <div class="resp-desc">Ensuring every visitor to Nomashae — whether in the Minecraft world or the digital Republic — has a welcoming, memorable, and worthwhile experience.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-calendar"></i></div>
+          <div class="resp-title">Events & Festivals</div>
+          <div class="resp-desc">Organising national events, cultural festivals, and seasonal celebrations that reflect Nomashae's elemental calendar. From Avatar Day to the Fire Festival, every season has its tradition.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-map"></i></div>
+          <div class="resp-title">Maps & Guides</div>
+          <div class="resp-desc">Producing and maintaining official maps, visitor guides, and regional information for all of Nomashae's territories. Every citizen and visitor deserves to know where they are.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-handshake"></i></div>
+          <div class="resp-title">Cultural Exchange</div>
+          <div class="resp-desc">Facilitating cultural exchange between Nomashae and external communities. The Ministry welcomes visitors who come in the spirit of curiosity, learning, and shared experience.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-star"></i></div>
+          <div class="resp-title">Visitor Recognition</div>
+          <div class="resp-desc">Acknowledging and celebrating visitors who contribute to Nomashae's community. Exceptional visitors may be recommended for honorary recognition by the Ministry of Internal Affairs.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESTINATIONS -->
+  <div class="section">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Explore Nomashae</span>
+        <h2 class="sec-title">Official Destinations</h2>
+        <p class="sec-sub">The seven regions of the Republic — each with its own element, landscape, and character</p>
+      </div>
+      <div class="dest-grid">
+
+        <div class="dest-card dc-air">
+          <div class="dest-banner"></div>
+          <div class="dest-inner">
+            <div class="dest-top">
+              <div class="dest-icon"><i class="fa-solid fa-wind"></i></div>
+              <span class="dest-element">Air · Northern</span>
+            </div>
+            <div class="dest-name">Northern Air Temple</div>
+            <div class="dest-desc">Perched high above the clouds, the Northern Air Temple is a place of meditation, freedom, and breathtaking vistas. Home to Nomashae's most philosophical citizens and a centre for Air Nomad tradition.</div>
+            <div class="dest-tags">
+              <span class="dest-tag">Scenic</span>
+              <span class="dest-tag">Meditation</span>
+              <span class="dest-tag">Architecture</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dest-card dc-air">
+          <div class="dest-banner"></div>
+          <div class="dest-inner">
+            <div class="dest-top">
+              <div class="dest-icon"><i class="fa-solid fa-wind"></i></div>
+              <span class="dest-element">Air · Eastern</span>
+            </div>
+            <div class="dest-name">Eastern Air Temple</div>
+            <div class="dest-desc">A peaceful sanctuary known for its gardens and open courtyards. The Eastern Air Temple is currently undergoing restoration by the Ministry of Infrastructure — visitors are welcome to witness its renewal.</div>
+            <div class="dest-tags">
+              <span class="dest-tag">Gardens</span>
+              <span class="dest-tag">Restoration</span>
+              <span class="dest-tag">Peaceful</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dest-card dc-air">
+          <div class="dest-banner"></div>
+          <div class="dest-inner">
+            <div class="dest-top">
+              <div class="dest-icon"><i class="fa-solid fa-wind"></i></div>
+              <span class="dest-element">Air · Southern</span>
+            </div>
+            <div class="dest-name">Southern Air Temple</div>
+            <div class="dest-desc">The birthplace of Nomashae's founding spirit. The Southern Air Temple is the most historically significant site in the Republic — a must-visit for anyone seeking to understand where Nomashae began.</div>
+            <div class="dest-tags">
+              <span class="dest-tag">Historical</span>
+              <span class="dest-tag">Founding Site</span>
+              <span class="dest-tag">Cultural</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dest-card dc-air">
+          <div class="dest-banner"></div>
+          <div class="dest-inner">
+            <div class="dest-top">
+              <div class="dest-icon"><i class="fa-solid fa-wind"></i></div>
+              <span class="dest-element">Air · Western</span>
+            </div>
+            <div class="dest-name">Western Air Temple</div>
+            <div class="dest-desc">Unique among the Air Temples for its inverted architecture — built beneath the clifftops rather than above them. The Western Air Temple offers some of Nomashae's most dramatic and unusual views.</div>
+            <div class="dest-tags">
+              <span class="dest-tag">Unique Architecture</span>
+              <span class="dest-tag">Dramatic Views</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dest-card dc-water">
+          <div class="dest-banner"></div>
+          <div class="dest-inner">
+            <div class="dest-top">
+              <div class="dest-icon"><i class="fa-solid fa-water"></i></div>
+              <span class="dest-element">Water · Northern</span>
+            </div>
+            <div class="dest-name">Northern Water Tribe</div>
+            <div class="dest-desc">A city of ice and canals, the Northern Water Tribe is one of Nomashae's most architecturally stunning regions. Its walls, waterways, and moon-lit bridges draw visitors from across the Republic.</div>
+            <div class="dest-tags">
+              <span class="dest-tag">Ice Architecture</span>
+              <span class="dest-tag">Waterways</span>
+              <span class="dest-tag">Night Views</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dest-card dc-water">
+          <div class="dest-banner"></div>
+          <div class="dest-inner">
+            <div class="dest-top">
+              <div class="dest-icon"><i class="fa-solid fa-water"></i></div>
+              <span class="dest-element">Water · Southern</span>
+            </div>
+            <div class="dest-name">Southern Water Tribe</div>
+            <div class="dest-desc">A close-knit community built around resilience and warmth. The Southern Water Tribe is known for its welcoming spirit, communal spaces, and the best food in the Republic.</div>
+            <div class="dest-tags">
+              <span class="dest-tag">Community</span>
+              <span class="dest-tag">Food</span>
+              <span class="dest-tag">Welcoming</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dest-card dc-earth">
+          <div class="dest-banner"></div>
+          <div class="dest-inner">
+            <div class="dest-top">
+              <div class="dest-icon"><i class="fa-solid fa-mountain"></i></div>
+              <span class="dest-element">Earth · Central</span>
+            </div>
+            <div class="dest-name">Earth Kingdom</div>
+            <div class="dest-desc">The heartland of Nomashae — vast, varied, and full of life. From great walled cities to rolling farmland and dense forests, the Earth Kingdom is the most geographically diverse region in the Republic.</div>
+            <div class="dest-tags">
+              <span class="dest-tag">Diverse Landscapes</span>
+              <span class="dest-tag">Cities</span>
+              <span class="dest-tag">Nature</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dest-card dc-fire">
+          <div class="dest-banner"></div>
+          <div class="dest-inner">
+            <div class="dest-top">
+              <div class="dest-icon"><i class="fa-solid fa-fire"></i></div>
+              <span class="dest-element">Fire · Southern</span>
+            </div>
+            <div class="dest-name">Fire Nation</div>
+            <div class="dest-desc">A land of volcanic landscapes, bold architecture, and passionate culture. The Fire Nation's energy and ambition are reflected in everything from its art to its cuisine — intense, memorable, and uniquely its own.</div>
+            <div class="dest-tags">
+              <span class="dest-tag">Volcanic</span>
+              <span class="dest-tag">Culture</span>
+              <span class="dest-tag">Cuisine</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dest-card dc-all">
+          <div class="dest-banner"></div>
+          <div class="dest-inner">
+            <div class="dest-top">
+              <div class="dest-icon"><i class="fa-solid fa-city"></i></div>
+              <span class="dest-element">All Elements · Capital</span>
+            </div>
+            <div class="dest-name">Uni Citi — The Capital</div>
+            <div class="dest-desc">The heart of Nomashae where all four elements converge. Home to the Parliament, the Government Quarter, and the Republic's main cultural institutions. Every visitor to Nomashae should begin and end in Uni Citi.</div>
+            <div class="dest-tags">
+              <span class="dest-tag">Capital</span>
+              <span class="dest-tag">Government</span>
+              <span class="dest-tag">Must Visit</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- VISITOR GUIDE -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">First Time Here?</span>
+        <h2 class="sec-title">Visitor's Guide</h2>
+        <p class="sec-sub">How to experience Nomashae — step by step</p>
+      </div>
+      <div class="guide-steps">
+        <div class="guide-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Apply for Citizenship or Visit as a Guest</div>
+            <div class="step-desc">You can explore Nomashae as a guest or apply for full citizenship through the Ministry of Internal Affairs. Citizens get access to more of the Republic — including governance participation and regional residency.</div>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Choose Your Region</div>
+            <div class="step-desc">Nomashae has eight distinct regions, each with its own element and character. Pick the one that calls to you — whether you're drawn to the freedom of the Air Temples or the warmth of the Water Tribes.</div>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Join the Community</div>
+            <div class="step-desc">Connect with Nomashae on Discord, explore the Minecraft world, and engage with The Daily Scroll to stay up to date with national events, festivals, and announcements.</div>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Attend an Event</div>
+            <div class="step-desc">Nomashae runs seasonal festivals and national events throughout the year. The Ministry of Tourism publishes the national calendar — check it and plan your visit around one of our celebrations.</div>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <div class="step-title">Explore & Contribute</div>
+            <div class="step-desc">The best visitors leave something behind — an idea, a creation, a connection. Nomashae welcomes all who come with curiosity and a desire to be part of something bigger than themselves.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CITIZEN SERVICES -->
+  <div class="section">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">How We Help</span>
+        <h2 class="sec-title">Citizen Services</h2>
+        <p class="sec-sub">What citizens and visitors can contact this ministry for</p>
+      </div>
+      <div class="services-list">
+        <div class="service-item">
+          <div class="service-icon"><i class="fa-solid fa-map"></i></div>
+          <div class="service-info">
+            <div class="service-name">Request a Regional Guide</div>
+            <div class="service-desc">Citizens and visitors can request detailed guides for any of Nomashae's eight regions — history, landmarks, local customs, and what to see and do.</div>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon"><i class="fa-solid fa-calendar-check"></i></div>
+          <div class="service-info">
+            <div class="service-name">National Events Calendar</div>
+            <div class="service-desc">Get the full national events calendar — festivals, ceremonies, sporting events, and cultural celebrations — so you never miss a moment in Nomashae.</div>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon"><i class="fa-solid fa-lightbulb"></i></div>
+          <div class="service-info">
+            <div class="service-name">Propose a Tourism Initiative</div>
+            <div class="service-desc">Citizens can submit ideas for new tourism attractions, trails, events, or visitor experiences. The Ministry reviews all proposals and acts on the best ones.</div>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon"><i class="fa-solid fa-handshake"></i></div>
+          <div class="service-info">
+            <div class="service-name">Cultural Exchange Requests</div>
+            <div class="service-desc">External communities or individuals seeking a cultural exchange with Nomashae can reach out to the Ministry. We welcome visitors who come in the spirit of learning and connection.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MINISTER -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Leadership</span>
+        <h2 class="sec-title">Minister of Tourism</h2>
+      </div>
+      <div class="minister-card">
+        <div class="minister-avatar"><i class="fa-solid fa-user"></i></div>
+        <div>
+          <span class="minister-role">Minister of Tourism</span>
+          <div class="minister-name">Krste AppaRider Dimov</div>
+          <div class="minister-note">Also serving as President of the Republic of Nomashae</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer><p>© 2026 Nomashae · Ministry of Tourism · Powered by the Elements</p></footer>
+
+  <script>
+    function getElement() {
+      const h = new Date().getHours();
+      if (h >= 6  && h < 12) return 'air';
+      if (h >= 12 && h < 18) return 'water';
+      if (h >= 18 && h < 22) return 'fire';
+      return 'earth';
+    }
+    document.body.setAttribute('data-element', getElement());
+
+    const darkBtn = document.getElementById('dark-btn');
+    let isDark = false;
+    try { isDark = localStorage.getItem('nmDark') === 'true'; } catch(e) {}
+    function applyDark() {
+      document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      darkBtn.classList.toggle('active', isDark);
+      darkBtn.textContent = isDark ? 'Light' : 'Dark';
+    }
+    darkBtn.addEventListener('click', () => {
+      isDark = !isDark;
+      try { localStorage.setItem('nmDark', isDark); } catch(e) {}
+      applyDark();
+    });
+    applyDark();
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
