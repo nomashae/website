@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ministry of Digital Environment & Natural Resources | Nomashae</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --accent: #4A7C59;
+      --bg: #f7f7f5; --bg2: #efefec; --card: #ffffff;
+      --ink: #1a1a1a; --ink2: #555550;
+      --border: rgba(0,0,0,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.07);
+      --radius: 14px; --t: 0.3s ease;
+    }
+    [data-theme="dark"] {
+      --bg: #141414; --bg2: #1e1e1e; --card: #242424;
+      --ink: #f0f0ee; --ink2: #999992;
+      --border: rgba(255,255,255,0.08); --shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    [data-element="air"]   { --accent: #5B9BBF; }
+    [data-element="water"] { --accent: #3A8F8F; }
+    [data-element="fire"]  { --accent: #C4622D; }
+    [data-element="earth"] { --accent: #4A7C59; }
+    [data-theme="dark"][data-element="air"]   { --accent: #7bb8d8; }
+    [data-theme="dark"][data-element="water"] { --accent: #5abfbf; }
+    [data-theme="dark"][data-element="fire"]  { --accent: #e07a4a; }
+    [data-theme="dark"][data-element="earth"] { --accent: #6aad82; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg); color: var(--ink);
+      line-height: 1.7; transition: background var(--t), color var(--t);
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2.5rem; height: 64px;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      transition: background var(--t), border-color var(--t);
+    }
+    .nav-left { display: flex; align-items: center; gap: 0.75rem; }
+    .back-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      text-decoration: none; color: var(--ink2);
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .nav-brand {
+      font-size: 1rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); text-decoration: none;
+      transition: color var(--t);
+    }
+    .nav-right { display: flex; gap: 0.5rem; }
+    .nav-btn {
+      background: transparent; border: 1.5px solid var(--border);
+      color: var(--ink2); padding: 0.35rem 0.9rem; border-radius: 8px;
+      cursor: pointer; font-family: 'Outfit', sans-serif;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; transition: all 0.2s;
+    }
+    .nav-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 2rem 4rem; text-align: center;
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      transition: background var(--t), border-color var(--t);
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%);
+      pointer-events: none;
+    }
+    .hero-ministry {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .hero-icon {
+      width: 72px; height: 72px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border-radius: 18px; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      transition: background var(--t), border-color var(--t);
+    }
+    .hero-icon i { font-size: 1.8rem; color: var(--accent); transition: color var(--t); }
+    .hero-title {
+      font-size: clamp(1.6rem, 5vw, 3.2rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 2px; margin-bottom: 0.5rem;
+      transition: color var(--t);
+    }
+    .hero-sub {
+      font-size: 0.9rem; color: var(--ink2); font-weight: 300;
+      max-width: 580px; margin: 0 auto 1.5rem;
+      transition: color var(--t);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      color: var(--accent); padding: 0.4rem 1rem; border-radius: 20px;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; transition: all var(--t);
+    }
+    .hero-badge i { font-size: 0.6rem; }
+
+    /* SECTIONS */
+    .section { padding: 4.5rem 2rem; border-top: 1px solid var(--border); transition: border-color var(--t); }
+    .section.alt { background: var(--bg2); transition: background var(--t), border-color var(--t); }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+    .sec-header { text-align: center; margin-bottom: 2.5rem; }
+    .sec-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.5rem; transition: color var(--t);
+    }
+    .sec-title {
+      font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 700;
+      color: var(--ink); letter-spacing: 1px; margin-bottom: 0.3rem;
+      transition: color var(--t);
+    }
+    .sec-sub { font-size: 0.85rem; color: var(--ink2); font-weight: 300; transition: color var(--t); }
+
+    .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade.in { opacity: 1; transform: none; }
+
+    /* RESPONSIBILITY GRID */
+    .resp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .resp-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.8rem;
+      box-shadow: var(--shadow); position: relative; overflow: hidden;
+      transition: background var(--t), border-color var(--t), transform 0.25s, box-shadow 0.25s;
+    }
+    .resp-card::after {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: var(--accent); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s ease, background var(--t);
+    }
+    .resp-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+    .resp-card:hover::after { transform: scaleX(1); }
+    .resp-icon {
+      width: 40px; height: 40px;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem; transition: background var(--t);
+    }
+    .resp-icon i { font-size: 1rem; color: var(--accent); transition: color var(--t); }
+    .resp-title { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.4rem; transition: color var(--t); }
+    .resp-desc { font-size: 0.82rem; font-weight: 300; color: var(--ink2); line-height: 1.7; transition: color var(--t); }
+
+    /* PROTECTED ZONES */
+    .zones-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.2rem;
+    }
+    .zone-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t), transform 0.25s, box-shadow 0.25s;
+    }
+    .zone-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.12); }
+    .zone-banner {
+      height: 90px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .zone-banner.mountains {
+      background: linear-gradient(135deg,
+        color-mix(in srgb, #5c5c5c80 60%, #5c5c5c80),
+        color-mix(in srgb, #5c5c5c80 60%, #5c5c5c80));
+    }
+    .zone-banner.canyon {
+      background: linear-gradient(135deg,
+        color-mix(in srgb, #5c5c5c80 60%, #5c5c5c80),
+        color-mix(in srgb, #5c5c5c80 60%, #5c5c5c80));
+    }
+    [data-theme="dark"] .zone-banner.mountains {
+      background: linear-gradient(135deg, rgba(92, 92, 92, 0.5), rgb(92, 92, 92, 0.5));
+    }
+    [data-theme="dark"] .zone-banner.canyon {
+      background: linear-gradient(135deg, rgba(92, 92, 92, 0.5), rgb(92, 92, 92, 0.5));
+    }
+    .zone-banner-icon { font-size: 2.4rem; opacity: 0.7; }
+    .zone-body { padding: 1.5rem 1.6rem; }
+    .zone-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.6rem; }
+    .zone-name { font-size: 1.05rem; font-weight: 700; color: var(--ink); transition: color var(--t); }
+    .zone-badge {
+      font-size: 0.55rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; padding: 0.22rem 0.65rem;
+      border-radius: 20px; flex-shrink: 0; white-space: nowrap;
+      background: rgba(74,124,89,0.12); color: #3a6b45;
+      border: 1px solid rgba(74,124,89,0.25);
+    }
+    [data-theme="dark"] .zone-badge { background: rgba(74,124,89,0.2); color: #6aad82; }
+    .zone-desc { font-size: 0.83rem; font-weight: 300; color: var(--ink2); line-height: 1.75; margin-bottom: 1rem; transition: color var(--t); }
+    .zone-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .zone-tag {
+      font-size: 0.6rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      padding: 0.18rem 0.55rem; border-radius: 6px;
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
+      color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+      transition: background var(--t), color var(--t), border-color var(--t);
+    }
+
+    /* BIOME CATALOGUE */
+    .biomes-list { display: flex; flex-direction: column; gap: 0.75rem; max-width: 720px; margin: 0 auto; }
+    .biome-item {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem 1.6rem;
+      display: flex; align-items: flex-start; gap: 1.2rem;
+      box-shadow: var(--shadow);
+      transition: background var(--t), border-color var(--t), transform 0.2s;
+    }
+    .biome-item:hover { transform: translateX(4px); }
+    .biome-icon {
+      width: 38px; height: 38px; flex-shrink: 0;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border-radius: 9px; display: flex; align-items: center; justify-content: center;
+      transition: background var(--t);
+    }
+    .biome-icon i { font-size: 0.95rem; color: var(--accent); transition: color var(--t); }
+    .biome-name { font-size: 0.92rem; font-weight: 700; color: var(--ink); margin-bottom: 0.18rem; transition: color var(--t); }
+    .biome-desc { font-size: 0.80rem; font-weight: 300; color: var(--ink2); line-height: 1.6; transition: color var(--t); }
+
+    /* CONSERVATION RULES */
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .rule-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.6rem;
+      box-shadow: var(--shadow); display: flex; gap: 1rem; align-items: flex-start;
+      transition: background var(--t), border-color var(--t), transform 0.25s;
+    }
+    .rule-card:hover { transform: translateY(-3px); }
+    .rule-num {
+      width: 32px; height: 32px; flex-shrink: 0; border-radius: 8px;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border: 1.5px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 700; color: var(--accent);
+      transition: background var(--t), border-color var(--t), color var(--t);
+    }
+    .rule-title { font-size: 0.9rem; font-weight: 700; color: var(--ink); margin-bottom: 0.3rem; transition: color var(--t); }
+    .rule-desc { font-size: 0.80rem; font-weight: 300; color: var(--ink2); line-height: 1.6; transition: color var(--t); }
+
+    /* MINISTER */
+    .minister-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem;
+      display: flex; align-items: center; gap: 1.5rem;
+      box-shadow: var(--shadow); max-width: 480px; margin: 0 auto;
+      transition: background var(--t), border-color var(--t);
+    }
+    .minister-avatar {
+      width: 60px; height: 60px; flex-shrink: 0;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      border: 2px solid color-mix(in srgb, var(--accent) 30%, transparent);
+      transition: background var(--t), border-color var(--t);
+    }
+    .minister-avatar i { font-size: 1.4rem; color: var(--accent); transition: color var(--t); }
+    .minister-role {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); display: block;
+      margin-bottom: 0.3rem; transition: color var(--t);
+    }
+    .minister-name { font-size: 1.05rem; font-weight: 700; color: var(--ink); transition: color var(--t); }
+    .minister-note { font-size: 0.78rem; color: var(--ink2); font-weight: 300; margin-top: 0.2rem; transition: color var(--t); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); text-align: center; padding: 2.5rem 1rem;
+      font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--ink2); transition: border-color var(--t), color var(--t);
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 1rem; }
+      .section { padding: 3rem 1.2rem; }
+      .zones-grid { grid-template-columns: 1fr; }
+      .minister-card { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body data-theme="light" data-element="earth">
+
+  <nav>
+    <div class="nav-left">
+      <a href="./ministries.html" class="back-link">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Ministries
+      </a>
+      <a href="./index.html" class="nav-brand">Nomashae</a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn" id="dark-btn">Dark</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-ministry">Republic of Nomashae</span>
+    <div class="hero-icon"><i class="fa-solid fa-leaf"></i></div>
+    <h1 class="hero-title">Ministry of Digital Environment & Natural Resources</h1>
+    <p class="hero-sub">Nomashae's landscapes are not just scenery — they are living parts of the Republic. This ministry protects them, studies them, and ensures every forest, canyon, and coastline is here for generations to come.</p>
+    <span class="hero-badge"><i class="fa-solid fa-circle-dot"></i> Active</span>
+  </div>
+
+  <!-- RESPONSIBILITIES -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">What We Do</span>
+        <h2 class="sec-title">Responsibilities</h2>
+        <p class="sec-sub">Stewardship of everything wild, natural, and living within Nomashae's borders</p>
+      </div>
+      <div class="resp-grid">
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-tree"></i></div>
+          <div class="resp-title">Flora Management</div>
+          <div class="resp-desc">Catalogues and protects the plant life across Nomashae's biomes — from flower forests and jungle canopies to underground cave flora. No species is too small to be accounted for.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-paw"></i></div>
+          <div class="resp-title">Fauna & Wildlife</div>
+          <div class="resp-desc">Oversees the animal populations of the Republic — tracking where they roam, ensuring they are not displaced by development, and maintaining healthy numbers across land, sea, and sky.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-mountain-sun"></i></div>
+          <div class="resp-title">Landscape Preservation</div>
+          <div class="resp-desc">Protects the natural terrain of Nomashae from unregulated alteration. Mountains, canyons, coasts, and ancient ruins are assessed before any development is permitted near them.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-droplet"></i></div>
+          <div class="resp-title">Aquatic Environments</div>
+          <div class="resp-desc">Manages the rivers, oceans, and underground water systems of the Republic. Responsible for the health of aquatic life and the condition of every body of water within Nomashae's territory.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-hard-hat"></i></div>
+          <div class="resp-title">Development Oversight</div>
+          <div class="resp-desc">Reviews all construction and resource extraction projects to ensure they do not cause lasting environmental damage. Works with other ministries to find sustainable solutions before ground is broken.</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon"><i class="fa-solid fa-book-open"></i></div>
+          <div class="resp-title">Environmental Records</div>
+          <div class="resp-desc">Maintains a living record of Nomashae's natural world — documenting biomes, tracking changes over time, and preserving knowledge about regions that may one day be altered or lost.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROTECTED ZONES -->
+  <div class="section">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Under Our Protection</span>
+        <h2 class="sec-title">Protected Natural Zones</h2>
+        <p class="sec-sub">These areas are open to citizens but regulated — preservation comes first</p>
+      </div>
+      <div class="zones-grid">
+
+        <div class="zone-card">
+          <div class="zone-banner mountains">
+            <span class="zone-banner-icon"><i class="fa-solid fa-mountain"></i></span>
+          </div>
+          <div class="zone-body">
+            <div class="zone-top">
+              <div class="zone-name">Mountains of Patola</div>
+              <span class="zone-badge">Regulated</span>
+            </div>
+            <p class="zone-desc">A vast mountain range whose peaks have stood long before Nomashae was founded. Hidden among the cliffs and ridgelines are the remnants of an ancient civilisation — ruins, carved stone, and structures whose origins are not fully understood. The mountains are open to exploration, but all building activity requires ministerial approval. The ruins are not to be dismantled or modified under any circumstances.</p>
+            <div class="zone-tags">
+              <span class="zone-tag">Ancient Ruins</span>
+              <span class="zone-tag">Mountain Range</span>
+              <span class="zone-tag">Heritage Site</span>
+              <span class="zone-tag">Build Restricted</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="zone-card">
+          <div class="zone-banner canyon">
+            <span class="zone-banner-icon"><i class="fa-solid fa-person-hiking"></i></span>
+          </div>
+          <div class="zone-body">
+            <div class="zone-top">
+              <div class="zone-name">Great Divine Canyon</div>
+              <span class="zone-badge">Regulated</span>
+            </div>
+            <p class="zone-desc">A massive canyon cutting deep into the earth — striking in scale and unlike anywhere else in Nomashae. Its lower depths are home to hostile cave fauna, making unsupported descent genuinely dangerous. The canyon walls and floor are protected from modification, and citizens venturing into the deeper sections do so at their own risk. Despite the hazards, it remains one of the most remarkable natural landmarks in the Republic.</p>
+            <div class="zone-tags">
+              <span class="zone-tag">Deep Canyon</span>
+              <span class="zone-tag">Cave Fauna</span>
+              <span class="zone-tag">Hazardous Zones</span>
+              <span class="zone-tag">Landscape Protected</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- BIOME CATALOGUE -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">The Natural World</span>
+        <h2 class="sec-title">Biome Catalogue</h2>
+        <p class="sec-sub">The known environments of Nomashae, as documented by this ministry</p>
+      </div>
+      <div class="biomes-list">
+        <div class="biome-item">
+          <div class="biome-icon"><i class="fa-solid fa-seedling"></i></div>
+          <div>
+            <div class="biome-name">Flower Forests</div>
+            <div class="biome-desc">Dense woodland biomes carpeted in wildflowers and tall grass. Among the most biodiverse regions in Nomashae — home to a wide variety of passive fauna and rare plant variants. Development here is subject to the strictest review.</div>
+          </div>
+        </div>
+        <div class="biome-item">
+          <div class="biome-icon"><i class="fa-solid fa-hill-rockslide"></i></div>
+          <div>
+            <div class="biome-name">Underground Cave Systems</div>
+            <div class="biome-desc">A vast network of tunnels, caverns, and lush cave biomes beneath Nomashae's surface. Rich in minerals and cave flora — as well as hostile mobs. The ministry monitors cave-adjacent construction to prevent unintended collapses or ecosystem disruption.</div>
+          </div>
+        </div>
+        <div class="biome-item">
+          <div class="biome-icon"><i class="fa-solid fa-water"></i></div>
+          <div>
+            <div class="biome-name">Coastal & Ocean Regions</div>
+            <div class="biome-desc">Nomashae's shorelines and open ocean contain coral reefs, ocean monuments, and a large variety of aquatic species. The ministry actively tracks ocean health and restricts pollution-causing activities near these regions.</div>
+          </div>
+        </div>
+        <div class="biome-item">
+          <div class="biome-icon"><i class="fa-solid fa-cloud-sun"></i></div>
+          <div>
+            <div class="biome-name">Plains & Savanna</div>
+            <div class="biome-desc">Wide open biomes that form the backbone of Nomashae's habitable terrain. Primary grazing grounds for horses, cows, and other passive wildlife. Often the site of new development — requiring careful coordination with this ministry.</div>
+          </div>
+        </div>
+        <div class="biome-item">
+          <div class="biome-icon"><i class="fa-solid fa-skull-crossbones"></i></div>
+          <div>
+            <div class="biome-name">The Nether Territories</div>
+            <div class="biome-desc">Nomashae's access to the Nether is acknowledged and monitored. The hostile biomes found there — wastes, fortresses, and soul sand valleys — fall under this ministry's environmental records. Citizens enter at their own risk. No conservation applies — but knowledge of the terrain is maintained.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONSERVATION RULES -->
+  <div class="section">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">The Ground Rules</span>
+        <h2 class="sec-title">Environmental Law</h2>
+        <p class="sec-sub">What every citizen and developer must respect</p>
+      </div>
+      <div class="rules-grid">
+        <div class="rule-card">
+          <div class="rule-num">I</div>
+          <div>
+            <div class="rule-title">No Unsanctioned Terraforming</div>
+            <div class="rule-desc">Significant alterations to natural terrain — flattening mountains, draining lakes, clearing forests — require written approval from this ministry before any work begins.</div>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-num">II</div>
+          <div>
+            <div class="rule-title">Ruins Are Untouchable</div>
+            <div class="rule-desc">Ancient structures, including those found in the Mountains of Patola, may not be modified, dismantled, or built over. They are cultural and historical assets of the Republic.</div>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-num">III</div>
+          <div>
+            <div class="rule-title">Protected Zones Stay Protected</div>
+            <div class="rule-desc">Regulated zones may be explored freely, but construction, resource extraction, and permanent modification within their boundaries require direct ministerial sign-off.</div>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-num">IV</div>
+          <div>
+            <div class="rule-title">Wildlife Is Not a Resource</div>
+            <div class="rule-desc">Mass culling of animal populations for materials is prohibited in designated zones. Sustainable harvesting is permitted — but the balance of wildlife must be maintained.</div>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-num">V</div>
+          <div>
+            <div class="rule-title">Report Environmental Damage</div>
+            <div class="rule-desc">If a citizen discovers significant environmental damage — whether from griefers, accidents, or unregulated builds — they are expected to report it to the ministry so it can be assessed and restored.</div>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-num">VI</div>
+          <div>
+            <div class="rule-title">Development Must Leave Room for Nature</div>
+            <div class="rule-desc">New cities and infrastructure must be designed with their natural surroundings in mind. Urban sprawl that consumes entire biomes without mitigation will not be approved.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MINISTER -->
+  <div class="section alt">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Leadership</span>
+        <h2 class="sec-title">Minister of Digital Environment & Natural Resources</h2>
+      </div>
+      <div class="minister-card">
+        <div class="minister-avatar"><i class="fa-solid fa-user"></i></div>
+        <div>
+          <span class="minister-role">Minister of Digital Environment & Natural Resources</span>
+          <div class="minister-name">Krste AppaRider Dimov</div>
+          <div class="minister-note">Also serving as President of the Republic of Nomashae</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer><p>© 2026 Nomashae · Ministry of Digital Environment & Natural Resources · Powered by the Elements</p></footer>
+
+  <script>
+    function getElement() {
+      const h = new Date().getHours();
+      if (h >= 6  && h < 12) return 'air';
+      if (h >= 12 && h < 18) return 'water';
+      if (h >= 18 && h < 22) return 'fire';
+      return 'earth';
+    }
+    document.body.setAttribute('data-element', getElement());
+
+    const darkBtn = document.getElementById('dark-btn');
+    let isDark = false;
+    try { isDark = localStorage.getItem('nmDark') === 'true'; } catch(e) {}
+    function applyDark() {
+      document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      darkBtn.classList.toggle('active', isDark);
+      darkBtn.textContent = isDark ? 'Light' : 'Dark';
+    }
+    darkBtn.addEventListener('click', () => {
+      isDark = !isDark;
+      try { localStorage.setItem('nmDark', isDark); } catch(e) {}
+      applyDark();
+    });
+    applyDark();
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

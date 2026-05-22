@@ -37,8 +37,9 @@ const i18n = {
         "minist":"Minsitries",
         "tgbotr-bobas":"The governing bodies of the Republic - built on balance and service",
         "sactive":"active",
-        "sdev":"in development"
-
+        "sdev":"in development",
+        "scomingsoon":"Coming Soon",
+        "splaned":"Total Planned"
     },
     mk: {
         "tback":"<svg viewBox=\"0 0 24 24\"><path d=\"M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z\"/></svg> Назад",
@@ -78,9 +79,10 @@ const i18n = {
         "minist":"Министерства",
         "tgbotr-bobas":"Владеечките тела на републиката - на база на баланс и услуга",
         "sactive":"Активни",
-        "sdev":"Во развивање"
-
-    },
+        "sdev":"Во развивање",
+        "scomingsoon":"Наскоро",
+        "splaned":"Сите Планирани"
+      },
     fb: {
         "tback":"<svg viewBox=\"0 0 24 24\"><path d=\"M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z\"/></svg> Bak",
         "ntnmsh":"Nomasha",
@@ -119,8 +121,10 @@ const i18n = {
         "minist":"Ministar",
         "tgbotr-bobas":"Da gova tela od da Repub - Boila ode Balans end servis",
         "sactive":"Aktiv",
-        "sdev":"im develip"
-    }
+        "sdev":"im develip",
+        "scomingsoon":"Shon Kom",
+        "splaned":"Total Planine"
+      }
 };
 
 const langs = ['en','mk','fb'];

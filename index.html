@@ -392,11 +392,60 @@
         <div class="gov-card"><span class="gov-role" data-i18n="role-affairs">Affairs</span><span class="gov-name">Eftimij<br>Yipified Novakovski</span></div>
         <div class="gov-card"><span class="gov-role" data-i18n="role-culture">Culture</span><span class="gov-name">Eftimij<br>Yipified Novakovski</span></div>
       </div>
-      <a href="./gov.html" class="docs">View Goverment Structure</a>
+      <a href="./gov.html" class="docs">View Government Structure</a>
     </div>
   </div>
 
   <div class="section">
+    <div class="section-inner fade">
+      <div class="sec-header">
+        <span class="sec-label">Next Up</span>
+        <h2 class="sec-title">Upcoming</h2>
+        <p class="sec-sub">What's new in Nomashae</p>
+      </div>
+
+      <!-- ✏️ EDIT YOUR UPCOMING ITEMS HERE -->
+      <div class="gov-grid" id="upcoming-grid"></div>
+
+      <script>
+        const upcomingItems = [
+          {
+            label: "Festival",
+            title: "Avatar Day Festival",
+            desc: "March 20 – June 20 · Nationwide celebrations"
+          },
+          {
+            label: "Press Conference",
+            title: "Language & Ministries",
+            desc: "June 1 · PM addresses language updates and ministry developments"
+          },
+          {
+            label: "Language",
+            title: "Flyingo Bisdomic Update",
+            desc: "Notice of deprecation"
+          },
+          {
+            label: "Holiday",
+            title: "Saint Kiril and Methodi",
+            desc: "May 24 - 25 · Holiday for the Macedonian population"
+          }
+        ];
+
+        const grid = document.getElementById('upcoming-grid');
+        upcomingItems.forEach(item => {
+          grid.innerHTML += `
+          <div class="gov-card">
+            <span class="gov-role">${item.label}</span>
+            <span class="gov-name">${item.title}</span>
+            <p style="font-size:0.78rem; color:var(--ink2); margin-top:0.5rem; font-weight:300; line-height:1.5;">${item.desc}</p>
+          </div>`;
+        });
+      </script>
+
+    </div>
+  </div>
+
+  <div class="section alt">
     <div class="section-inner fade">
       <div class="sec-header">
         <span class="sec-label" data-i18n="lang-label">Official Language</span>
@@ -420,7 +469,7 @@
     </div>
   </div>
 
-  <div class="section alt">
+  <div class="section">
     <div class="section-inner fade">
       <div class="sec-header">
         <span class="sec-label" data-i18n="about-label">Est. 1 September 2025</span>
