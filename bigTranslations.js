@@ -82,53 +82,11 @@ const i18n = {
         "sdev":"Во развивање",
         "scomingsoon":"Наскоро",
         "splaned":"Сите Планирани"
-      },
-    fb: {
-        "tback":"<svg viewBox=\"0 0 24 24\"><path d=\"M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z\"/></svg> Bak",
-        "ntnmsh":"Nomasha",
-        "nav-dark":"Darka", "nav-light":"Lighta",
-        "ron":"Repub Nomasha",
-        "dan":"Dek end Nufo",
-        "pdan":"Ofi ord, prist publak end anauntsments",
-        
-        //d1
-        
-        "p1t":"Prist Publak 1 — Kulturana, Prezida end Flagoj", "p1b":"Prist Publak", "p1d":"28 Jan 2026 · 09:15 XST",
-        "p1s1":"Adrei nu flagoj", "p1p1":"In ord maki di flagoj de <strong>DMN Nomasha</strong> nomoderno end nofloer, di flagoj mebi apdiati im nonu diman wit 4K resi. Di flagoj most medani samy, bony elementas teks end kot uf arm demebi remvi. <strong>DMN Nomasha</strong> alis dam mina kot uf arm fo megut digi predi dai folkocity", "p1s2":"Adrei nu Prezida",
-        "p1p2":"<strong>DMN Nomasha</strong> revowkr Krste Dimov na Prezida. Dam kom ven hi vi dimsfi pos wringlingly.",
-        "p1s3":"Adrei Foanthema",
-        "p1p3":"Foanthema nedi bonochi imlyric, biduge instru veri, biko end voka + instru veri",
-        "p1sig":"<span class=\"sig-date\">klosi 24 Jan 2026 · 10:27 XST</span> Eftimij Novakovski",
-
-        //d2
-
-        "p2t":"Ekek ord: Demo Transio",
-        "p2b":"Pasn",
-        "p2-3d":"26 Jen 2026",
-        "p2p1":"Afi fir end demo vti, <strong>DMN Nomashae</strong> es nucal es Demos MikroNatin.",
-        "p2s1":"<span class=\"vote-for\">1/1</span> citipip voti · Voti klosi 30 Dek 2025",
-        "p2sig":"<span class=\"sig-date\">Sig 26 Jen 2026</span>Eftimij Novakovski",
-
-        //fot
-        "footer":"© 2026 Nomasha · Powrd bai da Elemen",
-
-        //constitution
-        "constitution":"Constit",
-        "constitution-title":"Constit od Nomasha",
-        "constitution-descr":"Da Constit od Republik od Nomasha",
-        "buttontranslate":"<a href=\"./assets/constitution/Konstiti.pdf\" class=\"btnbtn\">Vivi Constit</a>",
-
-        "minist":"Ministar",
-        "tgbotr-bobas":"Da gova tela od da Repub - Boila ode Balans end servis",
-        "sactive":"Aktiv",
-        "sdev":"im develip",
-        "scomingsoon":"Shon Kom",
-        "splaned":"Total Planine"
       }
 };
 
-const langs = ['en','mk','fb'];
-const langLabels = {en:'EN', mk:'МК', fb:'FB'};
+const langs = ['en','mk'];
+const langLabels = {en:'EN', mk:'МК'};
 let langIdx = 0;
 try {
   const saved = localStorage.getItem('nmLang');
