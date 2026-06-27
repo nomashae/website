@@ -298,61 +298,6 @@
       margin-top: 30px;
     }
 
-    .domain-alert {
-      background: rgba(30, 30, 40, 0.85); /* Sleek, dark translucent background */
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      color: #ffffff;
-      padding: 14px 24px;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 99999; /* Ensures it stays on top of all other elements */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-
-    .domain-alert p {
-      margin: 0;
-      font-size: 14px;
-      line-height: 1.4;
-    }
-
-    .domain-alert a.alert-link {
-      color: #00e6ff;
-      text-decoration: underline;
-      font-weight: 600;
-      transition: color 0.2s ease;
-    }
-
-    .domain-alert a.alert-link:hover {
-      color: #00bfff;
-    }
-
-    .alert-close-btn {
-      background: none;
-      border: none;
-      color: rgba(255, 255, 255, 0.6);
-      cursor: pointer;
-      font-size: 16px;
-      padding: 4px 8px;
-      transition: color 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .alert-close-btn:hover {
-      color: #ffffff;
-    }
-
     @media (max-width: 680px) {
       nav { padding: 0 1rem !important; }
       .el-badge { display: none; }
@@ -420,14 +365,6 @@
     <a href="http://ministries.nomashae.org" class="nav-btn" data-i18n="nav-ministries">Ministries</a>
     <button class="nav-btn" id="dark-btn-mobile">Dark</button>
     <button class="nav-btn" id="lang-btn-mobile">EN</button>
-  </div>
-
-  <div id="domain-warning" class="domain-alert" style="display: none;">
-    <p>
-        <strong>Notice:</strong> We have moved! Please update your bookmarks to our new home at 
-        <a href="https://nomashae.org" class="alert-link">nomashae.org</a>.
-    </p>
-    <button class="alert-close-btn" onclick="closeDomainWarning()">✕</button>
   </div>
 
   <!-- <div class="announce">
@@ -718,30 +655,6 @@
       langBtnMobile.textContent = document.getElementById('lang-btn').textContent;
     });
   }
-
-  <script>
-document.addEventListener("DOMContentLoaded", () => {
-    // Check if the user has already dismissed this banner before
-    if (!localStorage.getItem("hide_domain_warning")) {
-        showDomainWarning();
-    }
-});
-
-function showDomainWarning() {
-    const warningBanner = document.getElementById("domain-warning");
-    if (warningBanner) {
-        warningBanner.style.display = "flex"; // Matches the flex layout of the CSS
-    }
-}
-
-function closeDomainWarning() {
-    const warningBanner = document.getElementById("domain-warning");
-    if (warningBanner) {
-        warningBanner.remove();
-    }
-    // Save preference so the user isn't annoyed on next visit or subpages
-    localStorage.setItem("hide_domain_warning", "true");
-}
-</script>
+  </script>
 </body>
 </html>
